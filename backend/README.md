@@ -13,3 +13,5 @@ If you have any troubles with connection please review settings in `application.
 There is one temporary endpoint created, which may help you to check if all basic settings were successful.
 After sending `GET` to `localhost:8080/test?id=1` you should receive json with a sample test.
 
+### 2. Swagger documentation:
+Swagger documentation is available after starting application on this URL: `http://localhost:8080/swagger-ui.html`
