@@ -15,7 +15,7 @@ public class PositionController {
         this.positionService = positionService;
     }
 
-    @GetMapping("/position")
+    @GetMapping("/candidate/positions")
     public List<PositionDto> getActivePositions() {
         return positionService.getAllActivePositions();
     }
