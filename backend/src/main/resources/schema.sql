@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS "candidate" CASCADE;
 DROP TABLE IF EXISTS "candidate_token" CASCADE;
 DROP TABLE IF EXISTS "resolved_test" CASCADE;
 
-create table "user"
+create table "users"
 (
 	id bigserial primary key,
 	first_name varchar not null,
@@ -20,12 +20,13 @@ create table "user"
 	email varchar not null,
 	unique(email),
 	password varchar not null,
+	is_active boolean not null default false,
 	is_deleted boolean not null default false,
 	version bigint not null default 0
 );
 
 create index "user_email"
-on "user"(email);
+on "users"(email);
 
 create table "role"
 (

@@ -7,13 +7,14 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "user", schema = "public", catalog = "masi")
+@Table(name = "users", schema = "public", catalog = "masi")
 public class UserEntity {
     private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private boolean isActive = false;
     private boolean isDeleted = false;
     private long version = 0;
     private Collection<ResolvedTestEntity> resolvedTestsById;
@@ -69,6 +70,16 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "is_active")
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Basic
