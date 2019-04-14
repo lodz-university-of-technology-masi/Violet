@@ -1,6 +1,7 @@
 package com.it.p.lodz.pl.masi.controllers;
 
 
+import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.services.TestService;
@@ -28,5 +29,10 @@ public class TestController {
     @GetMapping("/candidate/list/test")
     public List<TestVersionDto> getTestListForCandidate(@RequestParam(value = "positionId") long positionId, @RequestParam(value = "languageId") long languageId) {
         return testService.getTestListForCandidate(positionId, languageId);
+    }
+
+    @GetMapping("/moderator/list/test")
+    public List<TestDto> getAllTests() {
+        return testService.getAllTests();
     }
 }
