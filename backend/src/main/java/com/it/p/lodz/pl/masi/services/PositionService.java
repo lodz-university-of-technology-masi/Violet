@@ -19,7 +19,7 @@ public class PositionService {
     }
 
     public List<PositionDto> getAllActivePositions() {
-        var positions = positionRepository.findAllActive();
+        var positions = positionRepository.findAllByActiveTrue();
         var listType = new TypeToken<List<PositionDto>>(){}.getType();
         return mapper.map(positions, listType);
     }

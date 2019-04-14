@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface PositionRepository extends JpaRepository<PositionEntity, Long> {
     @Query(value = "SELECT * FROM position WHERE is_active", nativeQuery = true)
-    List<PositionEntity> findAllActive();
+    List<PositionEntity> findAllByActiveTrue();
+
 }
