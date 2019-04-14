@@ -23,4 +23,10 @@ public class PositionService {
         var listType = new TypeToken<List<PositionDto>>(){}.getType();
         return mapper.map(positions, listType);
     }
+
+    public List<PositionDto> getAllPositions() {
+        var positions = positionRepository.findAll();
+        var listType = new TypeToken<List<PositionDto>>(){}.getType();
+        return mapper.map(positions, listType);
+    }
 }

@@ -10,4 +10,7 @@ public interface PositionRepository extends JpaRepository<PositionEntity, Long> 
     @Query(value = "SELECT * FROM position WHERE is_active", nativeQuery = true)
     List<PositionEntity> findAllByActiveTrue();
 
+    @Query(value = "SELECT * FROM position", nativeQuery = true)
+    List<PositionEntity> findAll();
+
 }

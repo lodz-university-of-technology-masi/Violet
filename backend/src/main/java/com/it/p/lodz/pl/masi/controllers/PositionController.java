@@ -19,4 +19,9 @@ public class PositionController {
     public List<PositionDto> getActivePositions() {
         return positionService.getAllActivePositions();
     }
+
+    @GetMapping("/candidate/allPositions")
+    public List<PositionDto> getPositions() {
+        return positionService.getAllPositions();
+    }
 }
