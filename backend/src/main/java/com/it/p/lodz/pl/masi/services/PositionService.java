@@ -1,6 +1,9 @@
 package com.it.p.lodz.pl.masi.services;
 
+import com.it.p.lodz.pl.masi.dtos.BasePositionDto;
+import com.it.p.lodz.pl.masi.dtos.FullPositionDto;
 import com.it.p.lodz.pl.masi.dtos.PositionDto;
+import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -24,9 +27,15 @@ public class PositionService {
         return mapper.map(positions, listType);
     }
 
-    public List<PositionDto> getAllPositions() {
+    public List<FullPositionDto> getAllPositions() {
         var positions = positionRepository.findAll();
-        var listType = new TypeToken<List<PositionDto>>(){}.getType();
+        var listType = new TypeToken<List<FullPositionDto>>(){}.getType();
         return mapper.map(positions, listType);
+    }
+
+    public void addPosition(BasePositionDto positionDto) {
+        PositionEntity positionEntity = new PositionEntity();
+        positionEntity.setName(positionDto.getName());
+        this.positionRepository.saveAndFlush(positionEntity);
     }
 }

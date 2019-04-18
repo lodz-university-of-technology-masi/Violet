@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    @Query(value = "select * from \"user\" where \"id\" =" +
+    @Query(value = "select * from \"user\" where \"id\" IN" +
             "(select \"user_id\" from \"user_role\" where \"role_id\" =" +
-            "(select \"id\" from \"role\" where \"name\" ='editor'))",
+            "(select \"id\" from \"role\" where \"name\" ='redactor')) and " +
+            "is_deleted = false ",
             nativeQuery = true)
-    List<UserEntity> findAllEditors();
+    List<UserEntity> findAllRedactors();
 }

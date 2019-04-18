@@ -16,8 +16,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/allEditors")
-    public List<UserDto> getActivePositions() {
-        return userService.getAllEditors();
+    @GetMapping("/user/redactor")
+    public List<UserDto> getAllRedactors() {
+        return userService.getAllRedactors();
     }
 }
