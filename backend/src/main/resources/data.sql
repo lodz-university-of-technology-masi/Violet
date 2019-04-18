@@ -1,4 +1,4 @@
-INSERT INTO "role" (name) VALUES ('editor');
+INSERT INTO "role" (name) VALUES ('redactor');
 INSERT INTO "role" (name) VALUES ('moderator');
 
 INSERT INTO position (name) VALUES ('junior java developer');

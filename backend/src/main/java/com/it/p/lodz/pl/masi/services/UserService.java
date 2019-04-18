@@ -18,8 +18,8 @@ public class UserService {
         this.mapper = mapper;
     }
 
-    public List<UserDto> getAllEditors() {
-        var users = userRepository.findAllEditors();
+    public List<UserDto> getAllRedactors() {
+        var users = userRepository.findAllRedactors();
         var listType = new TypeToken<List<UserDto>>(){}.getType();
         return mapper.map(users, listType);
     }

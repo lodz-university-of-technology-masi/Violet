@@ -5,6 +5,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String email;
+    private Long version;
 
     public String getId() {
         return id;
@@ -38,4 +39,11 @@ public class UserDto {
         this.email = email;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

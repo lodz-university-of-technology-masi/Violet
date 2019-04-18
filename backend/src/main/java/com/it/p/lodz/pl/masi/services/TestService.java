@@ -4,7 +4,6 @@ import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
-import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
@@ -34,11 +33,6 @@ public class TestService {
         this.modelMapper = modelMapper;
     }
 
-    //TODO: Review or delete
-    public Test getTestByTestVersionId(Long id) {
-        return testVersionRepository.getOne(id).getTest();
-    }
-
     public List<TestVersionDto> getTestListForCandidate(Long positionId, Long languageId) {
         List<TestEntity> tests = testRepository.getAllByPositionByPositionIdAndActiveTrueAndDeletedFalse(positionRepository.getOne(positionId));
         List<TestVersionEntity> testVersions = testVersionRepository.
@@ -48,7 +42,7 @@ public class TestService {
     }
 
     public List<TestDto> getAllTests() {
-        var versions = testVersionRepository.findAll();
+        var versions = testVersionRepository.getAllByDeletedFalse();
         var groupedVersions = versions.stream().collect(Collectors.groupingBy(TestVersionEntity::getTestByTestId));
 
         var tests = new ArrayList<TestDto>();

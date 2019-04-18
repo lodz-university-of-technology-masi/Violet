@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface TestVersionRepository extends JpaRepository<TestVersionEntity, Long> {
     List<TestVersionEntity> getAllByLanguageByLanguageIdAndTestByTestIdAndActiveTrueAndDeletedFalse(LanguageEntity languageEntity, List<TestEntity> testEntities);
+    List<TestVersionEntity> getAllByDeletedFalse();
 }
