@@ -17,8 +17,7 @@ create table "user"
 	id bigserial primary key,
 	first_name varchar(32) not null,
 	last_name varchar(32) not null,
-	email varchar(64) not null,
-	unique(email),
+	email varchar(64) not null CONSTRAINT user_email_unique UNIQUE,
 	password varchar(64) not null,
 	is_deleted boolean not null default false,
 	version bigint not null default 0
@@ -30,8 +29,7 @@ on "user"(email);
 create table "role"
 (
 	id bigserial primary key,
-	name varchar(32) not null,
-	unique(name),
+	name varchar(32) not null CONSTRAINT role_name_unique UNIQUE,
 	version bigint not null default 0
 );
 
@@ -44,7 +42,7 @@ create table "user_role"
 	user_id bigint not null references "user"(id),
 	role_id bigint not null references "role"(id),
 	version bigint not null default 0,
-	unique (user_id, role_id)
+	CONSTRAINT user_and_role_unique UNIQUE(user_id, role_id)
 );
 
 create table "oauth_access_token"
@@ -75,8 +73,7 @@ on ur.role_id = r.id;
 create table "position"
 (
 	id bigserial primary key,
-	name varchar(32) not null,
-	unique(name),
+	name varchar(32) not null CONSTRAINT position_name_unique UNIQUE,
 	is_active boolean not null default true,
 	version bigint not null default 0
 );
@@ -87,8 +84,7 @@ on position(name);
 create table "language"
 (
 	id bigserial primary key,
-	name varchar(32) not null,
-	unique(name),
+	name varchar(32) not null CONSTRAINT language_name_unique UNIQUE,
 	version bigint not null default 0
 );
 
