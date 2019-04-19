@@ -4,6 +4,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
@@ -31,6 +34,9 @@ public class CandidateEntity {
     }
 
     @Basic
+    @NotNull(message = "null_candidate_first_name")
+    @Size(min=2, max=32, message = "wrong_candidate_first_name_size")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+([ '-][a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+)*", message = "wrong_candidate_first_name")
     @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
@@ -41,6 +47,9 @@ public class CandidateEntity {
     }
 
     @Basic
+    @NotNull(message = "null_candidate_last_name")
+    @Size(min=2, max=32, message = "wrong_candidate_last_name_size")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+([ '-][a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+)*", message = "wrong_candidate_last_name")
     @Column(name = "last_name")
     public String getLastName() {
         return lastName;
@@ -51,6 +60,9 @@ public class CandidateEntity {
     }
 
     @Basic
+    @NotNull(message = "null_candidate_email_name")
+    @Size(min=5, max=64, message = "wrong_candidate_email_size")
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "wrong_candidate_email")
     @Column(name = "email")
     public String getEmail() {
         return email;

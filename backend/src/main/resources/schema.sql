@@ -15,11 +15,11 @@ DROP TABLE IF EXISTS "resolved_test" CASCADE;
 create table "user"
 (
 	id bigserial primary key,
-	first_name varchar not null,
-	last_name varchar not null,
-	email varchar not null,
+	first_name varchar(32) not null,
+	last_name varchar(32) not null,
+	email varchar(64) not null,
 	unique(email),
-	password varchar not null,
+	password varchar(64) not null,
 	is_deleted boolean not null default false,
 	version bigint not null default 0
 );
@@ -30,7 +30,7 @@ on "user"(email);
 create table "role"
 (
 	id bigserial primary key,
-	name varchar not null,
+	name varchar(32) not null,
 	unique(name),
 	version bigint not null default 0
 );
@@ -75,7 +75,7 @@ on ur.role_id = r.id;
 create table "position"
 (
 	id bigserial primary key,
-	name varchar not null,
+	name varchar(32) not null,
 	unique(name),
 	is_active boolean not null default true,
 	version bigint not null default 0
@@ -87,7 +87,7 @@ on position(name);
 create table "language"
 (
 	id bigserial primary key,
-	name varchar not null,
+	name varchar(32) not null,
 	unique(name),
 	version bigint not null default 0
 );
@@ -119,9 +119,9 @@ create table "test_version"
 create table "candidate"
 (
 	id bigserial primary key,
-	first_name varchar not null,
-	last_name varchar not null,
-	email varchar not null,
+	first_name varchar(32) not null,
+	last_name varchar(32) not null,
+	email varchar(64) not null,
 	language_id bigint not null references "language"(id),
 	position_id bigint not null references "position"(id),
 	version bigint not null default 0
@@ -134,7 +134,7 @@ create table "candidate_token"
 (
 	id bigserial primary key,
 	candidate_id bigint not null references candidate(id),
-	token varchar not null,
+	token varchar(128) not null,
 	is_active boolean not null default true,
 	expire_date timestamp not null default now(),
 	version bigint not null default 0
@@ -148,7 +148,7 @@ create table "resolved_test"
 	position_id bigint not null references "position"(id),
 	language_id bigint not null references "language"(id),
 	test json not null,
-	mark json not null,
+	mark json,
 	points_sum bigint,
 	points_max bigint not null,
 	version bigint not null default 0

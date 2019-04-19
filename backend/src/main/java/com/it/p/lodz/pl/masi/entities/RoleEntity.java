@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
@@ -26,6 +28,8 @@ public class RoleEntity {
     }
 
     @Basic
+    @NotNull(message = "null_role_name")
+    @Size(min=3, max=32, message = "wrong_role_name_size")
     @Column(name = "name")
     public String getName() {
         return name;
