@@ -9,6 +9,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "test_version", schema = "public", catalog = "masi")
@@ -37,6 +38,7 @@ public class TestVersionEntity {
 
     @Basic
     @Column(name = "test")
+    @NotNull(message = "null_test_version")
     @Type(type = "json")
     public Test getTest() {
         return test;

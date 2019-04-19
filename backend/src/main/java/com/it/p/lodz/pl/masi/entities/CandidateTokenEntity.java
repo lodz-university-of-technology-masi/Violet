@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
@@ -28,6 +30,8 @@ public class CandidateTokenEntity {
     }
 
     @Basic
+    @NotNull(message = "null_candidate_token")
+    @Size(min=2, max=128, message = "wrong_candidate_token_size")
     @Column(name = "token")
     public String getToken() {
         return token;
@@ -48,6 +52,7 @@ public class CandidateTokenEntity {
     }
 
     @Basic
+    @NotNull(message = "null_candidate_token_expire_date")
     @Column(name = "expire_date")
     public Timestamp getExpireDate() {
         return expireDate;

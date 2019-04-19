@@ -10,6 +10,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "resolved_test", schema = "public", catalog = "masi")
@@ -41,6 +42,7 @@ public class ResolvedTestEntity {
 
     @Basic
     @Column(name = "test")
+    @NotNull(message = "null_resolved_test")
     @Type(type = "json")
     public Test getTest() {
         return test;
@@ -72,6 +74,7 @@ public class ResolvedTestEntity {
     }
 
     @Basic
+    @NotNull(message = "null_points_max")
     @Column(name = "points_max")
     public long getPointsMax() {
         return pointsMax;
