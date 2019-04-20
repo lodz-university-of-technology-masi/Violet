@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>Positions List</mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let p of positions">
+
+        <h3 mat-line>
+          <a mat-button [routerLink]="['/position-edit', p.id]">{{p.name}}</a>
+        </h3>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <button mat-fab color="primary" [routerLink]="['/position-add']">Add</button>
+
+</mat-card>
+
+
+
