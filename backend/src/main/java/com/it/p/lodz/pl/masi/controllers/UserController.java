@@ -4,6 +4,10 @@ import com.it.p.lodz.pl.masi.dtos.UserDto;
 import com.it.p.lodz.pl.masi.dtos.UserEditDto;
 import com.it.p.lodz.pl.masi.services.UserService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
