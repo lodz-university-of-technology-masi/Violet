@@ -1,7 +1,9 @@
 package com.it.p.lodz.pl.masi.controllers;
 
 import com.it.p.lodz.pl.masi.dtos.UserDto;
+import com.it.p.lodz.pl.masi.dtos.UserEditDto;
 import com.it.p.lodz.pl.masi.services.UserService;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,9 @@ public class UserController {
         return userService.getAllRedactors();
     }
 
-    @DeleteMapping("/user/redactor")
-    public void deleteRedactor(@RequestParam long id) {userService.deleteRedactor(id);}
+    @DeleteMapping("/user/redactor/{id}")
+    public void deleteRedactor(@PathVariable long id) {userService.deleteRedactor(id);}
+
+    @PutMapping("/user/redactor/{id}")
+    public void modifyRedactor(@PathVariable long id, @RequestBody UserEditDto dto) {userService.editUser(id, dto);}
 }
