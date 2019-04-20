@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class PositionController {
     public PositionController(PositionService positionService) {
         this.positionService = positionService;
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/candidate/positions")
     public List<PositionDto> getActivePositions() {
         return positionService.getAllActivePositions();
