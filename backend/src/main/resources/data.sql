@@ -22,7 +22,7 @@ VALUES ('Dudley', 'Dursley', 'dudley@dursley.com', 2, 4);
 INSERT INTO candidate (first_name, last_name, email, language_id, position_id)
 VALUES ('Geralt', 'Zrivi', 'geralt@zrivi.pl', 1, 3);
 
-INSERT INTO "user" (first_name, last_name, email, password) VALUES ('Jan', 'Nowak', 'jan.nowak@to.co', '12345678');
+INSERT INTO "user" (first_name, last_name, email, password) VALUES ('Jan', 'Nowak', 'jan.nowak@to.co', 'conajmniejszesnascieznakow');
 
 INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_role (user_id, role_id) VALUES (1, 2);
