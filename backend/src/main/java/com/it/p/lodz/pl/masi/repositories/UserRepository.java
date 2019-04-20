@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "is_deleted = false ",
             nativeQuery = true)
     List<UserEntity> findAllRedactors();
+
+    UserEntity findOneByIdAndDeletedFalse(Long id);
 }
