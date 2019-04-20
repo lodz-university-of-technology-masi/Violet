@@ -1,6 +1,7 @@
 package com.it.p.lodz.pl.masi.controllers;
 
 import com.it.p.lodz.pl.masi.exceptions.ApiError;
+import com.it.p.lodz.pl.masi.exceptions.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,13 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         org.hibernate.exception.ConstraintViolationException exception = (org.hibernate.exception.ConstraintViolationException) ex.getCause();
         ApiError apiError =
                 new ApiError("400", HttpStatus.BAD_REQUEST, exception.getConstraintName());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getErrors());
+    }
+
+    @ExceptionHandler({EntityNotFoundException.class})
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+        var apiError =
+                new ApiError("404", HttpStatus.NOT_FOUND, ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getErrors());
     }
 
