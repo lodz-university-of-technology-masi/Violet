@@ -41,8 +41,8 @@ public class Oauth2AuthServerConfig extends AuthorizationServerConfigurerAdapter
         clients
                 .inMemory()
                 .withClient("masi")
-                .secret(passwordEncoder.encode("M@Si-uSEr!=Hri"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+                .secret(passwordEncoder.encode("$2y$16$02aXGPAwaO0F5enob8BncOyKu0I.WahPIl59Ve9nf2pYgY6u3jnmy\n"))
+                .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(3600) .refreshTokenValiditySeconds(28*24*3600)
                 .scopes("read");
     }
@@ -51,7 +51,8 @@ public class Oauth2AuthServerConfig extends AuthorizationServerConfigurerAdapter
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .tokenStore(tokenStore())
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .pathMapping("/oauth/confirm_access", "/access_confirmation");
     }
 
     @Bean
