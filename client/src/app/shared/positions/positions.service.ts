@@ -1,33 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import {NewTestPosition, TestPosition} from '../model/position-model';
+import {Configuration} from '../../configuration';
 
 @Injectable()
 export class PositionsService {
-  public API = '//localhost:8081';
-  public POSITIONS_API = this.API + '/candidate/positions';
+  private API = this.config.Server;
 
-  constructor(private http: HttpClient) {
-  }
-
-  getAll(): Observable<any> {
-    return this.http.get(this.API + '/candidate/positions');
-  }
-  get(id: string) {
-    return this.http.get(this.POSITIONS_API + '/' + id);
-  }
-  save(position: any): Observable<any> {
-    let result: Observable<Object>;
-    if (position['href']) {
-      result = this.http.put(position.href, position);
-    } else {
-      result = this.http.post(this.POSITIONS_API, position);
-    }
-    return result;
+  constructor(private http: HttpClient, private config: Configuration) {
   }
 
-  remove(href: string) {
-    return this.http.delete(href);
+  getAll() {
+    return this.http.get<TestPosition[]>(this.API + '/position/list');
   }
 
+  save(position: NewTestPosition) {
+    return this.http.post(this.API + '/position/add', position);
+  }
 }

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { PositionsService } from '../shared/positions/positions.service';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {TestPosition} from '../shared/model/position-model';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-positions-list',
   templateUrl: './positions-list.component.html',
@@ -7,14 +10,22 @@ import { PositionsService } from '../shared/positions/positions.service';
 })
 export class PositionsListComponent implements OnInit {
 
-  positions: Array<any>;
+  displayedColumns: string[] = ['positionName', 'changeState'];
+  dataSource;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  positions: TestPosition[];
 
-  constructor(private positionsService: PositionsService) { }
+  constructor(private positionsService: PositionsService, private router: Router) { }
 
   ngOnInit() {
     this.positionsService.getAll().subscribe(data => {
       this.positions = data;
+      this.dataSource = new MatTableDataSource<TestPosition>(this.positions);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
+  onChangeStateClick(positions) {
+    // NOT IMPLEMENTED
+  }
 }

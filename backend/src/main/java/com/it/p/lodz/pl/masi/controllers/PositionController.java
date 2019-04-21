@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class PositionController {
     private PositionService positionService;
 
     public PositionController(PositionService positionService) {
         this.positionService = positionService;
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/candidate/positions")
     public List<PositionDto> getActivePositions() {
         return positionService.getAllActivePositions();
