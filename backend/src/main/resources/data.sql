@@ -2,7 +2,7 @@ INSERT INTO "role" (name) VALUES ('redactor');
 INSERT INTO "role" (name) VALUES ('moderator');
 
 INSERT INTO position (name) VALUES ('junior java developer');
-INSERT INTO position (name) VALUES ('mid java developer');
+INSERT INTO position (name, is_active) VALUES ('mid java developer', false);
 INSERT INTO position (name) VALUES ('senior java developer');
 INSERT INTO position (name) VALUES ('junior .NET developer');
 INSERT INTO position (name) VALUES ('mid .NET developer');

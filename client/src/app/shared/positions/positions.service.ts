@@ -18,4 +18,12 @@ export class PositionsService {
   save(position: NewTestPosition) {
     return this.http.post(this.API + '/position/add', position);
   }
+
+  activatePosition(position: TestPosition) {
+    return this.http.put(this.API + '/position/' + position.id + '?status=active', null);
+  }
+
+  deactivatePosition(position: TestPosition) {
+    return this.http.put(this.API + '/position/' + position.id + '?status=deactivate', null);
+  }
 }

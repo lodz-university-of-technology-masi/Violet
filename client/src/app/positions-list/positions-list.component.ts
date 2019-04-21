@@ -18,6 +18,10 @@ export class PositionsListComponent implements OnInit {
   constructor(private positionsService: PositionsService, private router: Router) { }
 
   ngOnInit() {
+   this.updateTable();
+  }
+
+  updateTable() {
     this.positionsService.getAll().subscribe(data => {
       this.positions = data;
       this.dataSource = new MatTableDataSource<TestPosition>(this.positions);
@@ -25,7 +29,15 @@ export class PositionsListComponent implements OnInit {
     });
   }
 
-  onChangeStateClick(positions) {
-    // NOT IMPLEMENTED
+  onChangeStateClick(position: TestPosition) {
+    if (position.active === true) {
+      this.positionsService.deactivatePosition(position).subscribe(() => {
+        this.updateTable();
+      });
+    } else {
+      this.positionsService.activatePosition(position).subscribe(() => {
+        this.updateTable();
+      });
+    }
   }
 }

@@ -11,7 +11,7 @@
     <ng-container matColumnDef="changeState">
       <mat-header-cell class='button-cell-1' *matHeaderCellDef> Change state </mat-header-cell>
       <mat-cell class='button-cell-1' *matCellDef="let positions">
-        <button mat-button mat-raised-button color='primary' (click)='onChangeStateClick(positions)'> {{positions.active === true ? 'Active' : 'Deactivate'}} </button>
+        <button mat-button mat-raised-button color='primary' (click)='onChangeStateClick(positions)'> {{positions.active === true ? 'Deactivate' : 'Active'}} </button>
       </mat-cell>
     </ng-container>
 
