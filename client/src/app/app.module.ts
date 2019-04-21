@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PositionsListComponent } from './positions-list/positions-list.component';
 import { MatButtonModule, MatCardModule, MatInputModule, MatListModule,
-  MatToolbarModule, MatMenuModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+  MatToolbarModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -50,6 +50,7 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatToolbarModule,
     FormsModule,
+    MatSortModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [PositionsService, Configuration],

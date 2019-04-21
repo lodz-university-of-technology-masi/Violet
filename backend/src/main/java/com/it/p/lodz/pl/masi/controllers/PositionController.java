@@ -41,12 +41,11 @@ public class PositionController {
     }
 
     @PutMapping("/position/{id}")
-    public void deactivate(@PathVariable long id, @RequestParam(value = "status") String status){
-
-        if(status.equals("deactivate")){
+    public void deactivate(@PathVariable long id, @RequestParam(value = "status") String status) {
+        if (status.equals("deactivate")) {
             positionService.deactivatePosition(id);
         }
-        if(status.equals("active")){
+        if (status.equals("active")) {
             positionService.activatePosition(id);
         }
     }
