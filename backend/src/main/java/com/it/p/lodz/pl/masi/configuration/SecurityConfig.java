@@ -34,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT `email`,`password`,`is_active` FROM `user` WHERE `email`=?")
-                .authoritiesByUsernameQuery("SELECT `*` FROM `user` WHERE `email`=?")
+                .usersByUsernameQuery("SELECT \"email\",\"password\",\"is_active\" FROM \"user\" WHERE \"email\"=?")
+                .authoritiesByUsernameQuery("SELECT USER FROM \"user\" WHERE \"emai1\"=?")
                 .passwordEncoder(passwordEncoder());
     }
 

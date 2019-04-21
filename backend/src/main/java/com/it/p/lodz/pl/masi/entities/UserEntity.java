@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "users", schema = "public", catalog = "masi")
+@Table(name = "user", schema = "public", catalog = "masi")
 public class UserEntity {
     private long id;
     private String firstName;
