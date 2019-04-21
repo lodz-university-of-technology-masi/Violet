@@ -2,11 +2,12 @@ package com.it.p.lodz.pl.masi.controllers;
 
 import com.it.p.lodz.pl.masi.dtos.UserDto;
 import com.it.p.lodz.pl.masi.dtos.UserEditDto;
+import com.it.p.lodz.pl.masi.dtos.UserRedactorDto;
 import com.it.p.lodz.pl.masi.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,6 +19,12 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/user/redactor/add")
+    public HttpStatus addRedactor(@RequestBody UserRedactorDto userRedactorDto) {
+        userService.addRedactor(userRedactorDto);
+        return HttpStatus.ACCEPTED;
     }
 
     @GetMapping("/user/redactor")
