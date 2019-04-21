@@ -38,4 +38,21 @@ public class PositionService {
         positionEntity.setName(positionDto.getName());
         this.positionRepository.saveAndFlush(positionEntity);
     }
+
+    public void activatePosition(Long positionId){
+        var value = positionRepository.findById(positionId);
+        if(value.isPresent()){
+            PositionEntity position = value.get();
+            position.setActive(true);
+            this.positionRepository.saveAndFlush(position);
+        }
+    }
+    public void deactivatePosition(Long positionId){
+        var value = positionRepository.findById(positionId);
+        if(value.isPresent()){
+            PositionEntity position = value.get();
+            position.setActive(false);
+            this.positionRepository.saveAndFlush(position);
+        }
+    }
 }

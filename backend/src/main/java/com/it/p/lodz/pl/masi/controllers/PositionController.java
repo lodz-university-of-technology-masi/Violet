@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +38,16 @@ public class PositionController {
     public HttpStatus addPosition(@RequestBody BasePositionDto positionDto) {
         positionService.addPosition(positionDto);
         return HttpStatus.ACCEPTED;
+    }
+
+    @PutMapping("/position/{id}")
+    public void deactivate(@PathVariable long id, @RequestParam(value = "status") String status){
+
+        if(status.equals("deactivate")){
+            positionService.deactivatePosition(id);
+        }
+        if(status.equals("active")){
+            positionService.activatePosition(id);
+        }
     }
 }
