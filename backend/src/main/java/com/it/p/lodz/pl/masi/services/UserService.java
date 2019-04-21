@@ -2,11 +2,14 @@ package com.it.p.lodz.pl.masi.services;
 
 import com.it.p.lodz.pl.masi.dtos.UserDto;
 import com.it.p.lodz.pl.masi.dtos.UserEditDto;
+import com.it.p.lodz.pl.masi.dtos.UserRedactorDto;
 import com.it.p.lodz.pl.masi.entities.RoleEntity;
 import com.it.p.lodz.pl.masi.entities.UserEntity;
+import com.it.p.lodz.pl.masi.entities.UserRoleEntity;
 import com.it.p.lodz.pl.masi.exceptions.RedactorNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.RoleRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRepository;
+import com.it.p.lodz.pl.masi.repositories.UserRoleRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
@@ -17,18 +20,31 @@ import java.util.List;
 public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private UserRoleRepository userRoleRepository;
     private ModelMapper mapper;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, ModelMapper mapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, ModelMapper mapper,
+                       UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.mapper = mapper;
         this.roleRepository = roleRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     public List<UserDto> getAllRedactors() {
         var users = userRepository.findAllRedactors();
         var listType = new TypeToken<List<UserDto>>(){}.getType();
         return mapper.map(users, listType);
+    }
+
+    public void addRedactor(UserRedactorDto userRedactorDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setFirstName(userRedactorDto.getFirstName());
+        userEntity.setLastName(userRedactorDto.getLastName());
+        userEntity.setEmail(userRedactorDto.getEmail());
+        userEntity.setPassword(userRedactorDto.getPassword());
+        this.userRepository.saveAndFlush(userEntity);
+        setRedactor(userEntity);
     }
 
     public void deleteRedactor(long id) {
@@ -52,5 +68,13 @@ public class UserService {
             throw new RedactorNotFoundException();
         }
         return user;
+    }
+
+    private void setRedactor(UserEntity userEntity) {
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        RoleEntity redactorRole = roleRepository.getOneByName("redactor");
+        userRoleEntity.setRoleByRoleId(redactorRole);
+        userRoleEntity.setUserByUserId(userEntity);
+        this.userRoleRepository.saveAndFlush(userRoleEntity);
     }
 }
