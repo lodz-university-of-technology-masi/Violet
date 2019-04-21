@@ -4,26 +4,28 @@ import { PositionsService } from './shared/positions/positions.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PositionsListComponent } from './positions-list/positions-list.component';
-import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatInputModule, MatListModule,
+  MatToolbarModule, MatMenuModule, MatTableModule, MatPaginatorModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { PositionEditComponent } from './position-edit/position-edit.component';
-import { HomeComponent } from './home/home.component';
+import { PositionAddComponent } from './position-add/position-add.component';
+import {HomeComponent} from './home/home.component';
+import {Configuration} from './configuration';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/positions-list', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'positions-list',
     component: PositionsListComponent
   },
   {
     path: 'position-add',
-    component: PositionEditComponent
+    component: PositionAddComponent
   },
   {
-    path: 'position-edit/:id',
-    component: PositionEditComponent
+    path: 'home',
+    component: HomeComponent
   }
 ];
 
@@ -31,7 +33,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PositionsListComponent,
-    PositionEditComponent
+    PositionAddComponent,
+    HomeComponent,
+    PositionAddComponent
   ],
   imports: [
     BrowserModule,
@@ -41,11 +45,14 @@ const appRoutes: Routes = [
     MatCardModule,
     MatInputModule,
     MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
     MatToolbarModule,
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [PositionsService],
+  providers: [PositionsService, Configuration],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
