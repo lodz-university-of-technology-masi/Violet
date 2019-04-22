@@ -1,9 +1,11 @@
 package com.it.p.lodz.pl.masi.services;
 
+import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
+import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
@@ -56,5 +58,14 @@ public class TestService {
         }
 
         return tests;
+    }
+
+    public EditResolveTestVersionDto getTestVersionById(long id) {
+        TestVersionEntity testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
+        if(testVersionEntity == null) {
+            throw new TestVersionNotFoundException();
+        } else {
+            return modelMapper.map(testVersionEntity, EditResolveTestVersionDto.class);
+        }
     }
 }
