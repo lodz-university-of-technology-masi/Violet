@@ -1,9 +1,36 @@
-<section class="hero is-info is-fullheight is-bold">
-  <div class="hero-body">
-    <div class="container">
+<mat-grid-list cols="4" rowHeight="1:1">
+  <mat-grid-tile> </mat-grid-tile>
 
-      <h1 class="title">Home Page!</h1>
+  <mat-grid-tile>
 
-    </div>
-  </div>
-</section>
+    <mat-card>
+
+      <mat-card-title>Candidate access</mat-card-title>
+
+      <mat-card-content>
+
+        <button mat-raised-button color="primary" (click)="startTest()">Start test</button>
+      </mat-card-content>
+
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+
+    <mat-card>
+
+      <mat-card-title>Employee access</mat-card-title>
+
+      <mat-card-content>
+
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+      </mat-card-content>
+
+    </mat-card>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile> </mat-grid-tile>
+
+</mat-grid-list>
