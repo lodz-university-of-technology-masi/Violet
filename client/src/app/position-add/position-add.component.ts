@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PositionsService} from '../shared/positions/positions.service';
+import {PositionsService} from '../shared/services/positions.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NewTestPosition} from '../shared/model/position-model';
 

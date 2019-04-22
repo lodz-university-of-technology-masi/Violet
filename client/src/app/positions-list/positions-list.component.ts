@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { PositionsService } from '../shared/positions/positions.service';
+import { PositionsService } from '../shared/services/positions.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestPosition} from '../shared/model/position-model';
 import {Router} from '@angular/router';
