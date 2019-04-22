@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -61,11 +62,9 @@ public class TestService {
     }
 
     public EditResolveTestVersionDto getTestVersionById(long id) {
-        TestVersionEntity testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
-        if(testVersionEntity == null) {
-            throw new TestVersionNotFoundException();
-        } else {
-            return modelMapper.map(testVersionEntity, EditResolveTestVersionDto.class);
-        }
+        Optional<TestVersionEntity> testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
+        return testVersionEntity
+                .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
+                .orElseThrow(TestVersionNotFoundException::new);
     }
 }
