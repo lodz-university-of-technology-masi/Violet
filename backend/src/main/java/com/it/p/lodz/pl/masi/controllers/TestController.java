@@ -1,16 +1,16 @@
 package com.it.p.lodz.pl.masi.controllers;
 
-
 import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.services.TestService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 public class TestController {
 
     private TestService testService;
