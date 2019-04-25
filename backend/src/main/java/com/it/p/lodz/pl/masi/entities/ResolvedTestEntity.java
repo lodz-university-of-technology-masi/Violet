@@ -2,6 +2,7 @@ package com.it.p.lodz.pl.masi.entities;
 
 import com.it.p.lodz.pl.masi.model.Mark;
 import com.it.p.lodz.pl.masi.model.Test;
+import com.it.p.lodz.pl.masi.model.TestAnswer;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 public class ResolvedTestEntity {
     private long id;
     private Test test;
+    private TestAnswer answer;
     private Mark mark;
     private Long pointsSum;
     private long pointsMax;
@@ -50,6 +52,18 @@ public class ResolvedTestEntity {
 
     public void setTest(Test test) {
         this.test = test;
+    }
+
+    @Basic
+    @Column(name = "answer")
+    @NotNull(message = "null_resolved_test_answer")
+    @Type(type = "json")
+    public TestAnswer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(TestAnswer answer) {
+        this.answer = answer;
     }
 
     @Basic
@@ -100,7 +114,9 @@ public class ResolvedTestEntity {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ResolvedTestEntity)) {
+            return false;
+        }
         ResolvedTestEntity that = (ResolvedTestEntity) o;
 
         return new EqualsBuilder()
@@ -108,6 +124,7 @@ public class ResolvedTestEntity {
                 .append(pointsMax, that.pointsMax)
                 .append(version, that.version)
                 .append(test, that.test)
+                .append(answer, that.answer)
                 .append(mark, that.mark)
                 .append(pointsSum, that.pointsSum)
                 .isEquals();
@@ -118,6 +135,7 @@ public class ResolvedTestEntity {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(test)
+                .append(answer)
                 .append(mark)
                 .append(pointsSum)
                 .append(pointsMax)
