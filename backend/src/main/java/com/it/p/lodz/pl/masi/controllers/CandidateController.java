@@ -26,7 +26,7 @@ public class CandidateController {
     }
 
     @PostMapping("/candidate/resolved/test")
-    public void resolveTest(ResolveTestDto resolveTestDto) {
-        
+    public void resolveTest(@RequestBody ResolveTestDto resolveTestDto) {
+        candidateService.resolveTest(resolveTestDto);
     }
 }

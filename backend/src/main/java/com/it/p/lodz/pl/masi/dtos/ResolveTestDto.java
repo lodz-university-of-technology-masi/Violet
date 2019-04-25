@@ -6,20 +6,11 @@ import com.it.p.lodz.pl.masi.model.Test;
 
 public class ResolveTestDto {
     private List<String> answers;
-    private Test test;
-    private long testVersionId;
+    private EditResolveTestVersionDto test;
     private long candidateId;
 
     public List<String> getAnswers() {
         return answers;
-    }
-
-    public long getTestVersionId() {
-        return testVersionId;
-    }
-
-    public void setTestVersionId(long testVersionId) {
-        this.testVersionId = testVersionId;
     }
 
     public long getCandidateId() {
@@ -30,11 +21,11 @@ public class ResolveTestDto {
         this.candidateId = candidateId;
     }
 
-    public Test getTest() {
+    public EditResolveTestVersionDto getTest() {
         return test;
     }
 
-    public void setTest(Test test) {
+    public void setTest(EditResolveTestVersionDto test) {
         this.test = test;
     }
 
