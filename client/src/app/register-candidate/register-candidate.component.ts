@@ -72,7 +72,6 @@ export class RegisterCandidateComponent implements OnInit {
 
   startTest() {
     this.candidateService.registerCandidate(this.registerCandidate).subscribe(data => {
-      // TODO: should be route to test resolving site, no homepage
       this.router.navigate(['/resolve-test'], {queryParams: {testVersionId: this.chosenTestVersionId, token: data.token}});
     });
   }

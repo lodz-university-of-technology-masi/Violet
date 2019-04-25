@@ -7,18 +7,18 @@ import com.it.p.lodz.pl.masi.model.Test;
 public class ResolveTestDto {
     private List<String> answers;
     private EditResolveTestVersionDto test;
-    private long candidateId;
+    private String candidateToken;
 
     public List<String> getAnswers() {
         return answers;
     }
 
-    public long getCandidateId() {
-        return candidateId;
+    public String getCandidateToken() {
+        return candidateToken;
     }
 
-    public void setCandidateId(long candidateId) {
-        this.candidateId = candidateId;
+    public void setCandidateToken(String candidateToken) {
+        this.candidateToken = candidateToken;
     }
 
     public EditResolveTestVersionDto getTest() {

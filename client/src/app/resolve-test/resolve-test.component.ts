@@ -3,6 +3,7 @@ import { TestService } from '../shared/services/test.service';
 import { TestVersionContentModel, QuestionModel } from '../shared/model/test-model';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { ResolveTestModel } from '../shared/model/resolve-test-model';
 
 @Component({
   selector: 'app-resolve-test',
@@ -14,7 +15,7 @@ export class ResolveTestComponent implements OnInit {
   private testVersionId: string;
   private token: string;
   questions: QuestionModel[] = [];
-  answers: String[] = [];
+  answers: string[];
 
   constructor(private testService: TestService, private route: ActivatedRoute) { }
 
@@ -29,8 +30,9 @@ export class ResolveTestComponent implements OnInit {
         t => {
           this.test = t;
           this.setQuestions(t);
+          this.answers = new Array<string>(this.questions.length);
       }, 
-        e => {console.log(e)});
+        e => {console.log(e.message)});
   }
   setQuestions(t: TestVersionContentModel) {
     this.questions = this.questions
@@ -44,7 +46,15 @@ export class ResolveTestComponent implements OnInit {
 
   public resolveTest() {
     console.log("resolved i guess");
-    console.log(this.answers);
+    var test: ResolveTestModel = new ResolveTestModel();
+    test.answers = this.answers;
+    test.candidateToken = this.token;
+    test.test = this.test;
+
+    this.testService.resolveTest(test)
+    .subscribe(
+      t => console.log("yea, success"),
+      e => console.error(e.message));
   }
 
 }
