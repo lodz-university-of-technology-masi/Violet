@@ -2,16 +2,22 @@ package com.it.p.lodz.pl.masi.services;
 
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
+import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.entities.CandidateEntity;
 import com.it.p.lodz.pl.masi.entities.CandidateTokenEntity;
 import com.it.p.lodz.pl.masi.entities.LanguageEntity;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
+import com.it.p.lodz.pl.masi.entities.ResolvedTestEntity;
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
+import com.it.p.lodz.pl.masi.model.Test;
+import com.it.p.lodz.pl.masi.model.TestAnswer;
 import com.it.p.lodz.pl.masi.repositories.CandidateRepository;
 import com.it.p.lodz.pl.masi.repositories.CandidateTokenRepository;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
+import com.it.p.lodz.pl.masi.repositories.TestVersionRepository;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -27,14 +33,17 @@ public class CandidateService {
     private LanguageRepository languageRepository;
     private PositionRepository positionRepository;
     private ModelMapper modelMapper;
+    private TestVersionRepository testVersionRepository;
 
     public CandidateService(CandidateRepository candidateRepository, CandidateTokenRepository candidateTokenRepository,
-                            LanguageRepository languageRepository, PositionRepository positionRepository, ModelMapper modelMapper) {
+                            LanguageRepository languageRepository, PositionRepository positionRepository, ModelMapper modelMapper,
+                            TestVersionRepository testVersionRepository) {
         this.candidateRepository = candidateRepository;
         this.candidateTokenRepository = candidateTokenRepository;
         this.languageRepository = languageRepository;
         this.positionRepository = positionRepository;
         this.modelMapper = modelMapper;
+        this.testVersionRepository = testVersionRepository;
     }
 
     @Transactional
@@ -69,5 +78,18 @@ public class CandidateService {
     private PositionEntity getPositionEntityForId(String id) {
         Optional<PositionEntity> positionEntity = positionRepository.getById(Long.parseLong(id));
         return positionEntity.orElseThrow(PositionNotFoundException::new);
+    }
+
+    public void resolveTest(ResolveTestDto dto)
+    {
+        var resolvedTest = new ResolvedTestEntity();
+        resolvedTest.setAnswer(new TestAnswer(dto.getAnswers()));
+        var candidate = candidateRepository.getOne(dto.getCandidateId());
+        resolvedTest.setCandidateByCandidateId(candidate);
+        resolvedTest.setLanguageByLanguageId(candidate.getLanguageByLanguageId());
+        resolvedTest.setPointsMax(dto.getAnswers().size());
+        resolvedTest.setPositionByPositionId(candidate.getPositionByPositionId());
+        resolvedTest.setTest(dto.getTest());
+        resolvedTest.setUserByOwnerId(testVersionRepository.getOne(dto.getTestVersionId()).getTestByTestId().getUserByOwnerId());
     }
 }
