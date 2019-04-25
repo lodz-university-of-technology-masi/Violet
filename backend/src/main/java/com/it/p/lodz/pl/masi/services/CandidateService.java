@@ -1,20 +1,24 @@
 package com.it.p.lodz.pl.masi.services;
 
+import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
+import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.entities.CandidateEntity;
 import com.it.p.lodz.pl.masi.entities.CandidateTokenEntity;
 import com.it.p.lodz.pl.masi.entities.LanguageEntity;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
+import com.it.p.lodz.pl.masi.entities.ResolvedTestEntity;
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
-import com.it.p.lodz.pl.masi.repositories.CandidateRepository;
-import com.it.p.lodz.pl.masi.repositories.CandidateTokenRepository;
-import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
-import com.it.p.lodz.pl.masi.repositories.PositionRepository;
+import com.it.p.lodz.pl.masi.model.Test;
+import com.it.p.lodz.pl.masi.model.TestAnswer;
+import com.it.p.lodz.pl.masi.repositories.*;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Convert;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -27,14 +31,19 @@ public class CandidateService {
     private LanguageRepository languageRepository;
     private PositionRepository positionRepository;
     private ModelMapper modelMapper;
+    private TestVersionRepository testVersionRepository;
+    private ResolvedTestRepository resolvedTestRepository;
 
     public CandidateService(CandidateRepository candidateRepository, CandidateTokenRepository candidateTokenRepository,
-                            LanguageRepository languageRepository, PositionRepository positionRepository, ModelMapper modelMapper) {
+                            LanguageRepository languageRepository, PositionRepository positionRepository, ModelMapper modelMapper,
+                            TestVersionRepository testVersionRepository, ResolvedTestRepository resolvedTestRepository) {
         this.candidateRepository = candidateRepository;
         this.candidateTokenRepository = candidateTokenRepository;
         this.languageRepository = languageRepository;
         this.positionRepository = positionRepository;
         this.modelMapper = modelMapper;
+        this.testVersionRepository = testVersionRepository;
+        this.resolvedTestRepository = resolvedTestRepository;
     }
 
     @Transactional
@@ -69,5 +78,28 @@ public class CandidateService {
     private PositionEntity getPositionEntityForId(String id) {
         Optional<PositionEntity> positionEntity = positionRepository.getById(Long.parseLong(id));
         return positionEntity.orElseThrow(PositionNotFoundException::new);
+    }
+
+    public void resolveTest(ResolveTestDto dto)
+    {
+        var resolvedTest = new ResolvedTestEntity();
+        var candidate = candidateRepository.getOne(dto.getCandidateId());
+        var testVersion = testVersionRepository.getOne(Long.parseLong(dto.getTest().getVersion()));
+        resolvedTest.setAnswer(new TestAnswer(dto.getAnswers()));
+        resolvedTest.setCandidateByCandidateId(candidate);
+        resolvedTest.setLanguageByLanguageId(candidate.getLanguageByLanguageId());
+        resolvedTest.setPointsMax(getMaxPoints(dto.getTest().getTest()));
+        resolvedTest.setPositionByPositionId(candidate.getPositionByPositionId());
+        resolvedTest.setTest(dto.getTest().getTest());
+        resolvedTest.setUserByOwnerId(testVersion.getTestByTestId().getUserByOwnerId());
+
+        resolvedTestRepository.saveAndFlush(resolvedTest);
+    }
+
+    private int getMaxPoints(Test test) {
+        return test.getChoiceQuestions().size() +
+                test.getNumericQuestions().size() +
+                test.getOpenQuestions().size() +
+                test.getScaleQuestions().size();
     }
 }
