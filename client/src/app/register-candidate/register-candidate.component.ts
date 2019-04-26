@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {CandidateService} from '../shared/services/candidate.service';
 import {Language, RecruitmentPosition, RegisterCandidate, TestVersionEntry} from '../shared/model/candidate-model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-register-candidate',
@@ -71,8 +72,7 @@ export class RegisterCandidateComponent implements OnInit {
 
   startTest() {
     this.candidateService.registerCandidate(this.registerCandidate).subscribe(data => {
-      // TODO: should be route to test resolving site, no homepage
-      this.router.navigate(['/home'], {queryParams: {testVersionId: this.chosenTestVersionId, token: data.token}});
+      this.router.navigate(['/resolve-test'], {queryParams: {testVersionId: this.chosenTestVersionId, token: data.token}});
     });
   }
 

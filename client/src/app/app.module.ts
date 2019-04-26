@@ -5,17 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PositionsListComponent } from './positions-list/positions-list.component';
 import {
-  MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatGridListModule,
+  MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatGridListModule, MatRadioModule,
   MatToolbarModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatSelectModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { PositionAddComponent } from './position-add/position-add.component';
 import {HomeComponent} from './home/home.component';
 import {Configuration} from './configuration';
 import { RegisterCandidateComponent } from './register-candidate/register-candidate.component';
 import {CandidateService} from './shared/services/candidate.service';
+import { ResolveTestComponent } from './resolve-test/resolve-test.component';
+import { TestService } from './shared/services/test.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,38 +36,52 @@ const appRoutes: Routes = [
   {
     path: 'register-candidate',
     component: RegisterCandidateComponent
+  },
+  {
+    path: "resolve-test",
+    component: ResolveTestComponent
   }
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PositionsListComponent,
-    PositionAddComponent,
-    HomeComponent,
-    PositionAddComponent,
-    RegisterCandidateComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatListModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatGridListModule,
-    FormsModule,
-    MatSortModule,
-    RouterModule.forRoot(appRoutes)
-  ],
-  providers: [PositionsService, Configuration, CandidateService],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      PositionsListComponent,
+      PositionAddComponent,
+      HomeComponent,
+      PositionAddComponent,
+      RegisterCandidateComponent,
+      ResolveTestComponent
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      MatButtonModule,
+      MatCardModule,
+      MatInputModule,
+      MatListModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatSelectModule,
+      MatGridListModule,
+      FormsModule,
+      ReactiveFormsModule,
+      MatSortModule,
+      MatRadioModule,
+      RouterModule.forRoot(appRoutes)
+   ],
+   providers: [
+      PositionsService,
+      Configuration,
+      CandidateService,
+      TestService
+   ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }
 

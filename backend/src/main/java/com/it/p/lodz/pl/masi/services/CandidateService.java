@@ -83,8 +83,8 @@ public class CandidateService {
     public void resolveTest(ResolveTestDto dto)
     {
         var resolvedTest = new ResolvedTestEntity();
-        var candidate = candidateRepository.getOne(dto.getCandidateId());
-        var testVersion = testVersionRepository.getOne(Long.parseLong(dto.getTest().getVersion()));
+        var candidate = candidateTokenRepository.getAllByToken(dto.getCandidateToken()).get(0).getCandidateByCandidateId();
+        var testVersion = testVersionRepository.getOne(Long.parseLong(dto.getTest().getId()));
         resolvedTest.setAnswer(new TestAnswer(dto.getAnswers()));
         resolvedTest.setCandidateByCandidateId(candidate);
         resolvedTest.setLanguageByLanguageId(candidate.getLanguageByLanguageId());
