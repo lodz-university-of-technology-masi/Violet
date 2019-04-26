@@ -1,4 +1,4 @@
-<form (ngSubmit)="resolveTest()" class="test-container">
+<form (ngSubmit)="resolveTest()" class="test-container mat-elevation-z8">
   <div *ngFor="let question of questions; index as i;" class="question-container">
     <p class="question-title">{{question.question}}</p>
     <ng-container *ngIf="question.answers; else elseTemplate">
@@ -8,10 +8,10 @@
     </ng-container>
     <ng-template #elseTemplate>
         <mat-form-field class="answer-input">
-            <input name="answer_{{i}}" [(ngModel)]="answers[i]" matInput placeholder="Answer" required>
+            <input name="answer_{{i}}" [(ngModel)]="answers[i]" matInput placeholder="Answer">
           </mat-form-field>
     </ng-template>
   </div>
   
-  <button type="submit" class="btn btn-success">Submit</button>
+  <button type="submit" class="mat-button">Submit</button>
 </form>
