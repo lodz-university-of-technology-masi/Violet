@@ -14,18 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("admin@admin.pl")
-//                .password("admin")
-//                .roles("USER");
-//    }
 
     @Autowired
     DataSource dataSource;
@@ -35,10 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT \"email\",\"password\",TRUE FROM \"user\" WHERE \"email\"=?")
-                .authoritiesByUsernameQuery("SELECT \"user\".\"email\" as \"username\", \"role\".\"name\" as \"role\"" +
-                        "FROM \"user\" INNER JOIN \"user_role\" ON \"user\".\"id\" = \"user_role\".\"user_id\"" +
-                        "INNER JOIN \"role\" ON \"user_role\".\"role_id\" = \"role\".\"id\"" +
-                        "WHERE \"user\".\"email\" = ?")
+                .authoritiesByUsernameQuery("SELECT \"user\".\"email\" AS username, \"role\".\"name\" AS role FROM " +
+                        "\"user\" INNER JOIN \"user_role\" ON \"user\".\"id\" = \"user_role\".\"user_id\" INNER JOIN " +
+                        "\"role\" ON \"user_role\".\"role_id\" = \"role\".\"id\" WHERE \"user\".\"email\" = ?")
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -47,20 +37,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .anyRequest()
-                .denyAll()
-                .and()
-                .formLogin()
-                .disable();
-    }
-
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//            .authorizeRequests()
+//            .anyRequest()
+//            .denyAll()
+//            .and()
+//            .formLogin()
+//            .disable();
+//    }
 }
