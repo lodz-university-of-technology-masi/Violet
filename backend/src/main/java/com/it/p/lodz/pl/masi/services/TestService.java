@@ -67,4 +67,18 @@ public class TestService {
                 .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
                 .orElseThrow(TestVersionNotFoundException::new);
     }
+
+    public void deleteTestById(long testId) {
+        var value = testRepository.findById(testId);
+        if (value.isPresent()) {
+            TestEntity testToDelete = value.get();
+            testToDelete.setDeleted(true);
+            var testVersions = testToDelete.getTestVersionsById();
+            for(TestVersionEntity version :testVersions){
+                version.setDeleted(true);
+            }
+            this.testRepository.saveAndFlush(testToDelete);
+            this.testVersionRepository.saveAll(testVersions);
+        }
+    }
 }
