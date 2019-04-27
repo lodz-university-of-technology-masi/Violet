@@ -74,8 +74,8 @@ public class TestService {
         if (valuePosition.isPresent() && valueTest.isPresent()) {
             TestEntity test = valueTest.get();
             PositionEntity position = valuePosition.get();
-            position.addTestToPosition(test);
-            this.positionRepository.saveAndFlush(position);
+            test.setPositionByPositionId(position);
+            this.testRepository.saveAndFlush(test);
         }
     }
     public void deleteTestById(long testId) {
