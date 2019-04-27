@@ -33,4 +33,8 @@ public class TestController {
     public EditResolveTestVersionDto getTestVersionById(@PathVariable long id) {
         return testService.getTestVersionById(id);
     }
+    @DeleteMapping("/moderator/test/{id}")
+    public void deleteTest(@PathVariable long id) {
+        testService.deleteTestById(id);
+    }
 }
