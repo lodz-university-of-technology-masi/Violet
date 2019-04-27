@@ -18,6 +18,8 @@ import { RegisterCandidateComponent } from './register-candidate/register-candid
 import {CandidateService} from './shared/services/candidate.service';
 import { ResolveTestComponent } from './resolve-test/resolve-test.component';
 import { TestService } from './shared/services/test.service';
+import { RedactorListComponent } from './redactor-list/redactor-list.component';
+import {RedactorService} from './shared/services/redactor.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -40,6 +42,10 @@ const appRoutes: Routes = [
   {
     path: "resolve-test",
     component: ResolveTestComponent
+  },
+  {
+    path: "redactor-list",
+    component: RedactorListComponent
   }
 ];
 
@@ -51,7 +57,8 @@ const appRoutes: Routes = [
       HomeComponent,
       PositionAddComponent,
       RegisterCandidateComponent,
-      ResolveTestComponent
+      ResolveTestComponent,
+      RedactorListComponent
    ],
    imports: [
       BrowserModule,
@@ -77,7 +84,8 @@ const appRoutes: Routes = [
       PositionsService,
       Configuration,
       CandidateService,
-      TestService
+      TestService,
+     RedactorService
    ],
    bootstrap: [
       AppComponent
