@@ -115,4 +115,7 @@ public class PositionEntity {
     public void setTestsById(Collection<TestEntity> testsById) {
         this.testsById = testsById;
     }
+    public void addTestToPosition(TestEntity test){
+        this.testsById.add(test);
+    }
 }

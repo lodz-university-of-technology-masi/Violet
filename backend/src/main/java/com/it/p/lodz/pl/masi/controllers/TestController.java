@@ -4,7 +4,6 @@ import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.services.TestService;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +31,9 @@ public class TestController {
     @GetMapping("/test/version/{id}")
     public EditResolveTestVersionDto getTestVersionById(@PathVariable long id) {
         return testService.getTestVersionById(id);
+    }
+    @PutMapping("/moderator/test/assign")
+    public void assignTestToPosition(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "testId") Long testId){
+        testService.assignTestToPosition(positionId,testId);
     }
 }
