@@ -1,0 +1,30 @@
+.test-container {
+    min-width: 300px;
+    width: 40%;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #424242;
+    margin-bottom: 50px;
+}
+
+.question-title {
+    font-size: 2em;
+    color: aliceblue;
+}
+
+.answer-option {
+    margin: 20px;
+    color: aliceblue;
+}
+.answer-input {
+    min-width: 45%;
+}
+
+input {
+
+}
+
+.mat-button {
+    background-color: aliceblue;
+    margin: 50px 45% 0 45%;
+}

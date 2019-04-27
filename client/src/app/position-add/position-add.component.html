@@ -1,0 +1,25 @@
+<form class="form" #positionForm="ngForm" (ngSubmit)="submitForm()">
+  <mat-card>
+
+    <mat-card-title>Add Position</mat-card-title>
+
+    <mat-card-content>
+
+      <mat-form-field>
+        <input matInput placeholder="Position Name" [(ngModel)]="position.name"
+               required name="name" #name>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="!positionForm.form.valid">Save
+      </button>
+      <a mat-button routerLink="/positions-list">Cancel</a>
+
+    </mat-card-actions>
+
+  </mat-card>
+</form>
+
+

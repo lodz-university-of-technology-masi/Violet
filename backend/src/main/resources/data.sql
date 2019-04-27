@@ -2,7 +2,7 @@ INSERT INTO "role" (name) VALUES ('redactor');
 INSERT INTO "role" (name) VALUES ('moderator');
 
 INSERT INTO position (name) VALUES ('junior java developer');
-INSERT INTO position (name) VALUES ('mid java developer');
+INSERT INTO position (name, is_active) VALUES ('mid java developer', false);
 INSERT INTO position (name) VALUES ('senior java developer');
 INSERT INTO position (name) VALUES ('junior .NET developer');
 INSERT INTO position (name) VALUES ('mid .NET developer');
@@ -32,8 +32,12 @@ INSERT INTO test (owner_id, position_id) VALUES (1, 1);
 INSERT INTO test_version (test_id, language_id, test) VALUES (1, 1,
                                                               '{"name":"Test 1","openQuestions":[{"question":"Ile masz lat?"},{"question":"Jak bardzo lubisz MASI?"}],"choiceQuestions":[{"question":"Ile masz lat?","answers":["8 lat","9 lat","10 lat"]},{"question":"Jak bardzo lubisz MASI?","answers":["8 lat","9 lat","10 lat"]}],"scaleQuestions":[{"question":"Jak bardzo lubisz MASI?","answers":[1,2,3]},{"question":"Jak bardzo lubisz Springa?","answers":[1,2,3,4,5,6]}],"numericQuestions":[{"question":"Ile masz lat?"},{"question":"8+3?"}]}'
                                                              );
+INSERT INTO test_version (test_id, language_id, test) VALUES (1, 2,
+ '{"name":"Test 2 - Angielski","openQuestions":[{"question":"Ile masz lat?"},{"question":"Jak bardzo lubisz MASI?"}],"choiceQuestions":[{"question":"Ile masz lat?","answers":["8 lat","9 lat","10 lat"]},{"question":"Jak bardzo lubisz MASI?","answers":["8 lat","9 lat","10 lat"]}],"scaleQuestions":[{"question":"Jak bardzo lubisz MASI?","answers":[1,2,3]},{"question":"Jak bardzo lubisz Springa?","answers":[1,2,3,4,5,6]}],"numericQuestions":[{"question":"Ile masz lat?"},{"question":"8+3?"}]}'
+);
 
-INSERT INTO resolved_test (owner_id, candidate_id, position_id, language_id, test, mark, points_sum, points_max)
+INSERT INTO resolved_test (owner_id, candidate_id, position_id, language_id, test, answer, mark, points_sum, points_max)
 VALUES (1, 5, 3, 1,
-        '{"name":"Test 1","openQuestions":[{"question":"Ile masz lat?"},{"question":"Jak bardzo lubisz MASI?"}],"choiceQuestions":[{"question":"Ile masz lat?","answers":["8 lat","9 lat","10 lat"]},{"question":"Jak bardzo lubisz MASI?","answers":["8 lat","9 lat","10 lat"]}],"scaleQuestions":[{"question":"Jak bardzo lubisz MASI?","answers":[1,2,3]},{"question":"Jak bardzo lubisz Springa?","answers":[1,2,3,4,5,6]}],"numericQuestions":[{"question":"Ile masz lat?"},{"question":"8+3?"}]}',
+        '{"name":"Test 1","openQuestions":[{"question":"Ile masz lat?"},{"question":"Jak bardzo lubisz MASI?"}],"choiceQuestions":[{"question":"Ile masz lat?","answers":["8 lat","9 lat","10 lat"]},{"question":"Jak bardzo lubisz MASI?","answers":["1","2","3"]}],"scaleQuestions":[{"question":"Jak bardzo lubisz MASI?","answers":[1,2,3]},{"question":"Jak bardzo lubisz Springa?","answers":[1,2,3,4,5,6]}],"numericQuestions":[{"question":"Ile masz lat?"},{"question":"8+3?"}]}',
+        '{"testAnswers": ["21 lat", "Bardzo lubię MASI", "9 lat", "3", "3", "5", "21", "11"]}',
         '{"marks":[1,0,1,1,0,0,1,0]}', 4, 8)

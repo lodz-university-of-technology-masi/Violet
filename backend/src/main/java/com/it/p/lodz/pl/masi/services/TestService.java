@@ -1,9 +1,12 @@
 package com.it.p.lodz.pl.masi.services;
 
+import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
+import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
+import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -56,5 +60,35 @@ public class TestService {
         }
 
         return tests;
+    }
+
+    public EditResolveTestVersionDto getTestVersionById(long id) {
+        Optional<TestVersionEntity> testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
+        return testVersionEntity
+                .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
+                .orElseThrow(TestVersionNotFoundException::new);
+    }
+    public void assignTestToPosition(Long positionId, Long testId) {
+        var valuePosition = positionRepository.findById(positionId);
+        var valueTest = testRepository.findById(testId);
+        if (valuePosition.isPresent() && valueTest.isPresent()) {
+            TestEntity test = valueTest.get();
+            PositionEntity position = valuePosition.get();
+            test.setPositionByPositionId(position);
+            this.testRepository.saveAndFlush(test);
+        }
+    }
+    public void deleteTestById(long testId) {
+        var value = testRepository.findById(testId);
+        if (value.isPresent()) {
+            TestEntity testToDelete = value.get();
+            testToDelete.setDeleted(true);
+            var testVersions = testToDelete.getTestVersionsById();
+            for(TestVersionEntity version :testVersions){
+                version.setDeleted(true);
+            }
+            this.testRepository.saveAndFlush(testToDelete);
+            this.testVersionRepository.saveAll(testVersions);
+        }
     }
 }

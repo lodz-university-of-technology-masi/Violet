@@ -1,0 +1,14 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="primary">
+  <button mat-raised-button (click)="returnToHome()">Home {{title}}!</button>
+  <button mat-button [matMenuTriggerFor]="menu">Position</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onPositionListClick()">Position list</button>
+    <button mat-menu-item (click)="onAddPositionClick()">Add position</button>
+  </mat-menu>
+</mat-toolbar>
+<br/>
+<router-outlet></router-outlet>
+
+
+

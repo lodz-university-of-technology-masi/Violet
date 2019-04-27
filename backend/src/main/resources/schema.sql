@@ -144,6 +144,7 @@ create table "resolved_test"
 	position_id bigint not null references "position"(id),
 	language_id bigint not null references "language"(id),
 	test json not null,
+	answer json not null,
 	mark json,
 	points_sum bigint,
 	points_max bigint not null,
