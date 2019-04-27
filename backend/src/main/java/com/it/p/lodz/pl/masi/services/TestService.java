@@ -68,14 +68,27 @@ public class TestService {
                 .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
                 .orElseThrow(TestVersionNotFoundException::new);
     }
-    public void assignTestToPosition(Long positionId, Long testId){
+    public void assignTestToPosition(Long positionId, Long testId) {
         var valuePosition = positionRepository.findById(positionId);
         var valueTest = testRepository.findById(testId);
-        if(valuePosition.isPresent() && valueTest.isPresent()){
+        if (valuePosition.isPresent() && valueTest.isPresent()) {
             TestEntity test = valueTest.get();
             PositionEntity position = valuePosition.get();
             position.addTestToPosition(test);
             this.positionRepository.saveAndFlush(position);
+        }
+    }
+    public void deleteTestById(long testId) {
+        var value = testRepository.findById(testId);
+        if (value.isPresent()) {
+            TestEntity testToDelete = value.get();
+            testToDelete.setDeleted(true);
+            var testVersions = testToDelete.getTestVersionsById();
+            for(TestVersionEntity version :testVersions){
+                version.setDeleted(true);
+            }
+            this.testRepository.saveAndFlush(testToDelete);
+            this.testVersionRepository.saveAll(testVersions);
         }
     }
 }

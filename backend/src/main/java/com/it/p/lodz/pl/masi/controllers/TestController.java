@@ -33,7 +33,11 @@ public class TestController {
         return testService.getTestVersionById(id);
     }
     @PutMapping("/moderator/test/assign")
-    public void assignTestToPosition(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "testId") Long testId){
-        testService.assignTestToPosition(positionId,testId);
+    public void assignTestToPosition(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "testId") Long testId) {
+        testService.assignTestToPosition(positionId, testId);
+    }
+    @DeleteMapping("/moderator/test/{id}")
+    public void deleteTest(@PathVariable long id) {
+        testService.deleteTestById(id);
     }
 }
