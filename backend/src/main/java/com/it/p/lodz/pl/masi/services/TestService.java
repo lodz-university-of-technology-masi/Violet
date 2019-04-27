@@ -3,6 +3,7 @@ package com.it.p.lodz.pl.masi.services;
 import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
+import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
 import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
@@ -67,7 +68,16 @@ public class TestService {
                 .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
                 .orElseThrow(TestVersionNotFoundException::new);
     }
-
+    public void assignTestToPosition(Long positionId, Long testId) {
+        var valuePosition = positionRepository.findById(positionId);
+        var valueTest = testRepository.findById(testId);
+        if (valuePosition.isPresent() && valueTest.isPresent()) {
+            TestEntity test = valueTest.get();
+            PositionEntity position = valuePosition.get();
+            test.setPositionByPositionId(position);
+            this.testRepository.saveAndFlush(test);
+        }
+    }
     public void deleteTestById(long testId) {
         var value = testRepository.findById(testId);
         if (value.isPresent()) {
