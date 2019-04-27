@@ -13,7 +13,7 @@ public class JdbcTokenStores extends JdbcTokenStore {
 
     private static final Log LOG = LogFactory.getLog(JdbcTokenStores.class);
 
-    public JdbcTokenStores(DataSource dataSource) {
+    JdbcTokenStores(DataSource dataSource) {
         super(dataSource);
     }
 
@@ -23,14 +23,12 @@ public class JdbcTokenStores extends JdbcTokenStore {
 
         try {
             accessToken = new DefaultOAuth2AccessToken(tokenValue);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Failed to find access token for token "+tokenValue);
+                LOG.info("Failed to find access token for token " + tokenValue);
             }
-        }
-        catch (IllegalArgumentException e) {
-            LOG.warn("Failed to deserialize access token for " +tokenValue,e);
+        } catch (IllegalArgumentException e) {
+            LOG.warn("Failed to deserialize access token for " + tokenValue, e);
             removeAccessToken(tokenValue);
         }
 
