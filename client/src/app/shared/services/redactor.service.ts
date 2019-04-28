@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Configuration} from '../../configuration';
-import {RedactorModel} from '../model/redactor-model';
+import {NewRedactor, RedactorModel} from '../model/redactor-model';
 
 @Injectable()
 export class RedactorService {
@@ -14,4 +14,7 @@ export class RedactorService {
     return this.http.get<RedactorModel[]>(this.API + '/user/redactor');
   }
 
+  save(redactor: NewRedactor) {
+    return this.http.post(this.API + '/user/redactor/add', redactor);
+  }
 }

@@ -5,3 +5,10 @@ export interface RedactorModel {
   email: string;
 
 }
+
+export interface NewRedactor {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}

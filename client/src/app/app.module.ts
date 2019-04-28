@@ -27,6 +27,7 @@ import {HttpInterceptorService} from './shared/services/http-interceptor.service
 import {MessageService} from './shared/services/message.service';
 import {RedactorListComponent} from './redactor-list/redactor-list.component';
 import {RedactorService} from './shared/services/redactor.service';
+import {RedactorAddComponent} from './redactor-add/redactor-add.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -57,6 +58,10 @@ const appRoutes: Routes = [
   {
     path: 'redactor-list',
     component: RedactorListComponent
+  },
+  {
+    path: 'redactor-add',
+    component: RedactorAddComponent
   }
 ];
 
@@ -73,7 +78,8 @@ export function createTranslateLoader(http: HttpClient) {
     PositionAddComponent,
     RegisterCandidateComponent,
     ResolveTestComponent,
-    RedactorListComponent
+    RedactorListComponent,
+    RedactorAddComponent
   ],
   imports: [
     BrowserModule,
