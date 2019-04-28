@@ -33,7 +33,12 @@ export class AppComponent {
   returnToHome() {
     this.router.navigate(['/home']);
   }
+
   onRedactorListClick() {
     this.router.navigate(['/redactor-list']);
+  }
+
+  onAddRedactorClick() {
+    this.router.navigate(['/redactor-add']);
   }
 }
