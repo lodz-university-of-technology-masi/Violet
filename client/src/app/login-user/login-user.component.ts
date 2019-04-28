@@ -13,8 +13,10 @@ import {MessageService} from '../shared/services/message.service';
 
 export class LoginUserComponent implements OnInit {
   loginForm: FormGroup;
+
   constructor(private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+  }
 
   ngOnInit() {
     localStorage.removeItem('token');
@@ -36,9 +38,7 @@ export class LoginUserComponent implements OnInit {
     this.authService.login(body.toString()).subscribe(data => {
       localStorage.setItem('token', JSON.stringify(data));
       this.router.navigate(['']);
-      this.messageService.success('You have logged in.');
-    }, error => {
-      this.messageService.error(`${error.error.message}`);
+      this.messageService.success('logged_in');
     });
   }
 }

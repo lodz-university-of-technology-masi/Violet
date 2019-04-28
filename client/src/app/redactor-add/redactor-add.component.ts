@@ -14,7 +14,8 @@ export class RedactorAddComponent implements OnInit {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    secondPassword: ''
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private redactorService: RedactorService,

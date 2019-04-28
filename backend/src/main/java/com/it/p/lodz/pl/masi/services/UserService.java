@@ -6,14 +6,17 @@ import com.it.p.lodz.pl.masi.dtos.UserRedactorDto;
 import com.it.p.lodz.pl.masi.entities.RoleEntity;
 import com.it.p.lodz.pl.masi.entities.UserEntity;
 import com.it.p.lodz.pl.masi.entities.UserRoleEntity;
+import com.it.p.lodz.pl.masi.exceptions.PasswordMismatchException;
 import com.it.p.lodz.pl.masi.exceptions.RedactorNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.RoleRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRoleRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
@@ -22,27 +25,34 @@ public class UserService {
     private RoleRepository roleRepository;
     private UserRoleRepository userRoleRepository;
     private ModelMapper mapper;
+    private BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, ModelMapper mapper,
-                       UserRoleRepository userRoleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, UserRoleRepository userRoleRepository,
+                       ModelMapper mapper) {
         this.userRepository = userRepository;
-        this.mapper = mapper;
         this.roleRepository = roleRepository;
         this.userRoleRepository = userRoleRepository;
+        this.mapper = mapper;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public List<UserDto> getAllRedactors() {
         var users = userRepository.findAllRedactors();
-        var listType = new TypeToken<List<UserDto>>(){}.getType();
+        var listType = new TypeToken<List<UserDto>>() {
+        }.getType();
         return mapper.map(users, listType);
     }
 
+    @Transactional
     public void addRedactor(UserRedactorDto userRedactorDto) {
+        if (!userRedactorDto.getPassword().equals(userRedactorDto.getSecondPassword())) {
+            throw new PasswordMismatchException();
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setFirstName(userRedactorDto.getFirstName());
         userEntity.setLastName(userRedactorDto.getLastName());
         userEntity.setEmail(userRedactorDto.getEmail());
-        userEntity.setPassword(userRedactorDto.getPassword());
+        userEntity.setPassword(this.passwordEncoder.encode(userRedactorDto.getPassword()));
         this.userRepository.saveAndFlush(userEntity);
         setRedactor(userEntity);
     }
@@ -55,9 +65,9 @@ public class UserService {
 
     public void editUser(long id, UserEditDto dto) {
         var user = getRedactor(id);
-        if(dto.getFirstName() != null) user.setFirstName(dto.getFirstName());
-        if(dto.getLastName() != null) user.setLastName(dto.getLastName());
-        if(dto.getEmail() != null) user.setEmail(dto.getEmail());
+        if (dto.getFirstName() != null) user.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null) user.setLastName(dto.getLastName());
+        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
         userRepository.saveAndFlush(user);
     }
 
@@ -72,7 +82,8 @@ public class UserService {
 
     public UserDto getRedactorDto(long id) {
         var user = getRedactor(id);
-        var type = new TypeToken<UserDto>(){}.getType();
+        var type = new TypeToken<UserDto>() {
+        }.getType();
         return mapper.map(user, type);
     }
 
