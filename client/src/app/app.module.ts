@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {PositionsService} from './shared/services/positions.service';
+import {AuthService} from './shared/services/auth.service';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {PositionsListComponent} from './positions-list/positions-list.component';
@@ -17,6 +18,7 @@ import {HomeComponent} from './home/home.component';
 import {Configuration} from './configuration';
 import {RegisterCandidateComponent} from './register-candidate/register-candidate.component';
 import {CandidateService} from './shared/services/candidate.service';
+import {LoginUserComponent} from './login-user/login-user.component';
 import {ResolveTestComponent} from './resolve-test/resolve-test.component';
 import {TestService} from './shared/services/test.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -49,6 +51,10 @@ const appRoutes: Routes = [
     component: ResolveTestComponent
   },
   {
+    path: 'login-user',
+    component: LoginUserComponent
+  },
+  {
     path: 'redactor-list',
     component: RedactorListComponent
   }
@@ -60,9 +66,9 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [
+    LoginUserComponent,
     AppComponent,
     PositionsListComponent,
-    PositionAddComponent,
     HomeComponent,
     PositionAddComponent,
     RegisterCandidateComponent,
@@ -101,6 +107,7 @@ export function createTranslateLoader(http: HttpClient) {
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    AuthService,
     PositionsService,
     Configuration,
     CandidateService,

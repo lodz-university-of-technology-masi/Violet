@@ -13,20 +13,19 @@ export class HttpInterceptorService implements HttpInterceptor {
   constructor(private messageService: MessageService, private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // TODO: This might be helpful during login implementation
-    // if (localStorage.getItem('oauth_token') && !req.url.includes('/oauth/token')) {
-    //   req = req.clone({
-    //     setHeaders: {
-    //       Authorization: `Bearer ` + localStorage.getItem('oauth_token')
-    //     }
-    //   });
-    // }
+    if (localStorage.getItem('token') && !req.url.includes('/oauth/token')) {
+      req = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ` + JSON.parse(localStorage.getItem('token')).access_token
+        }
+      });
+    }
 
     return next.handle(req).pipe(
       catchError(error => {
         if (error.error.error === 'invalid_token') {
             localStorage.removeItem('oauth_token');
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login-user']);
         } else if (error instanceof HttpErrorResponse && error.error.error !== 'unauthorized' && error.error.error !== 'invalid_token') {
           if (error.error.message) {
             this.messageService.error(`${error.error.message}`);

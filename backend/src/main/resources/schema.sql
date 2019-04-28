@@ -64,7 +64,7 @@ create table "oauth_refresh_token"
 );
 
 create view "user_role_view" as
-select u.email, r.name, u.is_deleted, u.password
+select u.email, r.name AS role, u.is_deleted, u.password
 from "user" as u right join user_role as ur
 on u.id = ur.user_id
 left join role as r

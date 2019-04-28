@@ -5,13 +5,11 @@ import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
 import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.services.CandidateService;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "${frontend.url}")
 public class CandidateController {
 
     private CandidateService candidateService;
