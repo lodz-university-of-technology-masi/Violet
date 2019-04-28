@@ -20,6 +20,8 @@ import {CandidateService} from './shared/services/candidate.service';
 import {ResolveTestComponent} from './resolve-test/resolve-test.component';
 import {TestService} from './shared/services/test.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import { RedactorListComponent } from './redactor-list/redactor-list.component';
+import {RedactorService} from './shared/services/redactor.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -42,6 +44,10 @@ const appRoutes: Routes = [
   {
     path: 'resolve-test',
     component: ResolveTestComponent
+  },
+  {
+    path: 'redactor-list',
+    component: RedactorListComponent
   }
 ];
 
@@ -50,15 +56,26 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PositionsListComponent,
-    PositionAddComponent,
-    HomeComponent,
-    PositionAddComponent,
-    RegisterCandidateComponent,
-    ResolveTestComponent
-  ],
+   declarations: [
+      AppComponent,
+      PositionsListComponent,
+      PositionAddComponent,
+      HomeComponent,
+      PositionAddComponent,
+      RegisterCandidateComponent,
+      ResolveTestComponent,
+      RedactorListComponent
+   ],
+   providers: [
+      PositionsService,
+      Configuration,
+      CandidateService,
+      TestService,
+     RedactorService
+   ],
+   bootstrap: [
+      AppComponent
+   ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -86,15 +103,6 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [
-    PositionsService,
-    Configuration,
-    CandidateService,
-    TestService
-  ],
-  bootstrap: [
-    AppComponent
-  ]
 })
 export class AppModule {
 }
