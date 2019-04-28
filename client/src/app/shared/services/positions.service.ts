@@ -12,18 +12,22 @@ export class PositionsService {
   }
 
   getAll() {
-    return this.http.get<TestPosition[]>(this.API + '/position/list');
+    return this.http.get<TestPosition[]>(this.API + '/position/list?access_token=' +
+      JSON.parse(localStorage.getItem('token')).access_token);
   }
 
   save(position: NewTestPosition) {
-    return this.http.post(this.API + '/position/add', position);
+    return this.http.post(this.API + '/position/add?access_token=' +
+      JSON.parse(localStorage.getItem('token')).access_token, position);
   }
 
   activatePosition(position: TestPosition) {
-    return this.http.put(this.API + '/position/' + position.id + '?status=active', null);
+    return this.http.put(this.API + '/position/' + position.id + '?status=active&access_token=' +
+      JSON.parse(localStorage.getItem('token')).access_token, null);
   }
 
   deactivatePosition(position: TestPosition) {
-    return this.http.put(this.API + '/position/' + position.id + '?status=deactivate', null);
+    return this.http.put(this.API + '/position/' + position.id + '?status=deactivate&access_token=' +
+      JSON.parse(localStorage.getItem('token')).access_token, null);
   }
 }

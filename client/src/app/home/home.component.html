@@ -24,7 +24,8 @@
 
       <mat-card-content>
 
-        <button mat-raised-button color="primary" (click)="login()">Login</button>
+        <button mat-raised-button color="primary" (click)="login()" *ngIf="!existToken()">Login</button>
+        <button mat-raised-button color="primary" (click)="logout()" *ngIf="existToken()">Logout</button>
       </mat-card-content>
 
     </mat-card>

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { PositionsService } from './shared/services/positions.service';
+import { AuthService } from './shared/services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PositionsListComponent } from './positions-list/positions-list.component';
@@ -18,6 +19,7 @@ import { RegisterCandidateComponent } from './register-candidate/register-candid
 import {CandidateService} from './shared/services/candidate.service';
 import { ResolveTestComponent } from './resolve-test/resolve-test.component';
 import { TestService } from './shared/services/test.service';
+import { LoginUserComponent } from './login-user/login-user.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -38,8 +40,12 @@ const appRoutes: Routes = [
     component: RegisterCandidateComponent
   },
   {
-    path: "resolve-test",
+    path: 'resolve-test',
     component: ResolveTestComponent
+  },
+  {
+    path: 'login-user',
+    component: LoginUserComponent
   }
 ];
 
@@ -51,7 +57,8 @@ const appRoutes: Routes = [
       HomeComponent,
       PositionAddComponent,
       RegisterCandidateComponent,
-      ResolveTestComponent
+      ResolveTestComponent,
+      LoginUserComponent
    ],
    imports: [
       BrowserModule,
@@ -77,7 +84,8 @@ const appRoutes: Routes = [
       PositionsService,
       Configuration,
       CandidateService,
-      TestService
+      TestService,
+      AuthService
    ],
    bootstrap: [
       AppComponent

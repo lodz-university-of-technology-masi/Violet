@@ -8,6 +8,7 @@ import { ResolveTestModel } from '../model/resolve-test-model';
 @Injectable()
 export class TestService {
     private API = this.config.Server;
+
     constructor(private http: HttpClient, private config: Configuration) {
     }
     
@@ -15,7 +16,7 @@ export class TestService {
         return this.http.get<TestVersionContentModel>(this.API + '/test/version/' + id);
     }
 
-    resolveTest(model: ResolveTestModel) : Observable<object> {
-        return this.http.post<object>(this.API + "/candidate/resolved/test", model);
+    resolveTest(model: ResolveTestModel): Observable<object> {
+        return this.http.post<object>(this.API + '/candidate/resolved/test', model);
     }
 }

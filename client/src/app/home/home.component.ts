@@ -18,6 +18,20 @@ export class HomeComponent implements OnInit {
   }
 
   login() {
-    // TODO: Not implemented
+    this.router.navigate(['/login-user']);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
+  }
+
+  existToken() {
+    const token = localStorage.getItem('token');
+    if (typeof token === 'undefined' || token === null || token === 'undefined') {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

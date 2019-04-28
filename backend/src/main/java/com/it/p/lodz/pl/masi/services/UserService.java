@@ -70,6 +70,12 @@ public class UserService {
         return user;
     }
 
+    public UserDto getRedactorDto(long id) {
+        var user = getRedactor(id);
+        var type = new TypeToken<UserDto>(){}.getType();
+        return mapper.map(user, type);
+    }
+
     private void setRedactor(UserEntity userEntity) {
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         RoleEntity redactorRole = roleRepository.getOneByName("redactor");

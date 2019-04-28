@@ -38,6 +38,9 @@ public class UserController {
         return userService.getAllRedactors();
     }
 
+    @GetMapping("/user/redactor/{id}")
+    public UserDto getRedactor(@PathVariable long id) {return userService.getRedactorDto(id);}
+
     @DeleteMapping("/user/redactor/{id}")
     public void deleteRedactor(@PathVariable long id) {userService.deleteRedactor(id);}
 

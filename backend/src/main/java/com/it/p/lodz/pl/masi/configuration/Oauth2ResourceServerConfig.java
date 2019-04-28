@@ -1,6 +1,7 @@
 package com.it.p.lodz.pl.masi.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -16,18 +17,16 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         http
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/candidate/positions").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.GET, "/position/list").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.POST, "/position/add").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.GET, "/candidate/list/test").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.GET, "/moderator/list/test").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.POST, "/user/redactor/add").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.GET, "/user/redactor").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.DELETE, "/user/redactor/{\\d+}").hasAuthority("moderator")
-//                .antMatchers(HttpMethod.PUT, "/user/redactor/{\\d+}").hasAuthority("moderator")
-                .anyRequest().hasAuthority("moderator")
-                .antMatchers("/login").permitAll()
-                .and().formLogin().permitAll()
+                .antMatchers("/candidate/**").permitAll()
+                .antMatchers("/test/version/{\\d+}").permitAll()
+                .antMatchers("/language/list").permitAll()
+                .antMatchers( "/moderator/**").hasAuthority("moderator")
+                .antMatchers(HttpMethod.DELETE, "/moderator/test/{\\d+}").hasAuthority("moderator")
+                .antMatchers("/user/**").hasAuthority("moderator")
+                .antMatchers(HttpMethod.GET, "/user/redactor/{\\d+}").hasAuthority("moderator")
+                .antMatchers(HttpMethod.DELETE,"/user/redactor/{\\d+}").hasAuthority("moderator")
+                .antMatchers(HttpMethod.PUT,"/user/redactor/{\\d+}").hasAuthority("moderator")
+                .antMatchers("/position/**").hasAuthority("moderator")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
