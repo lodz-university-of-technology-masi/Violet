@@ -28,6 +28,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "core-js": "2.6.5",
     "ng": "0.0.0",
+    "ngx-toastr": "^10.0.2",
     "rxjs": "^6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "^0.9.0"

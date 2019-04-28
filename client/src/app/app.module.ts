@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {PositionsService} from './shared/services/positions.service';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {PositionsListComponent} from './positions-list/positions-list.component';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -20,7 +20,10 @@ import {CandidateService} from './shared/services/candidate.service';
 import {ResolveTestComponent} from './resolve-test/resolve-test.component';
 import {TestService} from './shared/services/test.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import { RedactorListComponent } from './redactor-list/redactor-list.component';
+import {ToastrModule} from 'ngx-toastr';
+import {HttpInterceptorService} from './shared/services/http-interceptor.service';
+import {MessageService} from './shared/services/message.service';
+import {RedactorListComponent} from './redactor-list/redactor-list.component';
 import {RedactorService} from './shared/services/redactor.service';
 
 const appRoutes: Routes = [
@@ -56,26 +59,16 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      PositionsListComponent,
-      PositionAddComponent,
-      HomeComponent,
-      PositionAddComponent,
-      RegisterCandidateComponent,
-      ResolveTestComponent,
-      RedactorListComponent
-   ],
-   providers: [
-      PositionsService,
-      Configuration,
-      CandidateService,
-      TestService,
-     RedactorService
-   ],
-   bootstrap: [
-      AppComponent
-   ],
+  declarations: [
+    AppComponent,
+    PositionsListComponent,
+    PositionAddComponent,
+    HomeComponent,
+    PositionAddComponent,
+    RegisterCandidateComponent,
+    ResolveTestComponent,
+    RedactorListComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -94,6 +87,10 @@ export function createTranslateLoader(http: HttpClient) {
     ReactiveFormsModule,
     MatSortModule,
     MatRadioModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right-custom',
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -103,6 +100,18 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     RouterModule.forRoot(appRoutes)
   ],
+  providers: [
+    PositionsService,
+    Configuration,
+    CandidateService,
+    RedactorService,
+    TestService,
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
+    MessageService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }

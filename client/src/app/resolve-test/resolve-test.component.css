@@ -1,23 +1,30 @@
 .test-container {
-    min-width: 300px;
-    width: 40%;
-    margin: 0 auto;
-    padding: 50px;
-    background-color: #424242;
-    margin-bottom: 50px;
+  min-width: 300px;
+  width: 40%;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #424242;
+  margin-bottom: 50px;
+}
+
+.test-title {
+  font-size: 2em;
+  color: aliceblue;
 }
 
 .question-title {
-    font-size: 2em;
-    color: aliceblue;
+  font-size: 1.5em;
+  color: aliceblue;
 }
 
 .answer-option {
-    margin: 20px;
-    color: aliceblue;
+  margin: 20px;
+  color: aliceblue;
 }
+
 .answer-input {
-    min-width: 45%;
+  min-width: 45%;
+  color: aliceblue;
 }
 
 input {
@@ -25,6 +32,6 @@ input {
 }
 
 .mat-button {
-    background-color: aliceblue;
-    margin: 50px 45% 0 45%;
+  background-color: aliceblue;
+  margin: 50px 45% 0 45%;
 }
