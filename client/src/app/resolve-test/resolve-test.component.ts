@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TestService } from '../shared/services/test.service';
-import { TestVersionContentModel, QuestionModel } from '../shared/model/test-model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-import { ResolveTestModel } from '../shared/model/resolve-test-model';
+import {Component, OnInit, Input} from '@angular/core';
+import {TestService} from '../shared/services/test.service';
+import {TestVersionContentModel, QuestionModel} from '../shared/model/test-model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormGroup} from '@angular/forms';
+import {ResolveTestModel} from '../shared/model/resolve-test-model';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'app-resolve-test',
@@ -17,29 +18,32 @@ export class ResolveTestComponent implements OnInit {
   questions: QuestionModel[] = [];
   answers: string[];
 
-  constructor(private testService: TestService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private testService: TestService, private route: ActivatedRoute, private router: Router, private messageService: MessageService) {
+  }
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe(p =>
-      {
-        this.testVersionId = p.get("testVersionId");
-        this.token = p.get("token");
-      });
+    this.route.queryParamMap.subscribe(p => {
+      this.testVersionId = p.get('testVersionId');
+      this.token = p.get('token');
+    });
 
     this.testService.getTest(this.testVersionId).subscribe(
-        t => {
-          this.test = t;
-          this.setQuestions(t);
-          this.answers = new Array<string>(this.questions.length);
-      }, 
-        e => {console.log(e.message)});
+      t => {
+        this.test = t;
+        this.setQuestions(t);
+        this.answers = new Array<string>(this.questions.length);
+      },
+      e => {
+        console.log(e.message);
+      });
   }
+
   setQuestions(t: TestVersionContentModel) {
     this.questions = this.questions
-    .concat(t.test.choiceQuestions)
-    .concat(t.test.numericQuestions)
-    .concat(t.test.openQuestions)
-    .concat(t.test.scaleQuestions);
+      .concat(t.test.choiceQuestions)
+      .concat(t.test.numericQuestions)
+      .concat(t.test.openQuestions)
+      .concat(t.test.scaleQuestions);
 
     console.log(this.questions);
   }
@@ -51,16 +55,11 @@ export class ResolveTestComponent implements OnInit {
     test.test = this.test;
 
     this.testService.resolveTest(test)
-    .subscribe(
-      t => {
-        console.log("yea, success");   
-        alert("OK"); //TODO: prompt success
-        this.router.navigate(['/home']);
-       }, 
-      e => {
-        console.error(e.message);
-        alert("Error");
-      });   //TODO: prompt error
+      .subscribe(
+        t => {
+          this.messageService.success('test_resolved');
+          this.router.navigate(['/home']);
+        });
   }
 
 }

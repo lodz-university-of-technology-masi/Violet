@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PositionsService} from '../shared/services/positions.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NewTestPosition} from '../shared/model/position-model';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'app-position-add',
@@ -15,7 +16,8 @@ export class PositionAddComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private positionsService: PositionsService) {}
+              private positionsService: PositionsService,
+              private messageService: MessageService) {}
 
   ngOnInit() {
   }
@@ -26,6 +28,7 @@ export class PositionAddComponent implements OnInit {
 
   submitForm() {
     this.positionsService.save(this.position).subscribe(() => {
+      this.messageService.success('position_added');
       this.gotoList();
     });
   }
