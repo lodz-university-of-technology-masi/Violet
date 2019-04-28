@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+
+const languages = ['pl', 'en'];
 
 @Component({
   selector: 'app-root',
@@ -7,9 +10,16 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  constructor(private router: Router, private translateService: TranslateService) {
+    this.setupTranslationService();
+  }
 
-  constructor(private router: Router) {
+  private setupTranslationService() {
+    this.translateService.addLangs(languages);
+    if (languages.includes(this.translateService.getBrowserLang())) {
+      this.translateService.use(this.translateService.getBrowserLang());
+    }
+    this.translateService.setDefaultLang('en');
   }
 
   onPositionListClick() {
