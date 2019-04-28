@@ -1,17 +1,18 @@
-<form (ngSubmit)="resolveTest()" class="test-container mat-elevation-z8">
+<form (ngSubmit)="resolveTest()" class="test-container mat-elevation-z8" #testForm="ngForm">
+  <p class="test-title">{{test.test.name}}</p>
   <div *ngFor="let question of questions; index as i;" class="question-container">
     <p class="question-title">{{question.question}}</p>
     <ng-container *ngIf="question.answers; else elseTemplate">
-      <mat-radio-group name="answer_{{i}}" [(ngModel)]="answers[i]">
-        <mat-radio-button class="answer-option" *ngFor="let answer of question.answers" [value]=answer>{{answer}}</mat-radio-button>
+      <mat-radio-group required name="answer_{{i}}" [(ngModel)]="answers[i]">
+        <mat-radio-button required class="answer-option" *ngFor="let answer of question.answers" [value]=answer>{{answer}}</mat-radio-button>
       </mat-radio-group>
     </ng-container>
     <ng-template #elseTemplate>
         <mat-form-field class="answer-input">
-            <input name="answer_{{i}}" [(ngModel)]="answers[i]" matInput placeholder="Answer">
+            <input name="answer_{{i}}" [(ngModel)]="answers[i]" matInput required placeholder="Answer">
           </mat-form-field>
     </ng-template>
   </div>
-  
-  <button type="submit" class="mat-button">Submit</button>
+
+  <button type="submit" mat-raised-button color="primary" [disabled]="testForm.form.valid">Submit</button>
 </form>

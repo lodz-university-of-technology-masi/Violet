@@ -3,6 +3,7 @@ import { PositionsService } from '../shared/services/positions.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestPosition} from '../shared/model/position-model';
 import {Router} from '@angular/router';
+import {MessageService} from '../shared/services/message.service';
 @Component({
   selector: 'app-positions-list',
   templateUrl: './positions-list.component.html',
@@ -16,7 +17,7 @@ export class PositionsListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   positions: TestPosition[];
 
-  constructor(private positionsService: PositionsService, private router: Router) { }
+  constructor(private positionsService: PositionsService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit() {
    this.updateTable();
@@ -35,10 +36,12 @@ export class PositionsListComponent implements OnInit {
     if (position.active === true) {
       this.positionsService.deactivatePosition(position).subscribe(() => {
         this.updateTable();
+        this.messageService.success('position_deactivated');
       });
     } else {
       this.positionsService.activatePosition(position).subscribe(() => {
         this.updateTable();
+        this.messageService.success('position_activated');
       });
     }
   }

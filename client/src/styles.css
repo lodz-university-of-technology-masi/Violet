@@ -6,3 +6,8 @@ body {
   margin: 0;
   font-family: Roboto, sans-serif;
 }
+
+.toast-top-right-custom {
+  top: 65px;
+  right: 12px;
+}
