@@ -1,7 +1,10 @@
 package com.it.p.lodz.pl.masi.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -13,6 +16,9 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements Filter {
 
+    @Autowired
+    private Environment env;
+
     public SimpleCorsFilter() {
     }
 
@@ -20,10 +26,10 @@ public class SimpleCorsFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
+        response.setHeader("Access-Control-Allow-Origin", env.getProperty("access.control.allow.origin"));
+        response.setHeader("Access-Control-Allow-Methods", env.getProperty("access.control.allow.methods"));
+        response.setHeader("Access-Control-Max-Age", env.getProperty("access.control.max.age"));
+        response.setHeader("Access-Control-Allow-Headers", env.getProperty("access.control.allow.headers"));
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);

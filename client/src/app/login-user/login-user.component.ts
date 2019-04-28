@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../shared/services/auth.service';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../shared/services/auth.service';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {HttpParams} from '@angular/common/http';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'app-login-user',
@@ -12,7 +13,8 @@ import { HttpParams } from '@angular/common/http';
 
 export class LoginUserComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
+  constructor(private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
+              private authService: AuthService) { }
 
   ngOnInit() {
     localStorage.removeItem('token');
@@ -34,8 +36,9 @@ export class LoginUserComponent implements OnInit {
     this.authService.login(body.toString()).subscribe(data => {
       localStorage.setItem('token', JSON.stringify(data));
       this.router.navigate(['']);
+      this.messageService.success('You have logged in.');
     }, error => {
-      alert(error.error.error_description);
+      this.messageService.error(`${error.error.message}`);
     });
   }
 }
