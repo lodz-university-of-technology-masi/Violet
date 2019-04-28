@@ -1,7 +1,5 @@
 package com.it.p.lodz.pl.masi.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
@@ -16,10 +14,10 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements Filter {
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
-    public SimpleCorsFilter() {
+    public SimpleCorsFilter(Environment env) {
+        this.env = env;
     }
 
     @Override

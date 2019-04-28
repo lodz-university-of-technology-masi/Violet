@@ -5,20 +5,24 @@
 
     <mat-card-content>
       <mat-form-field>
-        <input matInput placeholder="Redactor First Name" [(ngModel)]="redactor.firstName"
+        <input matInput placeholder="First Name" [(ngModel)]="redactor.firstName"
                required name="firstName" #firstName>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Redactor Last Name" [(ngModel)]="redactor.lastName"
+        <input matInput placeholder="Last Name" [(ngModel)]="redactor.lastName"
                required name="lastName" #lastName>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Redactor E-mail" [(ngModel)]="redactor.email"
+        <input matInput placeholder="E-mail" [(ngModel)]="redactor.email"
                required name="email" #email>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Redactor Password" [(ngModel)]="redactor.password"
-               required name="password" #password>
+        <input matInput placeholder="Password" [(ngModel)]="redactor.password"
+               required name="password" type="password" #password>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Re-type Password" [(ngModel)]="redactor.secondPassword"
+               required name="secondPassword" type="password" #password>
       </mat-form-field>
     </mat-card-content>
 
@@ -26,7 +30,7 @@
       <button mat-raised-button color="primary" type="submit"
               [disabled]="!redactorForm.form.valid">Save
       </button>
-      <a mat-button routerLink="/positions-list">Cancel</a>
+      <a mat-button routerLink="/redactor-list">Cancel</a>
 
     </mat-card-actions>
 

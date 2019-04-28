@@ -1,3 +1,5 @@
 {
-  "HOME_PAGE": "Home page"
+  "HOME_PAGE": "Home page",
+  "logged_in": "You have logged in.",
+  "user_logout": "You have logged out."
 }

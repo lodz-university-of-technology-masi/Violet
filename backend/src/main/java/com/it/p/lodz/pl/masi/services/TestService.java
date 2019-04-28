@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class TestService {
                 .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
                 .orElseThrow(TestVersionNotFoundException::new);
     }
+
     public void assignTestToPosition(Long positionId, Long testId) {
         var valuePosition = positionRepository.findById(positionId);
         var valueTest = testRepository.findById(testId);
@@ -78,6 +80,8 @@ public class TestService {
             this.testRepository.saveAndFlush(test);
         }
     }
+
+    @Transactional
     public void deleteTestById(long testId) {
         var value = testRepository.findById(testId);
         if (value.isPresent()) {

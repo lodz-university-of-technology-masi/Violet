@@ -75,7 +75,7 @@ public class UserEntity {
 
     @Basic
     @NotNull(message = "null_user_password")
-    @Size(min=16, max=64, message = "wrong_user_password_size")
+    @Size(min=32, max=64, message = "wrong_user_password_size")
     @Column(name = "password")
     public String getPassword() {
         return password;

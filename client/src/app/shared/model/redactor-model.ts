@@ -11,4 +11,5 @@ export interface NewRedactor {
   lastName: string;
   email: string;
   password: string;
+  secondPassword: string;
 }
