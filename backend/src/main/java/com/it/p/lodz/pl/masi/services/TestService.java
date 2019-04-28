@@ -7,6 +7,7 @@ import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
 import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
+import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
@@ -94,5 +95,10 @@ public class TestService {
             this.testRepository.saveAndFlush(testToDelete);
             this.testVersionRepository.saveAll(testVersions);
         }
+    }
+    public void modifyTest(Long id, Test test) {
+        TestVersionEntity testVersionEntity = testVersionRepository.getOneById(id);
+        testVersionEntity.setTest(test);
+        this.testVersionRepository.saveAndFlush(testVersionEntity);
     }
 }
