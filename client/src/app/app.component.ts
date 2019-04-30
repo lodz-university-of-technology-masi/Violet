@@ -41,4 +41,7 @@ export class AppComponent {
   onAddRedactorClick() {
     this.router.navigate(['/redactor-add']);
   }
+  onTestListClick() {
+    this.router.navigate(['/test-list']);
+  }
 }

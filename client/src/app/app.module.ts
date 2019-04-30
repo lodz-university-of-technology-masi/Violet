@@ -28,6 +28,7 @@ import {MessageService} from './shared/services/message.service';
 import {RedactorListComponent} from './redactor-list/redactor-list.component';
 import {RedactorService} from './shared/services/redactor.service';
 import {RedactorAddComponent} from './redactor-add/redactor-add.component';
+import { TestListComponent } from './test-list/test-list.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -62,6 +63,10 @@ const appRoutes: Routes = [
   {
     path: 'redactor-add',
     component: RedactorAddComponent
+  },
+  {
+    path: 'test-list',
+    component: TestListComponent
   }
 ];
 
@@ -79,7 +84,8 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterCandidateComponent,
     ResolveTestComponent,
     RedactorListComponent,
-    RedactorAddComponent
+    RedactorAddComponent,
+    TestListComponent
   ],
   imports: [
     BrowserModule,

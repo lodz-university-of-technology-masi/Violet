@@ -6,6 +6,7 @@ export interface TestVersionContentModel {
 
 export interface TestModel {
     name: string;
+    id: number;
     openQuestions: OpenQuestionModel[];
     choiceQuestions: ChoiceQuestionModel[];
     scaleQuestions: ScaleQuestionModel[];
