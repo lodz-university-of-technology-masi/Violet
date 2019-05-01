@@ -9,20 +9,16 @@ import com.it.p.lodz.pl.masi.entities.UserEntity;
 import com.it.p.lodz.pl.masi.entities.UserRoleEntity;
 import com.it.p.lodz.pl.masi.exceptions.PasswordMismatchException;
 import com.it.p.lodz.pl.masi.exceptions.RedactorNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.UserNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.RoleRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRoleRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,14 +28,16 @@ public class UserService {
     private UserRoleRepository userRoleRepository;
     private ModelMapper mapper;
     private BCryptPasswordEncoder passwordEncoder;
+    private CurrentUserProvided currentUserProvided;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, UserRoleRepository userRoleRepository,
-                       ModelMapper mapper) {
+                       ModelMapper mapper, CurrentUserProvided currentUserProvided) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userRoleRepository = userRoleRepository;
         this.mapper = mapper;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.currentUserProvided = currentUserProvided;
     }
 
     public List<UserDto> getAllRedactors() {
@@ -102,7 +100,7 @@ public class UserService {
     }
 
     public UserIdentityDto getMyIdentity() {
-        UserEntity userEntity = getCurrentUserEntity();
+        UserEntity userEntity = this.currentUserProvided.getCurrentUserEntity();
         UserIdentityDto userIdentityDto = new UserIdentityDto();
         userIdentityDto.setEmail(userEntity.getEmail());
         userIdentityDto.setId(String.valueOf(userEntity.getId()));
@@ -111,11 +109,5 @@ public class UserService {
                 .map($ -> $.getRoleByRoleId().getName())
                 .collect(Collectors.toList()));
         return userIdentityDto;
-    }
-
-    private UserEntity getCurrentUserEntity() {
-        String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        Optional<UserEntity> userEntity = userRepository.findOneByEmail(email);
-        return userEntity.orElseThrow(UserNotFoundException::new);
     }
 }

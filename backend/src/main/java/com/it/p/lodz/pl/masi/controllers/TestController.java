@@ -1,14 +1,12 @@
 package com.it.p.lodz.pl.masi.controllers;
 
 import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
+import com.it.p.lodz.pl.masi.dtos.NewTestDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.services.TestService;
-import org.apache.tomcat.util.json.JSONParser;
-import org.codehaus.jackson.JsonNode;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
 
@@ -46,5 +44,10 @@ public class TestController {
     @DeleteMapping("/moderator/test/{id}")
     public void deleteTest(@PathVariable long id) {
         testService.deleteTestById(id);
+    }
+
+    @PostMapping("/redactor/test/add")
+    public void addNewTest(@RequestBody NewTestDto newTestDto) {
+        this.testService.addNewTest(newTestDto);
     }
 }

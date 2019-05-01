@@ -1,11 +1,13 @@
 package com.it.p.lodz.pl.masi.services;
 
 import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
+import com.it.p.lodz.pl.masi.dtos.NewTestDto;
 import com.it.p.lodz.pl.masi.dtos.TestDto;
 import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
+import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
@@ -29,13 +31,15 @@ public class TestService {
     private TestRepository testRepository;
     private LanguageRepository languageRepository;
     private PositionRepository positionRepository;
+    private CurrentUserProvided currentUserProvided;
     private ModelMapper modelMapper;
 
-    public TestService(TestVersionRepository testVersionRepository, TestRepository testRepository, LanguageRepository languageRepository, PositionRepository positionRepository, ModelMapper modelMapper) {
+    public TestService(TestVersionRepository testVersionRepository, TestRepository testRepository, LanguageRepository languageRepository, PositionRepository positionRepository, CurrentUserProvided currentUserProvided, ModelMapper modelMapper) {
         this.testVersionRepository = testVersionRepository;
         this.testRepository = testRepository;
         this.languageRepository = languageRepository;
         this.positionRepository = positionRepository;
+        this.currentUserProvided = currentUserProvided;
         this.modelMapper = modelMapper;
     }
 
@@ -43,7 +47,8 @@ public class TestService {
         List<TestEntity> tests = testRepository.getAllByPositionByPositionIdAndActiveTrueAndDeletedFalse(positionRepository.getOne(positionId));
         List<TestVersionEntity> testVersions = testVersionRepository.
                 getAllByLanguageByLanguageIdAndTestByTestIdAndActiveTrueAndDeletedFalse(languageRepository.getOne(languageId), tests);
-        Type listType = new TypeToken<List<TestVersionDto>>() {}.getType();
+        Type listType = new TypeToken<List<TestVersionDto>>() {
+        }.getType();
         return modelMapper.map(testVersions, listType);
     }
 
@@ -52,9 +57,10 @@ public class TestService {
         var groupedVersions = versions.stream().collect(Collectors.groupingBy(TestVersionEntity::getTestByTestId));
 
         var tests = new ArrayList<TestDto>();
-        Type listType = new TypeToken<List<TestVersionDto>>() {}.getType();
+        Type listType = new TypeToken<List<TestVersionDto>>() {
+        }.getType();
 
-        for(var test : groupedVersions.keySet()) {
+        for (var test : groupedVersions.keySet()) {
             var testDto = new TestDto();
             testDto.setId(Long.toString(test.getId()));
             testDto.setTestVersions(modelMapper.map(groupedVersions.get(test), listType));
@@ -89,16 +95,35 @@ public class TestService {
             TestEntity testToDelete = value.get();
             testToDelete.setDeleted(true);
             var testVersions = testToDelete.getTestVersionsById();
-            for(TestVersionEntity version :testVersions){
+            for (TestVersionEntity version : testVersions) {
                 version.setDeleted(true);
             }
             this.testRepository.saveAndFlush(testToDelete);
             this.testVersionRepository.saveAll(testVersions);
         }
     }
+
     public void modifyTest(Long id, Test test) {
         TestVersionEntity testVersionEntity = testVersionRepository.getOneById(id);
         testVersionEntity.setTest(test);
         this.testVersionRepository.saveAndFlush(testVersionEntity);
     }
+
+    @Transactional
+    public void addNewTest(NewTestDto newTestDto) {
+        TestEntity testEntity = new TestEntity();
+        testEntity.setUserByOwnerId(this.currentUserProvided.getCurrentUserEntity());
+
+        testRepository.saveAndFlush(testEntity);
+
+        TestVersionEntity testVersionEntity = new TestVersionEntity();
+        testVersionEntity.setTest(newTestDto.getTest());
+        testVersionEntity.setLanguageByLanguageId(this.languageRepository
+                .getById(Long.parseLong(newTestDto.getLanguageId()))
+                .orElseThrow(LanguageNotFoundException::new));
+        testVersionEntity.setTestByTestId(testEntity);
+
+        testVersionRepository.saveAndFlush(testVersionEntity);
+    }
+
 }

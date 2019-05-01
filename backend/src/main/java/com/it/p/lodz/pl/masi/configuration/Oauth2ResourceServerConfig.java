@@ -24,9 +24,10 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers(HttpMethod.DELETE, "/moderator/test/{\\d+}").hasAuthority("moderator")
                 .antMatchers("/user/redactor/**").hasAuthority("redactor")
                 .antMatchers("/user/identity").hasAnyAuthority("redactor", "moderator")
-                .antMatchers(HttpMethod.GET, "/user/redactor/{\\d+}").hasAuthority("moderator")
-                .antMatchers(HttpMethod.DELETE,"/user/redactor/{\\d+}").hasAuthority("moderator")
-                .antMatchers(HttpMethod.PUT,"/user/redactor/{\\d+}").hasAuthority("moderator")
+                .antMatchers("/redactor/test/add").hasAuthority("redactor")
+                .antMatchers(HttpMethod.GET, "/user/redactor/{\\d+}").hasAuthority("redactor")
+                .antMatchers(HttpMethod.DELETE,"/user/redactor/{\\d+}").hasAuthority("redactor")
+                .antMatchers(HttpMethod.PUT,"/user/redactor/{\\d+}").hasAuthority("redactor")
                 .antMatchers("/position/**").hasAuthority("moderator")
                 .antMatchers(HttpMethod.PUT, "/test/modify/**").hasAuthority("moderator")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
