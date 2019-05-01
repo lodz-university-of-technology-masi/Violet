@@ -14,10 +14,18 @@
         {{redactor.firstName}}
       </mat-cell>
     </ng-container>
+
     <ng-container matColumnDef="lastName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
       <mat-cell *matCellDef="let redactor">
         {{redactor.lastName}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+      <mat-cell class='button-cell-1' *matCellDef="let redactor">
+        <button mat-button mat-raised-button color='primary' (click)='onDeleteClick(redactor)'> Delete </button>
       </mat-cell>
     </ng-container>
 

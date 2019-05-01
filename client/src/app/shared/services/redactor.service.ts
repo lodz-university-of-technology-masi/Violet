@@ -17,4 +17,8 @@ export class RedactorService {
   save(redactor: NewRedactor) {
     return this.http.post(this.API + '/user/redactor/add', redactor);
   }
+
+  deleteRedactor(id: number) {
+    return this.http.delete( `${this.API}/user/redactor/${id}`);
+  }
 }

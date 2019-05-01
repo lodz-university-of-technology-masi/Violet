@@ -3,6 +3,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Router} from '@angular/router';
 import {RedactorModel} from '../shared/model/redactor-model';
 import {RedactorService} from '../shared/services/redactor.service';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'app-redactor-list',
@@ -11,13 +12,14 @@ import {RedactorService} from '../shared/services/redactor.service';
 })
 export class RedactorListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'delete'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   redactors: RedactorModel[];
 
-  constructor(private redactorService: RedactorService, private router: Router) { }
+  constructor(private redactorService: RedactorService, private router: Router, private messageService: MessageService) { }
+
   ngOnInit() {
     this.updateTable();
   }
@@ -31,4 +33,10 @@ export class RedactorListComponent implements OnInit {
     });
   }
 
+  onDeleteClick(redactor: RedactorModel) {
+    this.redactorService.deleteRedactor(redactor.id).subscribe(() => {
+      this.messageService.success('redactor_deleted');
+      this.updateTable();
+    });
+  }
 }
