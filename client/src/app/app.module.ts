@@ -28,45 +28,81 @@ import {MessageService} from './shared/services/message.service';
 import {RedactorListComponent} from './redactor-list/redactor-list.component';
 import {RedactorService} from './shared/services/redactor.service';
 import {RedactorAddComponent} from './redactor-add/redactor-add.component';
-import { TestListComponent } from './test-list/test-list.component';
+import {TestListComponent} from './test-list/test-list.component';
+import {AuthGuard} from './shared/services/auth-guard.service';
+import {UserRole} from './shared/model/user-model';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: 'positions-list',
-    component: PositionsListComponent
+    component: PositionsListComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
   },
   {
     path: 'position-add',
-    component: PositionAddComponent
+    component: PositionAddComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.guest, UserRole.moderator, UserRole.redactor]
+    }
   },
   {
     path: 'register-candidate',
-    component: RegisterCandidateComponent
+    component: RegisterCandidateComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.guest]
+    }
   },
   {
     path: 'resolve-test',
-    component: ResolveTestComponent
+    component: ResolveTestComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.guest]
+    }
   },
   {
     path: 'login-user',
-    component: LoginUserComponent
+    component: LoginUserComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.guest]
+    }
   },
   {
     path: 'redactor-list',
-    component: RedactorListComponent
+    component: RedactorListComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
   },
   {
     path: 'redactor-add',
-    component: RedactorAddComponent
+    component: RedactorAddComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
   },
   {
     path: 'test-list',
-    component: TestListComponent
+    component: TestListComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
+  },
+  {
+    path: '**',
+    component: HomeComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.guest, UserRole.moderator, UserRole.redactor]
+    }
   }
 ];
 
@@ -125,6 +161,7 @@ export function createTranslateLoader(http: HttpClient) {
     CandidateService,
     RedactorService,
     TestService,
+    AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     MessageService
   ],

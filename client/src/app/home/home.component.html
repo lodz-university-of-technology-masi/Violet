@@ -1,37 +1,13 @@
-<mat-grid-list cols="4" rowHeight="1:1">
-  <mat-grid-tile> </mat-grid-tile>
+<div *ngIf="!isLogged">
+  <mat-card>
 
-  <mat-grid-tile>
+    <mat-card-title>Candidate access</mat-card-title>
 
-    <mat-card>
+    <mat-card-content>
 
-      <mat-card-title>Candidate access</mat-card-title>
+      <button mat-raised-button color="primary" (click)="startTest()">Start test</button>
+    </mat-card-content>
 
-      <mat-card-content>
+  </mat-card>
+</div>
 
-        <button mat-raised-button color="primary" (click)="startTest()">Start test</button>
-      </mat-card-content>
-
-    </mat-card>
-
-  </mat-grid-tile>
-
-  <mat-grid-tile>
-
-    <mat-card>
-
-      <mat-card-title>Employee access</mat-card-title>
-
-      <mat-card-content>
-
-        <button mat-raised-button color="primary" (click)="login()" *ngIf="!existToken()">Login</button>
-        <button mat-raised-button color="primary" (click)="logout()" *ngIf="existToken()">Logout</button>
-      </mat-card-content>
-
-    </mat-card>
-
-  </mat-grid-tile>
-
-  <mat-grid-tile> </mat-grid-tile>
-
-</mat-grid-list>
