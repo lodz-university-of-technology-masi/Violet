@@ -3,17 +3,22 @@
   flex-direction: column;
   max-height: 500px;
   min-width: 300px;
-  width: 30%;
+  width: 90%;
   margin: 0 auto;
+}
+
+.card {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.id-cell {
+  flex: 0.3;
 }
 
 .mat-table {
   overflow: auto;
   max-height: 500px;
-}
-
-.mobile-label {
-  display: none;
 }
 
 button {

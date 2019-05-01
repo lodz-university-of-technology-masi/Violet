@@ -2,7 +2,7 @@ import {Injectable, Input} from '@angular/core';
 import {Configuration} from '../../configuration';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestModel, TestVersionContentModel} from '../model/test-model';
+import {TestListWithVersions, TestModel, TestVersionContentModel} from '../model/test-model';
 import {ResolveTestModel} from '../model/resolve-test-model';
 
 @Injectable()
@@ -20,6 +20,6 @@ export class TestService {
     return this.http.post<object>(this.API + '/candidate/resolved/test', model);
   }
   public getAll() {
-    return this.http.get<TestModel[]>(this.API + '/moderator/list/test');
+    return this.http.get<TestListWithVersions[]>(this.API + '/moderator/list/test');
   }
 }

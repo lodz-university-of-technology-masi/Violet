@@ -2,7 +2,19 @@ export interface TestVersionContentModel {
     id: string;
     version: string;
     test: TestModel;
-  }
+}
+
+export interface TestListWithVersions {
+  id: number;
+  testVersions: TestVersion[];
+}
+
+export interface TestVersion {
+  id: string;
+  testName: string;
+  version: number;
+  active: boolean;
+}
 
 export interface TestModel {
     name: string;
