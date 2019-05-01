@@ -1,20 +1,25 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color="primary">
   <button mat-raised-button (click)="returnToHome()">{{'HOME_PAGE' | translate}}</button>
-  <button mat-button [matMenuTriggerFor]="positionMenu">Position</button>
+  <button mat-button *ngIf="hasRole([UserRole.moderator])" [matMenuTriggerFor]="positionMenu">Position</button>
   <mat-menu #positionMenu="matMenu">
     <button mat-menu-item (click)="onPositionListClick()">Position list</button>
     <button mat-menu-item (click)="onAddPositionClick()">Add position</button>
   </mat-menu>
-  <button mat-button [matMenuTriggerFor]="redactorMenu">Redactor</button>
+  <button mat-button *ngIf="hasRole([UserRole.moderator])" [matMenuTriggerFor]="redactorMenu">Redactor</button>
   <mat-menu #redactorMenu="matMenu">
     <button mat-menu-item (click)="onRedactorListClick()">Redactor list</button>
     <button mat-menu-item (click)="onAddRedactorClick()">Add redactor</button>
   </mat-menu>
-  <button mat-button [matMenuTriggerFor]="testMenu">Tests</button>
+  <button mat-button *ngIf="hasRole([UserRole.moderator])" [matMenuTriggerFor]="testMenu">Tests</button>
   <mat-menu #testMenu="matMenu">
     <button mat-menu-item (click)="onTestListClick()">Tests list</button>
   </mat-menu>
+
+  <span class="fill-space"></span>
+  <button *ngIf="hasRole([UserRole.guest])" mat-raised-button routerLink='/login-user'>{{ "LOGIN" | translate }}</button>
+  <button *ngIf="isLogged" mat-raised-button (click)='onLogoutClick()'>{{ "LOGOUT" | translate }}</button>
+
 </mat-toolbar>
 <br/>
 <router-outlet></router-outlet>

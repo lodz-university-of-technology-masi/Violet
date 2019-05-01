@@ -1,5 +1,7 @@
 {
   "HOME_PAGE": "Strona główna",
   "logged_in": "Zalogowano",
-  "user_logout": "Wylogowano"
+  "user_logout": "Wylogowano",
+  "LOGIN": "Zaloguj",
+  "LOGOUT": "Wyloguj"
 }
