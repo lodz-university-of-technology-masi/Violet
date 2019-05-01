@@ -11,6 +11,10 @@
     <button mat-menu-item (click)="onRedactorListClick()">Redactor list</button>
     <button mat-menu-item (click)="onAddRedactorClick()">Add redactor</button>
   </mat-menu>
+  <button mat-button [matMenuTriggerFor]="testMenu">Tests</button>
+  <mat-menu #testMenu="matMenu">
+    <button mat-menu-item (click)="onTestListClick()">Tests list</button>
+  </mat-menu>
 </mat-toolbar>
 <br/>
 <router-outlet></router-outlet>
