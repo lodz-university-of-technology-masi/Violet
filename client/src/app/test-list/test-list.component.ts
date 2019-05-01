@@ -52,10 +52,14 @@ export class TestListComponent implements OnInit {
 
   onChangeStateClick(test: TestVersion) {
     //TODO: implement
+
+    this.updateTable();
   }
 
   onDeleteClick(test: TestListWithVersions) {
     //TODO: implement
+
+    this.updateTable();
   }
 
   onModifyClick(test: TestVersion) {
