@@ -2,22 +2,28 @@ package com.it.p.lodz.pl.masi.services;
 
 import com.it.p.lodz.pl.masi.dtos.UserDto;
 import com.it.p.lodz.pl.masi.dtos.UserEditDto;
+import com.it.p.lodz.pl.masi.dtos.UserIdentityDto;
 import com.it.p.lodz.pl.masi.dtos.UserRedactorDto;
 import com.it.p.lodz.pl.masi.entities.RoleEntity;
 import com.it.p.lodz.pl.masi.entities.UserEntity;
 import com.it.p.lodz.pl.masi.entities.UserRoleEntity;
 import com.it.p.lodz.pl.masi.exceptions.PasswordMismatchException;
 import com.it.p.lodz.pl.masi.exceptions.RedactorNotFoundException;
+import com.it.p.lodz.pl.masi.exceptions.UserNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.RoleRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRepository;
 import com.it.p.lodz.pl.masi.repositories.UserRoleRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class UserService {
@@ -93,5 +99,23 @@ public class UserService {
         userRoleEntity.setRoleByRoleId(redactorRole);
         userRoleEntity.setUserByUserId(userEntity);
         this.userRoleRepository.saveAndFlush(userRoleEntity);
+    }
+
+    public UserIdentityDto getMyIdentity() {
+        UserEntity userEntity = getCurrentUserEntity();
+        UserIdentityDto userIdentityDto = new UserIdentityDto();
+        userIdentityDto.setEmail(userEntity.getEmail());
+        userIdentityDto.setId(String.valueOf(userEntity.getId()));
+        userIdentityDto.setRoles(userEntity.getUserRolesById()
+                .stream()
+                .map($ -> $.getRoleByRoleId().getName())
+                .collect(Collectors.toList()));
+        return userIdentityDto;
+    }
+
+    private UserEntity getCurrentUserEntity() {
+        String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        Optional<UserEntity> userEntity = userRepository.findOneByEmail(email);
+        return userEntity.orElseThrow(UserNotFoundException::new);
     }
 }
