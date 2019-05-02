@@ -9,4 +9,5 @@ public class ExceptionMessages {
     static final String LANGUAGE_NOT_FOUND = "language_not_found";
     static final String PASSWORD_MISMATCH = "password_mismatch";
     static final String USER_NOT_FOUND = "user_not_found";
+    static final String RESOLVED_TEST_NOT_FOUND = "resolved_test_not_found";
 }
