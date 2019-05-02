@@ -1,24 +1,17 @@
 package com.it.p.lodz.pl.masi.services;
 
-import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
 import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
-import com.it.p.lodz.pl.masi.entities.CandidateEntity;
-import com.it.p.lodz.pl.masi.entities.CandidateTokenEntity;
-import com.it.p.lodz.pl.masi.entities.LanguageEntity;
-import com.it.p.lodz.pl.masi.entities.PositionEntity;
-import com.it.p.lodz.pl.masi.entities.ResolvedTestEntity;
+import com.it.p.lodz.pl.masi.entities.*;
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.model.TestAnswer;
 import com.it.p.lodz.pl.masi.repositories.*;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Convert;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Optional;
