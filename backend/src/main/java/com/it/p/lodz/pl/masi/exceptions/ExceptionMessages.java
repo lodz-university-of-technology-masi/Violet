@@ -10,4 +10,7 @@ public class ExceptionMessages {
     static final String PASSWORD_MISMATCH = "password_mismatch";
     static final String USER_NOT_FOUND = "user_not_found";
     static final String RESOLVED_TEST_NOT_FOUND = "resolved_test_not_found";
+    static final String TEST_NOT_FOUND = "test_not_found";
+    static final String TEST_VERSION_ADDED_WITHOUT_MAIN_TEST = "test_version_added_without_main_test";
+    static final String TEST_VERSION_NOT_EQUIVALENT = "test_version_not_equivalent";
 }

@@ -1,11 +1,12 @@
 package com.it.p.lodz.pl.masi.services;
 
 import com.it.p.lodz.pl.masi.dtos.*;
+import com.it.p.lodz.pl.masi.entities.LanguageEntity;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
-import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
+import com.it.p.lodz.pl.masi.exceptions.*;
+import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
@@ -130,5 +131,38 @@ public class TestService {
                 .orElseThrow(TestVersionNotFoundException::new);
         testVersionEntity.setTest(testVersionDto.getTest());
         this.testVersionRepository.saveAndFlush(testVersionEntity);
+    }
+
+    @Transactional
+    public void addTestVersion(NewTestVersionDto newTestVersionDto) {
+        TestEntity testEntity = this.testRepository
+                .getOneByIdAndUserByOwnerId(Long.parseLong(newTestVersionDto.getTestId()), this.currentUserProvided.getCurrentUserEntity())
+                .orElseThrow(TestNotFoundException::new);
+
+        this.checkIfTestVersionIsEquivalent(newTestVersionDto.getTest(), testEntity);
+
+        LanguageEntity languageEntity = this.languageRepository
+                .getById(Long.parseLong(newTestVersionDto.getLanguageId()))
+                .orElseThrow(LanguageNotFoundException::new);
+
+        TestVersionEntity testVersionEntity = new TestVersionEntity();
+        testVersionEntity.setTestByTestId(testEntity);
+        testVersionEntity.setLanguageByLanguageId(languageEntity);
+        testVersionEntity.setTest(newTestVersionDto.getTest());
+
+        this.testVersionRepository.saveAndFlush(testVersionEntity);
+    }
+
+    private void checkIfTestVersionIsEquivalent(Test newTestVersion, TestEntity testEntity) {
+        Test testVersionTest = this.testVersionRepository
+                .getFirstByTestByTestIdAndTestByTestId_UserByOwnerId(testEntity, this.currentUserProvided.getCurrentUserEntity())
+                .orElseThrow(TestVersionAddedWithoutMainTestException::new).getTest();
+        if (testVersionTest.getChoiceQuestions().size() != newTestVersion.getChoiceQuestions().size() ||
+                testVersionTest.getNumericQuestions().size() != newTestVersion.getNumericQuestions().size() ||
+                testVersionTest.getOpenQuestions().size() != newTestVersion.getOpenQuestions().size() ||
+                testVersionTest.getScaleQuestions().size() != newTestVersion.getScaleQuestions().size()
+        ) {
+            throw new TestVersionNotEquivalent();
+        }
     }
 }

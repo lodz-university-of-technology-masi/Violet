@@ -13,6 +13,6 @@ public interface TestVersionRepository extends JpaRepository<TestVersionEntity, 
     List<TestVersionEntity> getAllByLanguageByLanguageIdAndTestByTestIdAndActiveTrueAndDeletedFalse(LanguageEntity languageEntity, List<TestEntity> testEntities);
     List<TestVersionEntity> getAllByDeletedFalse();
     Optional<TestVersionEntity> getOneByIdAndDeletedFalseAndActiveTrue(Long id);
-    TestVersionEntity getOneById(Long id);
     Optional<TestVersionEntity> getOneByIdAndTestByTestId_UserByOwnerId(Long id, UserEntity userEntity);
+    Optional<TestVersionEntity> getFirstByTestByTestIdAndTestByTestId_UserByOwnerId(TestEntity testEntity, UserEntity userEntity);
 }
