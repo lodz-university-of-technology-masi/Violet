@@ -3,6 +3,7 @@ package com.it.p.lodz.pl.masi.repositories;
 import com.it.p.lodz.pl.masi.entities.LanguageEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
+import com.it.p.lodz.pl.masi.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface TestVersionRepository extends JpaRepository<TestVersionEntity, 
     List<TestVersionEntity> getAllByDeletedFalse();
     Optional<TestVersionEntity> getOneByIdAndDeletedFalseAndActiveTrue(Long id);
     TestVersionEntity getOneById(Long id);
+    Optional<TestVersionEntity> getOneByIdAndTestByTestId_UserByOwnerId(Long id, UserEntity userEntity);
 }

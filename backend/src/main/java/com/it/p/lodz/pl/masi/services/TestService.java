@@ -1,15 +1,11 @@
 package com.it.p.lodz.pl.masi.services;
 
-import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
-import com.it.p.lodz.pl.masi.dtos.NewTestDto;
-import com.it.p.lodz.pl.masi.dtos.TestDto;
-import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
+import com.it.p.lodz.pl.masi.dtos.*;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
-import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
@@ -103,9 +99,11 @@ public class TestService {
         }
     }
 
-    public void modifyTest(Long id, Test test) {
-        TestVersionEntity testVersionEntity = testVersionRepository.getOneById(id);
-        testVersionEntity.setTest(test);
+    public void modifyTest(ModifyTestVersionDto testVersionDto) {
+        TestVersionEntity testVersionEntity = testVersionRepository
+                .findById(Long.parseLong(testVersionDto.getVersionId()))
+                .orElseThrow(TestVersionNotFoundException::new);
+        testVersionEntity.setTest(testVersionDto.getTest());
         this.testVersionRepository.saveAndFlush(testVersionEntity);
     }
 
@@ -126,4 +124,11 @@ public class TestService {
         testVersionRepository.saveAndFlush(testVersionEntity);
     }
 
+    public void modifyMyTest(ModifyTestVersionDto testVersionDto) {
+        TestVersionEntity testVersionEntity = this.testVersionRepository
+                .getOneByIdAndTestByTestId_UserByOwnerId(Long.parseLong(testVersionDto.getVersionId()), this.currentUserProvided.getCurrentUserEntity())
+                .orElseThrow(TestVersionNotFoundException::new);
+        testVersionEntity.setTest(testVersionDto.getTest());
+        this.testVersionRepository.saveAndFlush(testVersionEntity);
+    }
 }

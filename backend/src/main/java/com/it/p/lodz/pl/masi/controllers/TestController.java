@@ -1,10 +1,6 @@
 package com.it.p.lodz.pl.masi.controllers;
 
-import com.it.p.lodz.pl.masi.dtos.EditResolveTestVersionDto;
-import com.it.p.lodz.pl.masi.dtos.NewTestDto;
-import com.it.p.lodz.pl.masi.dtos.TestDto;
-import com.it.p.lodz.pl.masi.dtos.TestVersionDto;
-import com.it.p.lodz.pl.masi.model.Test;
+import com.it.p.lodz.pl.masi.dtos.*;
 import com.it.p.lodz.pl.masi.services.TestService;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,14 +29,22 @@ public class TestController {
     public EditResolveTestVersionDto getTestVersionById(@PathVariable long id) {
         return testService.getTestVersionById(id);
     }
+
     @PutMapping("/moderator/test/assign")
     public void assignTestToPosition(@RequestParam(value = "positionId") Long positionId, @RequestParam(value = "testId") Long testId) {
         testService.assignTestToPosition(positionId, testId);
     }
-    @PutMapping("/test/modify")
-    public void modifyTestById(@RequestParam(value = "testId") Long testId, @RequestBody Test test) {
-        testService.modifyTest(testId, test);
+
+    @PutMapping("/moderator/test")
+    public void modifyAnyTestById(@RequestBody ModifyTestVersionDto testVersionDto) {
+        testService.modifyTest(testVersionDto);
     }
+
+    @PutMapping("/redactor/test")
+    public void modifyMyTestById(@RequestBody ModifyTestVersionDto testVersionDto) {
+        testService.modifyMyTest(testVersionDto);
+    }
+
     @DeleteMapping("/moderator/test/{id}")
     public void deleteTest(@PathVariable long id) {
         testService.deleteTestById(id);
