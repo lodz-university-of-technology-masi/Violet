@@ -40,6 +40,11 @@ public class TestController {
         testService.modifyTest(testVersionDto);
     }
 
+    @PostMapping("/redactor/test/version/add")
+    public void addTestVersion(@RequestBody NewTestVersionDto newTestVersionDto) {
+        testService.addTestVersion(newTestVersionDto);
+    }
+
     @PutMapping("/redactor/test")
     public void modifyMyTestById(@RequestBody ModifyTestVersionDto testVersionDto) {
         testService.modifyMyTest(testVersionDto);
