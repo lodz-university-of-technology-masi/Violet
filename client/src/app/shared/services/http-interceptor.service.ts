@@ -24,7 +24,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         if (error.error.error === 'invalid_token') {
-            localStorage.removeItem('oauth_token');
+            localStorage.removeItem('token');
             this.router.navigate(['/login-user']);
         } else if (error instanceof HttpErrorResponse && error.error.error !== 'unauthorized' && error.error.error !== 'invalid_token') {
           if (error.error.message) {

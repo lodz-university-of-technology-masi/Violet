@@ -3,6 +3,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestListWithVersions, TestVersion} from '../shared/model/test-model';
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'app-test-list',
@@ -25,7 +26,7 @@ export class TestListComponent implements OnInit {
   @ViewChild(MatSort) sortDetailed: MatSort;
   dataSourceDetailed;
 
-  constructor(private testService: TestService, private router: Router) {
+  constructor(private testService: TestService, private router: Router, private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -39,6 +40,7 @@ export class TestListComponent implements OnInit {
       this.dataSource = new MatTableDataSource<TestListWithVersions>(this.tests);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.showDetailedTable = false;
     });
   }
 
@@ -46,7 +48,6 @@ export class TestListComponent implements OnInit {
     this.dataSourceDetailed = new MatTableDataSource<TestVersion>(tests.testVersions);
     this.dataSourceDetailed.paginator = this.paginator;
     this.dataSourceDetailed.sort = this.sort;
-
     this.showDetailedTable = true;
   }
 
@@ -57,9 +58,10 @@ export class TestListComponent implements OnInit {
   }
 
   onDeleteClick(test: TestListWithVersions) {
-    //TODO: implement
-
-    this.updateTable();
+    this.testService.deleteTest(test.id).subscribe(() => {
+      this.messageService.success('test_deleted');
+      this.updateTable();
+    });
   }
 
   onModifyClick(test: TestVersion) {
