@@ -177,7 +177,7 @@ public class TestService {
 
         for (var test : groupedVersions.keySet()) {
             var testDto = new TestDto();
-            if(test.getUserByOwnerId().getId() == currentUserProvided.getCurrentUserEntity().getId()){
+            if(test.getUserByOwnerId().getId() == currentUserProvided.getCurrentUserEntity().getId() && test.isDeleted()==false){
                 testDto.setId(Long.toString(test.getId()));
                 testDto.setTestVersions(modelMapper.map(groupedVersions.get(test), listType));
                 tests.add(testDto);
