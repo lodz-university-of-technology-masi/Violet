@@ -19,7 +19,12 @@ export class TestService {
   resolveTest(model: ResolveTestModel): Observable<object> {
     return this.http.post<object>(this.API + '/candidate/resolved/test', model);
   }
+
   public getAll() {
     return this.http.get<TestListWithVersions[]>(this.API + '/moderator/list/test');
+  }
+
+  public deleteTest(id: number) {
+    return this.http.delete(`${this.API}/moderator/test/${id}`);
   }
 }
