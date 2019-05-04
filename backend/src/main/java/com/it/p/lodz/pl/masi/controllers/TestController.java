@@ -59,4 +59,8 @@ public class TestController {
     public void addNewTest(@RequestBody NewTestDto newTestDto) {
         this.testService.addNewTest(newTestDto);
     }
+    @GetMapping("/redactor/list/test")
+    public List<TestDto> getAllTestsAssignedToUser(){
+        return testService.getTestListForRedactor();
+    }
 }
