@@ -50,6 +50,7 @@ public class TestService {
     }
 
     public List<TestDto> getAllTests() {
+
         var versions = testVersionRepository.getAllByDeletedFalse();
         var groupedVersions = versions.stream().collect(Collectors.groupingBy(TestVersionEntity::getTestByTestId));
 
@@ -164,5 +165,25 @@ public class TestService {
         ) {
             throw new TestVersionNotEquivalent();
         }
+    }
+
+    public List<TestDto> getTestListForRedactor() {
+        var versions = testVersionRepository.getAllByDeletedFalse();
+        var groupedVersions = versions.stream().collect(Collectors.groupingBy(TestVersionEntity::getTestByTestId));
+
+        var tests = new ArrayList<TestDto>();
+        Type listType = new TypeToken<List<TestVersionDto>>() {
+        }.getType();
+
+        for (var test : groupedVersions.keySet()) {
+            var testDto = new TestDto();
+            if(test.getUserByOwnerId().getId() == currentUserProvided.getCurrentUserEntity().getId() && test.isDeleted()==false){
+                testDto.setId(Long.toString(test.getId()));
+                testDto.setTestVersions(modelMapper.map(groupedVersions.get(test), listType));
+                tests.add(testDto);
+            }
+        }
+
+        return tests;
     }
 }
