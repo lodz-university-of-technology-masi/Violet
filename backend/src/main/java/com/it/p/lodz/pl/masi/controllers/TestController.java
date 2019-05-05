@@ -45,6 +45,12 @@ public class TestController {
         testService.addTestVersion(newTestVersionDto);
     }
 
+    @GetMapping("/redactor/test/version/{id}")
+    public EditResolveTestVersionDto getTestVersion(@PathVariable long id) {
+        var userId = 1l; //TODO: get user id from claim
+        return testService.getTestVersionById(id, userId);
+    }
+
     @PutMapping("/redactor/test")
     public void modifyMyTestById(@RequestBody ModifyTestVersionDto testVersionDto) {
         testService.modifyMyTest(testVersionDto);
