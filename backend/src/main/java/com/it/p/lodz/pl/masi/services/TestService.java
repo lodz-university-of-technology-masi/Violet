@@ -113,6 +113,17 @@ public class TestService {
         }
     }
 
+
+    @Transactional
+    public void deleteTestById(long testId, String email) {
+        var test = testRepository.findById(testId);
+        if(test.isPresent() &&
+                !test.get().getUserByOwnerId().getEmail().equalsIgnoreCase(email))
+            throw new TestNotFoundException();
+
+        deleteTestById(testId);
+    }
+
     public void modifyTest(ModifyTestVersionDto testVersionDto) {
         TestVersionEntity testVersionEntity = testVersionRepository
                 .findById(Long.parseLong(testVersionDto.getVersionId()))

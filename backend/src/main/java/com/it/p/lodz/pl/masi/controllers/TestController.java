@@ -54,6 +54,13 @@ public class TestController {
         return testService.getTestVersionById(id, user.getUsername());
     }
 
+
+    @DeleteMapping("/redactor/test/version/{id}")
+    public void deleteTestByOwner(@PathVariable long id) {
+        var user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        testService.deleteTestById(id, user.getUsername());
+    }
+
     @PutMapping("/redactor/test")
     public void modifyMyTestById(@RequestBody ModifyTestVersionDto testVersionDto) {
         testService.modifyMyTest(testVersionDto);
