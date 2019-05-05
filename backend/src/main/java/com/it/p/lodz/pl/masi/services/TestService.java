@@ -75,6 +75,18 @@ public class TestService {
                 .orElseThrow(TestVersionNotFoundException::new);
     }
 
+    public EditResolveTestVersionDto getTestVersionById(long id, String email) {
+        Optional<TestVersionEntity> testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
+
+        if(testVersionEntity.isPresent() &&
+                !testVersionEntity.get().getTestByTestId().getUserByOwnerId().getEmail().equalsIgnoreCase(email))
+            throw new TestVersionNotFoundException();
+
+        return testVersionEntity
+                .map($ -> modelMapper.map($, EditResolveTestVersionDto.class))
+                .orElseThrow(TestVersionNotFoundException::new);
+    }
+
     public void assignTestToPosition(Long positionId, Long testId) {
         var valuePosition = positionRepository.findById(positionId);
         var valueTest = testRepository.findById(testId);

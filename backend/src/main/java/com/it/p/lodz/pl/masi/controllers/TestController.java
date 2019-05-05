@@ -2,6 +2,8 @@ package com.it.p.lodz.pl.masi.controllers;
 
 import com.it.p.lodz.pl.masi.dtos.*;
 import com.it.p.lodz.pl.masi.services.TestService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +45,13 @@ public class TestController {
     @PostMapping("/redactor/test/version/add")
     public void addTestVersion(@RequestBody NewTestVersionDto newTestVersionDto) {
         testService.addTestVersion(newTestVersionDto);
+    }
+
+    @GetMapping("/redactor/test/version/{id}")
+    public EditResolveTestVersionDto getTestVersion(@PathVariable long id) {
+        var user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return testService.getTestVersionById(id, user.getUsername());
     }
 
     @PutMapping("/redactor/test")
