@@ -12,7 +12,7 @@ import {MessageService} from '../shared/services/message.service';
 })
 export class RedactorListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'delete'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'delete', 'edit'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,5 +38,9 @@ export class RedactorListComponent implements OnInit {
       this.messageService.success('redactor_deleted');
       this.updateTable();
     });
+  }
+  
+  onEditClick(redactor: RedactorModel) {
+    this.router.navigate(['/redactor-edit'], {queryParams: {redactorId: redactor.id}});
   }
 }

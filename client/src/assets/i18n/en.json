@@ -3,5 +3,8 @@
   "logged_in": "You have logged in.",
   "user_logout": "You have logged out.",
   "LOGIN": "Login",
-  "LOGOUT": "Logout"
+  "LOGOUT": "Logout",
+  "redactor_get_error": "Could not fetch user data",
+  "redactor_saved": "User data saved",
+  "redactor_edit_error": "Could not save user data"
 }
