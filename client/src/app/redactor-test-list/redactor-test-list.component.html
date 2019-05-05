@@ -1,0 +1,95 @@
+<mat-card class="card">
+
+  <mat-card-title>My tests</mat-card-title>
+
+  <mat-card-content>
+
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table matSort [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+          <mat-cell class='id-cell' *matCellDef="let tests">
+            {{tests.id}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+          <mat-cell *matCellDef="let tests">
+            {{tests.testVersions[0].testName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+          <mat-cell class='button-cell-1' *matCellDef="let tests">
+            <button mat-button mat-raised-button color='primary' (click)='onDeleteClick(tests)'> Delete </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="choose">
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Choose</mat-header-cell>
+          <mat-cell class='button-cell-1' *matCellDef="let tests">
+            <button mat-button mat-raised-button color='primary' (click)='onChooseClick(tests)'> Choose</button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>
+
+<br/><br/>
+
+<mat-card class="card" *ngIf=showDetailedTable>
+
+  <mat-card-title>Versions of test</mat-card-title>
+
+  <mat-card-content>
+
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table matSort [dataSource]="dataSourceDetailed">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+          <mat-cell class='id-cell' *matCellDef="let tests">
+            {{tests.id}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+          <mat-cell *matCellDef="let tests">
+            {{tests.testName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="active">
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Change state </mat-header-cell>
+          <mat-cell class='button-cell-1' *matCellDef="let tests">
+            <button mat-button mat-raised-button color='primary' (click)='onChangeStateClick(tests)'> {{tests.active === true ? 'Deactivate' : 'Active'}} </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="modify">
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Modify </mat-header-cell>
+          <mat-cell class='button-cell-1' *matCellDef="let tests">
+            <button mat-button mat-raised-button color='primary' (click)='onModifyClick(tests)'> Modify </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsDetailed"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsDetailed;"></mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

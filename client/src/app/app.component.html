@@ -14,6 +14,7 @@
   <button mat-button *ngIf="hasRole([UserRole.moderator])" [matMenuTriggerFor]="testMenu">Tests</button>
   <mat-menu #testMenu="matMenu">
     <button mat-menu-item (click)="onTestListClick()">Tests list</button>
+    <button mat-menu-item (click)="onRedactorTestsListClick()">Redactor's test list</button>
   </mat-menu>
 
   <span class="fill-space"></span>
