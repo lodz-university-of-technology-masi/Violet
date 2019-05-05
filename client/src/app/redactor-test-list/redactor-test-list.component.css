@@ -1,0 +1,52 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.card {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.id-cell {
+  flex: 0.3;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+button {
+  margin: 2px;
+}
+
+.button-cell-1 {
+  flex: 0.7;
+}
+
+.button-cell-2 {
+  flex: 1.3;
+}
+
+.button-cell-3 {
+  flex: 1.0;
+}
+
+.mat-button {
+  white-space: normal;
+}
+
+mat-header-cell {
+  display: flex;
+  justify-content: center;
+}
+
+mat-cell {
+  display: flex;
+  justify-content: center;
+}

@@ -95,4 +95,8 @@ export class AppComponent {
     return false;
   }
 
+  onRedactorTestsListClick() {
+    this.router.navigate(['/test-list-redactor']);
+
+  }
 }

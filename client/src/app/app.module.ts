@@ -31,6 +31,7 @@ import {RedactorAddComponent} from './redactor-add/redactor-add.component';
 import {TestListComponent} from './test-list/test-list.component';
 import {AuthGuard} from './shared/services/auth-guard.service';
 import {UserRole} from './shared/model/user-model';
+import { RedactorTestListComponent } from './redactor-test-list/redactor-test-list.component';
 import { RedactorEditComponent } from './redactor-edit/redactor-edit.component';
 
 const appRoutes: Routes = [
@@ -107,6 +108,13 @@ const appRoutes: Routes = [
     }
   },
   {
+  path: 'test-list-redactor',
+    component: RedactorTestListComponent,
+    canActivate: [AuthGuard], data: {
+    permittedRoles: [UserRole.redactor]
+    }
+  },
+  {
     path: '**',
     component: HomeComponent,
     canActivate: [AuthGuard], data: {
@@ -131,7 +139,8 @@ export function createTranslateLoader(http: HttpClient) {
     RedactorListComponent,
     RedactorAddComponent,
     RedactorEditComponent,
-    TestListComponent
+    TestListComponent,
+    RedactorTestListComponent
   ],
   imports: [
     BrowserModule,
