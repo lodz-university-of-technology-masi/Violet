@@ -111,7 +111,7 @@ const appRoutes: Routes = [
   path: 'test-list-redactor',
     component: RedactorTestListComponent,
     canActivate: [AuthGuard], data: {
-    permittedRoles: [UserRole.moderator]
+    permittedRoles: [UserRole.redactor]
     }
   },
   {

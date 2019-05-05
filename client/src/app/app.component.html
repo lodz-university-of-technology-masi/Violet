@@ -14,8 +14,10 @@
   <button mat-button *ngIf="hasRole([UserRole.moderator])" [matMenuTriggerFor]="testMenu">Tests</button>
   <mat-menu #testMenu="matMenu">
     <button mat-menu-item (click)="onTestListClick()">Tests list</button>
-    <button mat-menu-item (click)="onRedactorTestsListClick()">Redactor's test list</button>
   </mat-menu>
+  <button mat-button *ngIf="hasRole([UserRole.redactor])" (click)="onRedactorTestsListClick()">My Tests</button>
+
+
 
   <span class="fill-space"></span>
   <button *ngIf="hasRole([UserRole.guest])" mat-raised-button routerLink='/login-user'>{{ "LOGIN" | translate }}</button>
