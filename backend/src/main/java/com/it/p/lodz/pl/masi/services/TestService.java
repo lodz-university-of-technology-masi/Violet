@@ -75,11 +75,11 @@ public class TestService {
                 .orElseThrow(TestVersionNotFoundException::new);
     }
 
-    public EditResolveTestVersionDto getTestVersionById(long id, long userId) {
+    public EditResolveTestVersionDto getTestVersionById(long id, String email) {
         Optional<TestVersionEntity> testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
 
         if(testVersionEntity.isPresent() &&
-                testVersionEntity.get().getTestByTestId().getUserByOwnerId().getId() != userId)
+                !testVersionEntity.get().getTestByTestId().getUserByOwnerId().getEmail().equalsIgnoreCase(email))
             throw new TestVersionNotFoundException();
 
         return testVersionEntity
