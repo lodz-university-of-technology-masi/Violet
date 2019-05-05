@@ -3,5 +3,8 @@
   "logged_in": "Zalogowano",
   "user_logout": "Wylogowano",
   "LOGIN": "Zaloguj",
-  "LOGOUT": "Wyloguj"
+  "LOGOUT": "Wyloguj",
+  "redactor_get_error": "Nie udało się pobrać danych użytkownika",
+  "redactor_saved": "Zapisano dane użytkownika",
+  "redactor_edit_error": "Nie udało się zapisać danych użytkownika"
 }

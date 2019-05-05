@@ -1,0 +1,30 @@
+mat-form-field {
+    width: 100%;
+  }
+  
+  div.buttons {
+    float: right;
+    justify-content: flex-end;
+  }
+  
+  button {
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+  
+  .form {
+    width: 30%;
+    margin: 0 auto;
+  }
+  
+  mat-card {
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  
+  .errors-space {
+    font-size: 12px;
+    padding-bottom: 6px;
+    color: red;
+  }
+  
