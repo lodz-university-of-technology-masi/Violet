@@ -25,26 +25,33 @@
         </div>
       </mat-form-field>
       <br>
-
-      <mat-form-field formArrayName="choiceQuestions" *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
-        <div [formGroupName]="i">
-          <input formControlName="question" matInput placeholder="Choice question text">
+      <div formArrayName="choiceQuestions" *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
+        <mat-form-field [formGroupName]="i">
+          <input formControlName="question" matInput placeholder="Choice question text"/>
+        </mat-form-field>
+        <div>
+          <mat-form-field *ngFor="let answer of arrayOfChoiceAnswersNumber[i]; let j = index;">
+            <input type="text" class="form-control" matInput placeholder="Answer text" (change)='addChoiceAnswer(i, j, $event.target.value)'/>
+          </mat-form-field>
         </div>
-      </mat-form-field>
-      <!--<a mat-button color="primary" type="addAnswer" (click)='addAnswer(choiceId)'>Add answer</a>-->
-      <!--<mat-form-field formArrayName="answers" *ngFor="let answer of testForm.get('choiceQuestions').controls[choiceId].get('answers').controls; let j = index;">-->
-        <!--<div [formGroupName]="j">-->
-          <!--<input matInput placeholder="Answer text">-->
-        <!--</div>-->
-      <!--</mat-form-field>-->
-
+        <div>
+          <a mat-button color="primary" type="addAnswer" (click)='addChoiceAnswerInput(i)'>Add answer</a>
+        </div>
+      </div>
       <br>
-      <mat-form-field formArrayName="scaleQuestions" *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
-        <div [formGroupName]="i">
-          <input formControlName="question" matInput placeholder="Scale question text">
+      <div formArrayName="scaleQuestions" *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
+        <mat-form-field [formGroupName]="i">
+          <input formControlName="question" matInput placeholder="Scale question text"/>
+        </mat-form-field>
+        <div>
+          <mat-form-field *ngFor="let answer of arrayOfScaleAnswersNumber[i]; let j = index;">
+            <input type="text" class="form-control" matInput placeholder="Answer text" (change)='addScaleAnswer(i, j, $event.target.value)'/>
+          </mat-form-field>
         </div>
-      </mat-form-field>
-
+        <div>
+          <a mat-button color="primary" type="addAnswer" (click)='addScaleAnswerInput(i)'>Add answer</a>
+        </div>
+      </div>
       <br>
       <mat-form-field formArrayName="numericQuestions" *ngFor="let question of testForm.get('numericQuestions').controls; let i = index;">
         <div [formGroupName]="i">

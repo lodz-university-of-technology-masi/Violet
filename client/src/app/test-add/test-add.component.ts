@@ -1,12 +1,11 @@
-import {Component, NgModule, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NewTest, NewTestModel} from '../shared/model/test-model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
 import {TestService} from '../shared/services/test.service';
 import {Language} from '../shared/model/candidate-model';
 import {CandidateService} from '../shared/services/candidate.service';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {HttpParams} from '@angular/common/http';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-test-add',
@@ -18,7 +17,10 @@ export class TestAddComponent implements OnInit {
   choiceId: 0;
   questionTypes = ['Open question', 'Choice question', 'Scale question', 'Numeric question'];
   questionType: string;
-  arrayOfAnswers: any[];
+  arrayOfChoiceAnswers: any[];
+  arrayOfChoiceAnswersNumber: any[];
+  arrayOfScaleAnswers: any[];
+  arrayOfScaleAnswersNumber: any[];
   newTestModel: NewTestModel = {
     name: '',
     openQuestions: [],
@@ -32,14 +34,17 @@ export class TestAddComponent implements OnInit {
   };
   testForm: FormGroup;
   questions: FormArray;
-  choiceAnswers: FormArray;
-  scaleAnswers: FormArray;
 
   constructor(private route: ActivatedRoute, private router: Router, private testService: TestService,
               private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.arrayOfAnswers = new Array(2);
+    this.arrayOfChoiceAnswers = new Array(new Array(2));
+    this.arrayOfChoiceAnswersNumber = new Array(new Array(2));
+    this.arrayOfChoiceAnswers[0].fill('');
+    this.arrayOfScaleAnswers = new Array(new Array(2));
+    this.arrayOfScaleAnswersNumber = new Array(new Array(2));
+    this.arrayOfScaleAnswers[0].fill('');
     this.candidateService.getAllLanguages().subscribe(data => {
       this.languages = data;
     });
@@ -62,13 +67,7 @@ export class TestAddComponent implements OnInit {
   createChoiceScaleQuestion(): FormGroup {
     return this.formBuilder.group({
       question: '',
-      answers: this.formBuilder.array([this.createAnswer()])
-    });
-  }
-
-  createAnswer(): FormGroup {
-    return this.formBuilder.group({
-      answer: ''
+      answers: []
     });
   }
 
@@ -81,10 +80,14 @@ export class TestAddComponent implements OnInit {
       case 'Choice question':
         this.questions = this.testForm.get('choiceQuestions') as FormArray;
         this.questions.push(this.createChoiceScaleQuestion());
+        this.arrayOfChoiceAnswers.push(['', '']);
+        this.arrayOfChoiceAnswersNumber.push(new Array(2));
         break;
       case 'Scale question':
         this.questions = this.testForm.get('scaleQuestions') as FormArray;
         this.questions.push(this.createChoiceScaleQuestion());
+        this.arrayOfScaleAnswers.push(['', '']);
+        this.arrayOfScaleAnswersNumber.push(new Array(2));
         break;
       case 'Numeric question':
         this.questions = this.testForm.get('numericQuestions') as FormArray;
@@ -95,12 +98,22 @@ export class TestAddComponent implements OnInit {
     this.choiceId++;
   }
 
-  addAnswer(id: number): void {
-    // this.arrayOfAnswers = new Array(this.arrayOfAnswers.length + 1);
-    this.choiceAnswers = this.testForm.get('choiceQuestions').controls[id].get('answers') as FormArray;
-    console.log(this.testForm.get('choiceQuestions').controls[id].get('answers') as FormArray);
-    console.log(id);
-    this.choiceAnswers.push(this.createAnswer());
+  addChoiceAnswerInput(i: number): void {
+    this.arrayOfChoiceAnswers[i].push('');
+    this.arrayOfChoiceAnswersNumber[i] = new Array(this.arrayOfChoiceAnswersNumber[i].length + 1);
+  }
+
+  addScaleAnswerInput(i: number): void {
+    this.arrayOfScaleAnswers[i] = new Array(this.arrayOfScaleAnswers[i].length + 1);
+    this.arrayOfScaleAnswersNumber[i] = new Array(this.arrayOfScaleAnswersNumber[i].length + 1);
+  }
+
+  addChoiceAnswer(i: number, j: number, value: string): void {
+    this.arrayOfChoiceAnswers[i][j] = value;
+  }
+
+  addScaleAnswer(i: number, j: number, value: string): void {
+    this.arrayOfScaleAnswers[i][j] = value;
   }
 
   setQuestionType(type: string): void {
@@ -112,10 +125,15 @@ export class TestAddComponent implements OnInit {
     this.newTest.test.name = this.testForm.controls.name.value;
     this.newTest.test.openQuestions = this.testForm.controls.openQuestions.value;
     this.newTest.test.choiceQuestions = this.testForm.controls.choiceQuestions.value;
+    for (let i = 0; i < this.newTest.test.choiceQuestions.length; i++) {
+      this.newTest.test.choiceQuestions[i].answers = this.arrayOfChoiceAnswers[i];
+    }
     this.newTest.test.scaleQuestions = this.testForm.controls.scaleQuestions.value;
+    for (let i = 0; i < this.newTest.test.scaleQuestions.length; i++) {
+      this.newTest.test.scaleQuestions[i].answers = this.arrayOfScaleAnswers[i];
+    }
     this.newTest.test.numericQuestions = this.testForm.controls.numericQuestions.value;
-    console.log(JSON.stringify(this.newTest).replace(null, '[]').replace(null, '[]'));
-    this.testService.addTest(JSON.stringify(this.newTest).replace(null, '[]').replace(null, '[]')).subscribe(() => {
+    this.testService.addTest(JSON.stringify(this.newTest)).subscribe(() => {
       this.messageService.success('Test has been added.');
       this.router.navigate(['/test-list']);
     });
