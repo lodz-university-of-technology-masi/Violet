@@ -31,6 +31,7 @@ import {RedactorAddComponent} from './redactor-add/redactor-add.component';
 import {TestListComponent} from './test-list/test-list.component';
 import {AuthGuard} from './shared/services/auth-guard.service';
 import {UserRole} from './shared/model/user-model';
+import {TestAddComponent} from './test-add/test-add.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -98,6 +99,13 @@ const appRoutes: Routes = [
     }
   },
   {
+    path: 'test-add',
+    component: TestAddComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
+  },
+  {
     path: '**',
     component: HomeComponent,
     canActivate: [AuthGuard], data: {
@@ -121,7 +129,8 @@ export function createTranslateLoader(http: HttpClient) {
     ResolveTestComponent,
     RedactorListComponent,
     RedactorAddComponent,
-    TestListComponent
+    TestListComponent,
+    TestAddComponent
   ],
   imports: [
     BrowserModule,

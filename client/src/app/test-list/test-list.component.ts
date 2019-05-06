@@ -67,4 +67,8 @@ export class TestListComponent implements OnInit {
   onModifyClick(test: TestVersion) {
     //TODO: implement
   }
+
+  onAddClick() {
+    this.router.navigate(['/test-add']);
+  }
 }

@@ -1,0 +1,63 @@
+<form [formGroup]="testForm" class="test-container mat-elevation-z8" #test="ngForm" (ngSubmit)='addTest()'>
+  <mat-card>
+
+    <mat-card-title>Add New Test</mat-card-title>
+
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput placeholder="Test name" formControlName="name" required>
+      </mat-form-field>
+      <br>
+      <mat-card-header>Test language</mat-card-header>
+      <mat-radio-group name="testLanguage" formControlName="languageId" required>
+        <mat-radio-button class="language-option" *ngFor="let language of languages" [value]=language.id required>{{language.name}}</mat-radio-button>
+      </mat-radio-group>
+      <br>
+      <mat-card-header>Question type</mat-card-header>
+      <mat-radio-group name="questionType">
+        <mat-radio-button class="question-option" *ngFor="let type of questionTypes" (click)='setQuestionType(type)' [value]=type required>{{type}}</mat-radio-button>
+      </mat-radio-group>
+      <a mat-button color="primary" type="addQuestion" (click)='addQuestion(questionType)'>Add question</a>
+      <br>
+      <mat-form-field formArrayName="openQuestions" *ngFor="let question of testForm.get('openQuestions').controls; let i = index;">
+        <div [formGroupName]="i">
+          <input formControlName="question" matInput placeholder="Open question text">
+        </div>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field formArrayName="choiceQuestions" *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
+        <div [formGroupName]="i">
+          <input formControlName="question" matInput placeholder="Choice question text">
+        </div>
+      </mat-form-field>
+      <!--<a mat-button color="primary" type="addAnswer" (click)='addAnswer(choiceId)'>Add answer</a>-->
+      <!--<mat-form-field formArrayName="answers" *ngFor="let answer of testForm.get('choiceQuestions').controls[choiceId].get('answers').controls; let j = index;">-->
+        <!--<div [formGroupName]="j">-->
+          <!--<input matInput placeholder="Answer text">-->
+        <!--</div>-->
+      <!--</mat-form-field>-->
+
+      <br>
+      <mat-form-field formArrayName="scaleQuestions" *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
+        <div [formGroupName]="i">
+          <input formControlName="question" matInput placeholder="Scale question text">
+        </div>
+      </mat-form-field>
+
+      <br>
+      <mat-form-field formArrayName="numericQuestions" *ngFor="let question of testForm.get('numericQuestions').controls; let i = index;">
+        <div [formGroupName]="i">
+          <input formControlName="question" matInput placeholder="Numeric question text">
+        </div>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!test.form.valid">
+        Add test
+      </button>
+      <a mat-button routerLink="/test-list">Cancel</a>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

@@ -2,7 +2,7 @@ import {Injectable, Input} from '@angular/core';
 import {Configuration} from '../../configuration';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestListWithVersions, TestModel, TestVersionContentModel} from '../model/test-model';
+import {TestListWithVersions, TestVersionContentModel} from '../model/test-model';
 import {ResolveTestModel} from '../model/resolve-test-model';
 
 @Injectable()
@@ -26,5 +26,10 @@ export class TestService {
 
   public deleteTest(id: number) {
     return this.http.delete(`${this.API}/moderator/test/${id}`);
+  }
+
+  public addTest(newTest: string) {
+    const headers = {'Content-type': 'application/json'};
+    return this.http.post(`${this.API}/redactor/test/add`, newTest, {headers});
   }
 }
