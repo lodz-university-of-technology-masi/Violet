@@ -59,7 +59,7 @@ export class RedactorTestListComponent implements OnInit {
   }
 
   onDeleteClick(test: TestListWithVersions) {
-    this.testService.deleteTest(test.id).subscribe(() => {
+    this.testService.redactorDeleteTest(test.id).subscribe(() => {
       this.messageService.success('test_deleted');
       this.updateTable();
     });
