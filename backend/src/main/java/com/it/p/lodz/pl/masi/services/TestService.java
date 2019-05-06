@@ -115,10 +115,10 @@ public class TestService {
 
 
     @Transactional
-    public void deleteTestById(long testId, String email) {
+    public void deleteRedactorTestById(long testId) {
         var test = testRepository.findById(testId);
         if(test.isPresent() &&
-                !test.get().getUserByOwnerId().getEmail().equalsIgnoreCase(email))
+                !test.get().getUserByOwnerId().getEmail().equalsIgnoreCase(currentUserProvided.getCurrentUserEntity().getEmail()))
             throw new TestNotFoundException();
 
         deleteTestById(testId);

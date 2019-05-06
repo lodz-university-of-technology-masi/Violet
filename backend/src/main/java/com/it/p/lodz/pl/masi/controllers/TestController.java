@@ -55,10 +55,9 @@ public class TestController {
     }
 
 
-    @DeleteMapping("/redactor/test/version/{id}")
+    @DeleteMapping("/redactor/test/{id}")
     public void deleteTestByOwner(@PathVariable long id) {
-        var user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        testService.deleteTestById(id, user.getUsername());
+        testService.deleteRedactorTestById(id);
     }
 
     @PutMapping("/redactor/test")
@@ -75,6 +74,7 @@ public class TestController {
     public void addNewTest(@RequestBody NewTestDto newTestDto) {
         this.testService.addNewTest(newTestDto);
     }
+
     @GetMapping("/redactor/list/test")
     public List<TestDto> getAllTestsAssignedToUser(){
         return testService.getTestListForRedactor();

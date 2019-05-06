@@ -27,6 +27,11 @@ export class TestService {
   public deleteTest(id: number) {
     return this.http.delete(`${this.API}/moderator/test/${id}`);
   }
+
+  public redactorDeleteTest(id: number) {
+    return this.http.delete(`${this.API}/redactor/test/${id}`);
+  }
+
   public getCurrentRedactorTests() {
     return this.http.get<TestListWithVersions[]>(`${this.API}/redactor/list/test`);
   }
