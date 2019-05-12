@@ -5,10 +5,7 @@ import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
 import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.entities.*;
 import com.it.p.lodz.pl.masi.exceptions.CandidateNotFoundException;
-<<<<<<< HEAD
 import com.it.p.lodz.pl.masi.exceptions.InvalidTokenException;
-=======
->>>>>>> b22f1ed6657f53bf12f6f5a4c48f68d7e313c250
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.WrongAnswerNumberException;
