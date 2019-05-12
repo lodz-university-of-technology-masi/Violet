@@ -5,6 +5,7 @@ import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
 import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.entities.*;
 import com.it.p.lodz.pl.masi.exceptions.CandidateNotFoundException;
+import com.it.p.lodz.pl.masi.exceptions.InvalidTokenException;
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.WrongAnswerNumberException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -79,10 +81,13 @@ public class CandidateService {
     {
         var resolvedTest = new ResolvedTestEntity();
         var testVersion = testVersionRepository.getOne(Long.parseLong(dto.getTest().getId()));
-        
+
         CandidateEntity candidate = null;
         try {
-            candidate = candidateTokenRepository.getAllByToken(dto.getCandidateToken()).get(0).getCandidateByCandidateId();
+            var token = candidateTokenRepository.getAllByToken(dto.getCandidateToken()).get(0);
+            if(!token.isActive() || token.getExpireDate().compareTo(new Timestamp(System.currentTimeMillis() + 60 * 60 * 1000)) > 0)
+                throw new InvalidTokenException();
+            candidate = token.getCandidateByCandidateId();
         } catch(IndexOutOfBoundsException e) {
             throw new CandidateNotFoundException();
         }
