@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import {PositionsService} from '../shared/services/positions.service';
+import {TestPosition} from '../shared/model/position-model';
 
 @Component({
   selector: 'app-test-list',
@@ -20,7 +22,7 @@ export class TestListComponent implements OnInit, DoCheck {
 
   showDetailedTable = false;
 
-  displayedColumns: string[] = ['id', 'name', 'delete', 'choose'];
+  displayedColumns: string[] = ['id', 'name', 'delete', 'assign', 'choose'];
   displayedColumnsDetailed: string[] = ['id', 'name', 'active', 'modify', 'export'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -29,8 +31,10 @@ export class TestListComponent implements OnInit, DoCheck {
   @ViewChild(MatPaginator) paginatorDetailed: MatPaginator;
   @ViewChild(MatSort) sortDetailed: MatSort;
   dataSourceDetailed;
+  positions: TestPosition[];
 
-  constructor(private testService: TestService, private router: Router, private messageService: MessageService) {
+  constructor(private testService: TestService, private router: Router, private messageService: MessageService,
+              private positionsService: PositionsService) {
   }
 
   ngOnInit() {
@@ -51,6 +55,9 @@ export class TestListComponent implements OnInit, DoCheck {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.showDetailedTable = false;
+    });
+    this.positionsService.getAll().subscribe(data => {
+      this.positions = data.sort((a, b) => a.id - b.id );
     });
   }
 
@@ -81,6 +88,13 @@ export class TestListComponent implements OnInit, DoCheck {
   onAddClick() {
     this.router.navigate(['/test-add']);
   }
+
+  onAssignChange(test: TestVersion, positionId: string) {
+    this.testService.assignPosition(positionId, test.id).subscribe(() => {
+      this.messageService.success('Position assigned');
+    });
+  }
+
   onPdfExportClick(test: TestVersion) {
     this.testService.getTest(test.id).subscribe(t => {
       this.questions = this.questions
@@ -93,20 +107,21 @@ export class TestListComponent implements OnInit, DoCheck {
 
 
   }
+
   exportPdf() {
     var data = document.getElementById('export-container');
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 10;  
-      pdf.addImage(contentDataURL, 'PNG', position, position, imgWidth, imgHeight)  
-      pdf.save('MYPdf.pdf'); // Generated PDF   
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png')
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      var position = 10;
+      pdf.addImage(contentDataURL, 'PNG', position, position, imgWidth, imgHeight)
+      pdf.save('MYPdf.pdf'); // Generated PDF
     });
   }
 }
