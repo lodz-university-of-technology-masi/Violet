@@ -24,7 +24,9 @@
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/file-saver/src/FileSaver.js"
+            ]
           },
           "configurations": {
             "production": {

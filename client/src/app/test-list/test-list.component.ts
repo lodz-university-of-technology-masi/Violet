@@ -4,8 +4,7 @@ import {TestListWithVersions, TestVersion, TestVersionContentModel, QuestionMode
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
-import * as jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
+import { ExportService } from '../shared/services/export.service';
 
 @Component({
   selector: 'app-test-list',
@@ -30,7 +29,7 @@ export class TestListComponent implements OnInit, DoCheck {
   @ViewChild(MatSort) sortDetailed: MatSort;
   dataSourceDetailed;
 
-  constructor(private testService: TestService, private router: Router, private messageService: MessageService) {
+  constructor(private testService: TestService, private router: Router, private messageService: MessageService, private exportService: ExportService) {
   }
 
   ngOnInit() {
@@ -78,9 +77,16 @@ export class TestListComponent implements OnInit, DoCheck {
     //TODO: implement
   }
 
+  onCsvExportClick(test: TestVersion) {
+    this.testService.getTest(test.id).subscribe(t => {
+      this.exportService.exportCsv(t, test.languageName);
+    });
+  }
+
   onAddClick() {
     this.router.navigate(['/test-add']);
   }
+  
   onPdfExportClick(test: TestVersion) {
     this.testService.getTest(test.id).subscribe(t => {
       this.questions = this.questions
@@ -90,23 +96,10 @@ export class TestListComponent implements OnInit, DoCheck {
       .concat(t.test.scaleQuestions);
       this.triggerExport = true;
       });
-
-
   }
+
   exportPdf() {
     var data = document.getElementById('export-container');
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 10;  
-      pdf.addImage(contentDataURL, 'PNG', position, position, imgWidth, imgHeight)  
-      pdf.save('MYPdf.pdf'); // Generated PDF   
-    });
+    this.exportService.exportPdf(data);
   }
 }

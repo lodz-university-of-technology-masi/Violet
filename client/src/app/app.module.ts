@@ -33,6 +33,7 @@ import {AuthGuard} from './shared/services/auth-guard.service';
 import {UserRole} from './shared/model/user-model';
 import { RedactorTestListComponent } from './redactor-test-list/redactor-test-list.component';
 import { RedactorEditComponent } from './redactor-edit/redactor-edit.component';
+import { ExportService } from './shared/services/export.service';
 import {TestAddComponent} from './test-add/test-add.component';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -193,7 +194,8 @@ export function createTranslateLoader(http: HttpClient) {
     TestService,
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    MessageService
+    MessageService,
+    ExportService
   ],
   bootstrap: [
     AppComponent
