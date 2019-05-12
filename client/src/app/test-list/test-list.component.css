@@ -50,3 +50,9 @@ mat-cell {
   display: flex;
   justify-content: center;
 }
+
+#hidden-export-container {
+  overflow: hidden;
+  opacity: 0.0;
+  font-size: 2em;
+}
