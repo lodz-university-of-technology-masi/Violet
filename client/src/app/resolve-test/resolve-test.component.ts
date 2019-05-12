@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {ResolveTestModel} from '../shared/model/resolve-test-model';
 import {MessageService} from '../shared/services/message.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-resolve-test',

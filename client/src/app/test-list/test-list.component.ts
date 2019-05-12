@@ -1,23 +1,27 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, DoCheck} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {TestListWithVersions, TestVersion} from '../shared/model/test-model';
+import {TestListWithVersions, TestVersion, TestVersionContentModel, QuestionModel} from '../shared/model/test-model';
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-test-list',
   templateUrl: './test-list.component.html',
   styleUrls: ['./test-list.component.css']
 })
-export class TestListComponent implements OnInit {
+export class TestListComponent implements OnInit, DoCheck {
 
   tests: TestListWithVersions[];
+  questions: QuestionModel[] = [];
+  private triggerExport = false;
 
   showDetailedTable = false;
 
   displayedColumns: string[] = ['id', 'name', 'delete', 'choose'];
-  displayedColumnsDetailed: string[] = ['id', 'name', 'active', 'modify'];
+  displayedColumnsDetailed: string[] = ['id', 'name', 'active', 'modify', 'export'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -31,7 +35,13 @@ export class TestListComponent implements OnInit {
 
   ngOnInit() {
     this.updateTable();
+  }
 
+  ngDoCheck(): void {
+    if(this.triggerExport) {
+      this.triggerExport = false;
+      this.exportPdf();
+    }
   }
 
   updateTable() {
@@ -67,4 +77,34 @@ export class TestListComponent implements OnInit {
   onModifyClick(test: TestVersion) {
     //TODO: implement
   }
+
+  onPdfExportClick(test: TestVersion) {
+    this.testService.getTest(test.id).subscribe(t => {
+      this.questions = this.questions
+      .concat(t.test.choiceQuestions)
+      .concat(t.test.numericQuestions)
+      .concat(t.test.openQuestions)
+      .concat(t.test.scaleQuestions);
+      this.triggerExport = true;
+      });
+
+
+  }
+  exportPdf() {
+    var data = document.getElementById('export-container');
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('image/png')  
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 10;  
+      pdf.addImage(contentDataURL, 'PNG', position, position, imgWidth, imgHeight)  
+      pdf.save('MYPdf.pdf'); // Generated PDF   
+    });
+  }
+
 }
