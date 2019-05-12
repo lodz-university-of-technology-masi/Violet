@@ -34,6 +34,8 @@ export class TestService {
 
   public getCurrentRedactorTests() {
     return this.http.get<TestListWithVersions[]>(`${this.API}/redactor/list/test`);
+  }
+
   public addTest(newTest: string) {
     const headers = {'Content-type': 'application/json'};
     return this.http.post(`${this.API}/redactor/test/add`, newTest, {headers});

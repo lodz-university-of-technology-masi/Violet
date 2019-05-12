@@ -110,10 +110,13 @@ const appRoutes: Routes = [
     }
   },
   {
-  path: 'test-list-redactor',
+    path: 'test-list-redactor',
     component: RedactorTestListComponent,
     canActivate: [AuthGuard], data: {
-    permittedRoles: [UserRole.redactor]
+      permittedRoles: [UserRole.redactor]
+    }
+  },
+  {
     path: 'test-add',
     component: TestAddComponent,
     canActivate: [AuthGuard], data: {
@@ -146,8 +149,7 @@ export function createTranslateLoader(http: HttpClient) {
     RedactorAddComponent,
     RedactorEditComponent,
     TestListComponent,
-    RedactorTestListComponent
-    TestListComponent,
+    RedactorTestListComponent,
     TestAddComponent
   ],
   imports: [
