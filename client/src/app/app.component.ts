@@ -65,6 +65,10 @@ export class AppComponent {
     this.router.navigate(['/test-list']);
   }
 
+  onAddTestClick() {
+    this.router.navigate(['/test-add']);
+  }
+
   onLogoutClick() {
     localStorage.removeItem('token');
     this.router.navigate(['']);

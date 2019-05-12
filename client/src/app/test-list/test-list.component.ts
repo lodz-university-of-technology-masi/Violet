@@ -83,6 +83,10 @@ export class TestListComponent implements OnInit, DoCheck {
     });
   }
 
+  onAddClick() {
+    this.router.navigate(['/test-add']);
+  }
+  
   onPdfExportClick(test: TestVersion) {
     this.testService.getTest(test.id).subscribe(t => {
       this.questions = this.questions
@@ -98,5 +102,4 @@ export class TestListComponent implements OnInit, DoCheck {
     var data = document.getElementById('export-container');
     this.exportService.exportPdf(data);
   }
-
 }
