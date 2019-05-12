@@ -33,6 +33,8 @@ import {AuthGuard} from './shared/services/auth-guard.service';
 import {UserRole} from './shared/model/user-model';
 import { RedactorTestListComponent } from './redactor-test-list/redactor-test-list.component';
 import { RedactorEditComponent } from './redactor-edit/redactor-edit.component';
+import {TestAddComponent} from './test-add/test-add.component';
+import {MatIconModule} from '@angular/material/icon';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -112,6 +114,10 @@ const appRoutes: Routes = [
     component: RedactorTestListComponent,
     canActivate: [AuthGuard], data: {
     permittedRoles: [UserRole.redactor]
+    path: 'test-add',
+    component: TestAddComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
     }
   },
   {
@@ -141,6 +147,8 @@ export function createTranslateLoader(http: HttpClient) {
     RedactorEditComponent,
     TestListComponent,
     RedactorTestListComponent
+    TestListComponent,
+    TestAddComponent
   ],
   imports: [
     BrowserModule,
@@ -171,7 +179,8 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MatIconModule
   ],
   providers: [
     AuthService,

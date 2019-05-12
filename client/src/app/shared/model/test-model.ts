@@ -25,6 +25,19 @@ export interface TestModel {
     numericQuestions: NumericQuestionModel[];
 }
 
+export interface NewTest {
+  languageId: string;
+  test: NewTestModel;
+}
+
+export interface NewTestModel {
+  name: string;
+  openQuestions: OpenQuestionModel[];
+  choiceQuestions: ChoiceQuestionModel[];
+  scaleQuestions: ScaleQuestionModel[];
+  numericQuestions: NumericQuestionModel[];
+}
+
 export interface QuestionModel {
     question: string;
 }
