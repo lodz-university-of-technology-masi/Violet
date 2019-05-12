@@ -37,6 +37,10 @@ button {
   flex: 1.0;
 }
 
+.button-cell-4 {
+  flex: 0.5;
+}
+
 .mat-button {
   white-space: normal;
 }

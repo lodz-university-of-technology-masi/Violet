@@ -40,4 +40,8 @@ export class TestService {
     const headers = {'Content-type': 'application/json'};
     return this.http.post(`${this.API}/redactor/test/add`, newTest, {headers});
   }
+
+  public assignPosition(positionId: string, testId: string) {
+    return this.http.put(`${this.API}/moderator/test/assign?positionId=${positionId}&testId=${testId}`, null);
+  }
 }
