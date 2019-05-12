@@ -4,11 +4,11 @@
 
   <mat-card-content>
 
-    <ng-container>
-        <button mat-button mat-raised-button color='primary' (click)='onAddClick()'> Add </button>
-    </ng-container>
-
     <div class="example-container mat-elevation-z8">
+      <ng-container>
+        <button mat-button mat-raised-button color='primary' (click)='onAddClick()'>Add New Test</button>
+      </ng-container>
+
       <mat-table #table matSort [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">

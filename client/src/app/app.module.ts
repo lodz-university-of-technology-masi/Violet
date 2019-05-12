@@ -32,6 +32,7 @@ import {TestListComponent} from './test-list/test-list.component';
 import {AuthGuard} from './shared/services/auth-guard.service';
 import {UserRole} from './shared/model/user-model';
 import {TestAddComponent} from './test-add/test-add.component';
+import {MatIconModule} from '@angular/material/icon';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -161,7 +162,8 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MatIconModule
   ],
   providers: [
     AuthService,

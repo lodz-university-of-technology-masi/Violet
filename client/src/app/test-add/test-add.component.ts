@@ -98,14 +98,47 @@ export class TestAddComponent implements OnInit {
     this.choiceId++;
   }
 
+  removeQuestion(type: string, id: number): void {
+    switch (type) {
+      case 'Open question':
+        this.questions = this.testForm.get('openQuestions') as FormArray;
+        break;
+      case 'Choice question':
+        this.questions = this.testForm.get('choiceQuestions') as FormArray;
+        this.arrayOfChoiceAnswers.splice(id, 1);
+        this.arrayOfChoiceAnswersNumber.splice(id, 1);
+        break;
+      case 'Scale question':
+        this.questions = this.testForm.get('scaleQuestions') as FormArray;
+        this.arrayOfScaleAnswers.splice(id, 1);
+        this.arrayOfScaleAnswersNumber.splice(id, 1);
+        break;
+      case 'Numeric question':
+        this.questions = this.testForm.get('numericQuestions') as FormArray;
+        break;
+      default:
+    }
+    this.questions.removeAt(id);
+  }
+
   addChoiceAnswerInput(i: number): void {
     this.arrayOfChoiceAnswers[i].push('');
     this.arrayOfChoiceAnswersNumber[i] = new Array(this.arrayOfChoiceAnswersNumber[i].length + 1);
   }
 
+  removeChoiceAnswerInput(i: number): void {
+    this.arrayOfChoiceAnswers[i].pop();
+    this.arrayOfChoiceAnswersNumber[i].pop();
+  }
+
   addScaleAnswerInput(i: number): void {
-    this.arrayOfScaleAnswers[i] = new Array(this.arrayOfScaleAnswers[i].length + 1);
+    this.arrayOfScaleAnswers[i].push('');
     this.arrayOfScaleAnswersNumber[i] = new Array(this.arrayOfScaleAnswersNumber[i].length + 1);
+  }
+
+  removeScaleAnswerInput(i: number): void {
+    this.arrayOfScaleAnswers[i].pop();
+    this.arrayOfScaleAnswersNumber[i].pop();
   }
 
   addChoiceAnswer(i: number, j: number, value: string): void {
