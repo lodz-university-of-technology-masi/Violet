@@ -103,3 +103,22 @@
 
   </form>
 </div>
+<form class="widthStyle topMargin" #wikiForm="ngForm">
+  <mat-card>
+
+    <mat-card-title>Searching</mat-card-title>
+
+    <mat-card-content>
+
+      <mat-form-field>
+        <input matInput placeholder="Type" [(ngModel)]="value" name="value">
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openWiki(value)">Search Wiki </button>
+      <button mat-raised-button color="primary" (click)="findSynonyms(value)">Search Synonyms</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

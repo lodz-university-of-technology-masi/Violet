@@ -20,6 +20,7 @@ export class TestAddComponent implements OnInit {
   arrayOfChoiceAnswers: any[];
   arrayOfChoiceAnswersNumber: any[];
   arrayOfScaleAnswers: any[];
+  value = '';
   arrayOfScaleAnswersNumber: any[];
   newTestModel: NewTestModel = {
     name: '',
@@ -97,7 +98,15 @@ export class TestAddComponent implements OnInit {
     }
     this.choiceId++;
   }
-
+  onType(value: string) {
+    this.value = value;
+  }
+  openWiki(value: string) {
+    window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+  }
+  findSynonyms(value: string) {
+  window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+}
   removeQuestion(type: string, id: number): void {
     switch (type) {
       case 'Open question':
