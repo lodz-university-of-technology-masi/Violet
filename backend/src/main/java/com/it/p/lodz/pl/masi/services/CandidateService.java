@@ -4,6 +4,7 @@ import com.it.p.lodz.pl.masi.dtos.RegisterCandidateDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
 import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.entities.*;
+import com.it.p.lodz.pl.masi.exceptions.CandidateNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
 import com.it.p.lodz.pl.masi.exceptions.WrongAnswerNumberException;
@@ -77,8 +78,14 @@ public class CandidateService {
     public void resolveTest(ResolveTestDto dto)
     {
         var resolvedTest = new ResolvedTestEntity();
-        var candidate = candidateTokenRepository.getAllByToken(dto.getCandidateToken()).get(0).getCandidateByCandidateId();
         var testVersion = testVersionRepository.getOne(Long.parseLong(dto.getTest().getId()));
+        
+        CandidateEntity candidate = null;
+        try {
+            candidate = candidateTokenRepository.getAllByToken(dto.getCandidateToken()).get(0).getCandidateByCandidateId();
+        } catch(IndexOutOfBoundsException e) {
+            throw new CandidateNotFoundException();
+        }
 
         var questions = testVersion.getTest().getChoiceQuestions().size() +
                 testVersion.getTest().getScaleQuestions().size() +
