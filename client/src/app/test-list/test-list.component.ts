@@ -5,6 +5,7 @@ import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
 import { ExportService } from '../shared/services/export.service';
+import {PositionsService} from '../shared/services/positions.service';
 import {TestPosition} from '../shared/model/position-model';
 
 @Component({
@@ -55,6 +56,7 @@ export class TestListComponent implements OnInit, DoCheck {
       this.showDetailedTable = false;
     });
     this.positionsService.getAll().subscribe(data => {
+      this.positions = data.sort((a, b) => a.id - b.id );
     });
   }
 
