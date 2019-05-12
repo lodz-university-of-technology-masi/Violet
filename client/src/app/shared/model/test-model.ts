@@ -39,6 +39,12 @@ export interface NewTestModel {
   numericQuestions: NumericQuestionModel[];
 }
 
+export interface ModifiedTest {
+  versionId: string;
+  test: NewTestModel;
+  version: string;
+}
+
 export interface QuestionModel {
     question: string;
 }
