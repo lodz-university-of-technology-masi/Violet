@@ -56,3 +56,8 @@ mat-cell {
   opacity: 0.0;
   font-size: 2em;
 }
+
+.icon {
+  height: 30px;
+  margin-left: 5px;
+}

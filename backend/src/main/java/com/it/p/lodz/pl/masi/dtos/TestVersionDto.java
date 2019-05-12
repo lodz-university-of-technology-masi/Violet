@@ -5,9 +5,18 @@ public class TestVersionDto {
     private String testName;
     private Boolean isActive;
     private Long version;
+    private String languageName;
 
     public String getId() {
         return id;
+    }
+
+    public String getLanguageName() {
+        return languageName;
+    }
+
+    public void setLanguageName(String languageName) {
+        this.languageName = languageName;
     }
 
     public void setId(String id) {

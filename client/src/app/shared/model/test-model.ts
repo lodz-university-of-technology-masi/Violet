@@ -14,6 +14,7 @@ export interface TestVersion {
   testName: string;
   version: number;
   active: boolean;
+  languageName: string;
 }
 
 export interface TestModel {
