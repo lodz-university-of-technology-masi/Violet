@@ -1,0 +1,53 @@
+mat-icon {
+  color: white;
+}
+
+mat-radio-button {
+  margin-top: 10px;
+  padding: 6px;
+}
+
+a[mat-button] {
+  background-color: #c2185b;
+  color: #ffffff;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.secondary-title {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.answers, .questions {
+  margin-left: 2.5em;
+  margin-bottom: 16px;
+}
+
+.inside-button {
+  margin-left: 8px !important;
+}
+
+.end-button {
+  margin-left: 8px !important;
+}
+
+.cancel-button {
+  background-color: inherit !important;
+}

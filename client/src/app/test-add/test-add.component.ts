@@ -14,7 +14,6 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class TestAddComponent implements OnInit {
   languages: Language[];
-  choiceId: 0;
   questionTypes = ['Open question', 'Choice question', 'Scale question', 'Numeric question'];
   questionType: string;
   arrayOfChoiceAnswers: any[];
@@ -96,7 +95,6 @@ export class TestAddComponent implements OnInit {
         break;
       default:
     }
-    this.choiceId++;
   }
   onType(value: string) {
     this.value = value;

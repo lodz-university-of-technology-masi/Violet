@@ -4,7 +4,7 @@ import {TestListWithVersions, TestVersion, TestVersionContentModel, QuestionMode
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
-import { ExportService } from '../shared/services/export.service';
+import {ExportService} from '../shared/services/export.service';
 import {PositionsService} from '../shared/services/positions.service';
 import {TestPosition} from '../shared/model/position-model';
 
@@ -81,7 +81,7 @@ export class TestListComponent implements OnInit, DoCheck {
   }
 
   onModifyClick(test: TestVersion) {
-    //TODO: implement
+    this.router.navigate(['/test-modify'], {queryParams: {testId: test.id}});
   }
 
   onCsvExportClick(test: TestVersion) {

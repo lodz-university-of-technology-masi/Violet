@@ -44,4 +44,9 @@ export class TestService {
   public assignPosition(positionId: string, testId: string) {
     return this.http.put(`${this.API}/moderator/test/assign?positionId=${positionId}&testId=${testId}`, null);
   }
+
+  public modifyTest(modifiedTest: string) {
+    const headers = {'Content-type': 'application/json'};
+    return this.http.put(`${this.API}/moderator/test`, modifiedTest, {headers});
+  }
 }

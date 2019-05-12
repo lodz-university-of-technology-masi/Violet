@@ -31,11 +31,12 @@ import {RedactorAddComponent} from './redactor-add/redactor-add.component';
 import {TestListComponent} from './test-list/test-list.component';
 import {AuthGuard} from './shared/services/auth-guard.service';
 import {UserRole} from './shared/model/user-model';
-import { RedactorTestListComponent } from './redactor-test-list/redactor-test-list.component';
-import { RedactorEditComponent } from './redactor-edit/redactor-edit.component';
-import { ExportService } from './shared/services/export.service';
+import {RedactorTestListComponent} from './redactor-test-list/redactor-test-list.component';
+import {RedactorEditComponent} from './redactor-edit/redactor-edit.component';
+import {ExportService} from './shared/services/export.service';
 import {TestAddComponent} from './test-add/test-add.component';
 import {MatIconModule} from '@angular/material/icon';
+import {TestModifyComponent} from './test-modify/test-modify.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -125,6 +126,13 @@ const appRoutes: Routes = [
     }
   },
   {
+    path: 'test-modify',
+    component: TestModifyComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.moderator]
+    }
+  },
+  {
     path: '**',
     component: HomeComponent,
     canActivate: [AuthGuard], data: {
@@ -151,7 +159,8 @@ export function createTranslateLoader(http: HttpClient) {
     RedactorEditComponent,
     TestListComponent,
     RedactorTestListComponent,
-    TestAddComponent
+    TestAddComponent,
+    TestModifyComponent
   ],
   imports: [
     BrowserModule,
