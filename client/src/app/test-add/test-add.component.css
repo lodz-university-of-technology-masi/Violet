@@ -51,3 +51,20 @@ a[mat-button] {
 .cancel-button {
   background-color: inherit !important;
 }
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  background-color: yellow;
+}
+
+.example-full-width {
+  width: 100%;
+  background-color: yellow;
+}
+.widthStyle {
+  width: 20%;
+}
+.topMargin {
+  margin-left: 30px;
+}
