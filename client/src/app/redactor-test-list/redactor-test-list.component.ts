@@ -17,7 +17,7 @@ export class RedactorTestListComponent implements OnInit {
   showDetailedTable = false;
 
   displayedColumns: string[] = ['id', 'name', 'add', 'delete', 'choose'];
-  displayedColumnsDetailed: string[] = ['id', 'name', 'active', 'modify'];
+  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -38,6 +38,9 @@ export class RedactorTestListComponent implements OnInit {
   updateTable() {
     this.testService.getCurrentRedactorTests().subscribe(data => {
       this.tests = data.sort((a, b) => a.id - b.id);
+      for (let i = 0; i < this.tests.length; i++) {
+        this.tests[i].testVersions.sort((a, b) => a.id - b.id);
+      }
       this.dataSource = new MatTableDataSource<TestListWithVersions>(this.tests);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -52,12 +55,6 @@ export class RedactorTestListComponent implements OnInit {
     this.showDetailedTable = true;
   }
 
-  onChangeStateClick(test: TestVersion) {
-    //TODO: implement
-
-    this.updateTable();
-  }
-
   onDeleteClick(test: TestListWithVersions) {
     this.testService.redactorDeleteTest(test.id).subscribe(() => {
       this.messageService.success('test_deleted');
@@ -69,7 +66,11 @@ export class RedactorTestListComponent implements OnInit {
     this.router.navigate(['/test-modify'], {queryParams: {testId: test.id}});
   }
 
-  onAddClick(test: TestVersion) {
-    this.router.navigate(['/test-add-version'], {queryParams: {testId: test.id}});
+  onAddVersionClick(test: TestListWithVersions) {
+    this.router.navigate(['/test-add-version'], {queryParams: {testId: test.id, testVersionId: test.testVersions[0].id}});
+  }
+
+  onAddClick() {
+    this.router.navigate(['/test-add']);
   }
 }

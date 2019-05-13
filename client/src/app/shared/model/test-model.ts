@@ -6,11 +6,12 @@ export interface TestVersionContentModel {
 
 export interface TestListWithVersions {
   id: number;
+  positionId: number;
   testVersions: TestVersion[];
 }
 
 export interface TestVersion {
-  id: string;
+  id: number;
   testName: string;
   version: number;
   active: boolean;
@@ -32,7 +33,7 @@ export interface NewTest {
 }
 
 export interface NewTestVersion {
-  testId: string;
+  testId: number;
   languageId: string;
   test: NewTestModel;
 }
@@ -67,6 +68,7 @@ export interface QuestionModel {
 }
 
 export interface OpenQuestionModel extends QuestionModel {}
+
 export interface ChoiceQuestionModel extends QuestionModel {
     answers: string[];
 }

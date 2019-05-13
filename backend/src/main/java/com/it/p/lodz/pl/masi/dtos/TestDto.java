@@ -4,6 +4,7 @@ import java.util.List;
 
 public class TestDto {
     private String id;
+    private String positionId;
     private List<TestVersionDto> testVersions;
 
     public String getId() {
@@ -20,5 +21,13 @@ public class TestDto {
 
     public void setTestVersions(List<TestVersionDto> versions) {
         this.testVersions = versions;
+    }
+
+    public String getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
     }
 }

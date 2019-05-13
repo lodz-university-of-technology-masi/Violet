@@ -22,7 +22,7 @@ export class TestListComponent implements OnInit, DoCheck {
   showDetailedTable = false;
 
   displayedColumns: string[] = ['id', 'name', 'delete', 'assign', 'choose'];
-  displayedColumnsDetailed: string[] = ['id', 'name', 'active', 'modify', 'export'];
+  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify', 'export'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -50,6 +50,9 @@ export class TestListComponent implements OnInit, DoCheck {
   updateTable() {
     this.testService.getAll().subscribe(data => {
       this.tests = data.sort((a, b) => a.id - b.id);
+      for (let i = 0; i < this.tests.length; i++) {
+        this.tests[i].testVersions.sort((a, b) => a.id - b.id);
+      }
       this.dataSource = new MatTableDataSource<TestListWithVersions>(this.tests);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -65,12 +68,6 @@ export class TestListComponent implements OnInit, DoCheck {
     this.dataSourceDetailed.paginator = this.paginator;
     this.dataSourceDetailed.sort = this.sort;
     this.showDetailedTable = true;
-  }
-
-  onChangeStateClick(test: TestVersion) {
-    //TODO: implement
-
-    this.updateTable();
   }
 
   onDeleteClick(test: TestListWithVersions) {
