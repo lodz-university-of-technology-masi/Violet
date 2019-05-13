@@ -37,6 +37,8 @@ import {ExportService} from './shared/services/export.service';
 import {TestAddComponent} from './test-add/test-add.component';
 import {MatIconModule} from '@angular/material/icon';
 import {TestModifyComponent} from './test-modify/test-modify.component';
+import { ResolveTestListComponent } from './resolve-test-list/resolve-test-list.component';
+import { TestAddVersionComponent } from './test-add-version/test-add-version.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -129,7 +131,21 @@ const appRoutes: Routes = [
     path: 'test-modify',
     component: TestModifyComponent,
     canActivate: [AuthGuard], data: {
-      permittedRoles: [UserRole.moderator]
+      permittedRoles: [UserRole.moderator, UserRole.redactor]
+    }
+  },
+  {
+    path: 'resolve-test-list',
+    component: ResolveTestListComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.redactor]
+    }
+  },
+  {
+    path: 'test-add-version',
+    component: TestAddVersionComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.redactor]
     }
   },
   {
@@ -160,7 +176,9 @@ export function createTranslateLoader(http: HttpClient) {
     TestListComponent,
     RedactorTestListComponent,
     TestAddComponent,
-    TestModifyComponent
+    TestModifyComponent,
+    ResolveTestListComponent,
+    TestAddVersionComponent
   ],
   imports: [
     BrowserModule,

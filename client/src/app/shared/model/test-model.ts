@@ -31,6 +31,12 @@ export interface NewTest {
   test: NewTestModel;
 }
 
+export interface NewTestVersion {
+  testId: string;
+  languageId: string;
+  test: NewTestModel;
+}
+
 export interface NewTestModel {
   name: string;
   openQuestions: OpenQuestionModel[];
@@ -43,6 +49,17 @@ export interface ModifiedTest {
   versionId: string;
   test: NewTestModel;
   version: string;
+}
+
+export interface ResolvedTest {
+  id: string;
+  testName: string;
+  pointsSum: string;
+  pointsMax: string;
+  version: string;
+  candidateByCandidateIdEmail: string;
+  positionByPositionIdName: string;
+  languageByLanguageIdName: string;
 }
 
 export interface QuestionModel {

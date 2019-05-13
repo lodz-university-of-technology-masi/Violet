@@ -1,0 +1,103 @@
+<div class="example-container">
+  <form [formGroup]="testForm" #test="ngForm" (ngSubmit)='addTest()'>
+    <mat-card>
+
+      <mat-card-title>New Test Version Form</mat-card-title>
+
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput placeholder="Test name" formControlName="name" required>
+        </mat-form-field>
+
+        <div class="title">Test language:</div>
+        <mat-radio-group name="testLanguage" formControlName="languageId" required>
+          <mat-radio-button class="language-option" *ngFor="let language of languages" [value]=language.id required>{{language.name}}</mat-radio-button>
+        </mat-radio-group>
+
+        <div class="title">Questions:</div>
+
+        <div class="secondary-title">Open questions:</div>
+        <div class="question" *ngFor="let question of testForm.get('openQuestions').controls; let i = index;">
+          <mat-form-field formArrayName="openQuestions">
+            <div [formGroupName]="i">
+              <input formControlName="question" matInput placeholder="Open question text">
+            </div>
+          </mat-form-field>
+        </div>
+
+        <div class="secondary-title">Choice questions:</div>
+        <div class="question" formArrayName="choiceQuestions" *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
+          <mat-form-field [formGroupName]="i">
+            <input formControlName="question" matInput placeholder="Choice question text"/>
+          </mat-form-field>
+          <div class="answers">
+            <div *ngFor="let answer of arrayOfChoiceAnswers[i]; let j = index;">
+              <mat-form-field>
+                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer" (change)='addChoiceAnswer(i, j, $event.target.value)'/>
+              </mat-form-field>
+              <a class="inside-button" mat-button type="removeAnswer" (click)='removeChoiceAnswerInput(i)'>
+                <mat-icon>delete</mat-icon>
+              </a>
+            </div>
+            <a class="mat-button-wrapper" mat-button type="addAnswer" (click)='addChoiceAnswerInput(i)'>Add answer</a>
+          </div>
+        </div>
+
+        <div class="secondary-title">Scale questions:</div>
+        <div class="question" formArrayName="scaleQuestions" *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
+          <mat-form-field [formGroupName]="i">
+            <input formControlName="question" matInput placeholder="Scale question text"/>
+          </mat-form-field>
+          <div class="answers">
+            <div *ngFor="let answer of arrayOfScaleAnswers[i]; let j = index;">
+              <mat-form-field>
+                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer" (change)='addScaleAnswer(i, j, $event.target.value)'/>
+              </mat-form-field>
+              <a class="inside-button" mat-button type="removeAnswer" (click)='removeScaleAnswerInput(i)'>
+                <mat-icon>delete</mat-icon>
+              </a>
+            </div>
+            <a mat-button type="addAnswer" (click)='addScaleAnswerInput(i)'>Add answer</a>
+          </div>
+        </div>
+
+        <div class="secondary-title">Numeric questions:</div>
+        <div class="question" *ngFor="let question of testForm.get('numericQuestions').controls; let i = index;">
+          <mat-form-field formArrayName="numericQuestions">
+            <div [formGroupName]="i">
+              <input formControlName="question" matInput placeholder="Numeric question text">
+            </div>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!test.form.valid">
+          Add test version
+        </button>
+        <a class="end-button cancel-button" mat-button routerLink="/test-list">Cancel</a>
+      </mat-card-actions>
+    </mat-card>
+
+  </form>
+</div>
+
+<form class="widthStyle topMargin" #wikiForm="ngForm">
+  <mat-card>
+
+    <mat-card-title>Searching</mat-card-title>
+
+    <mat-card-content>
+
+      <mat-form-field>
+        <input matInput placeholder="Type" [(ngModel)]="value" name="value">
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openWiki(value)">Search Wiki </button>
+      <button mat-raised-button color="primary" (click)="findSynonyms(value)">Search Synonyms</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

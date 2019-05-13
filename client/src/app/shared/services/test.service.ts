@@ -2,7 +2,7 @@ import {Injectable, Input} from '@angular/core';
 import {Configuration} from '../../configuration';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestListWithVersions, TestVersionContentModel} from '../model/test-model';
+import {ResolvedTest, TestListWithVersions, TestVersionContentModel} from '../model/test-model';
 import {ResolveTestModel} from '../model/resolve-test-model';
 
 @Injectable()
@@ -48,5 +48,14 @@ export class TestService {
   public modifyTest(modifiedTest: string) {
     const headers = {'Content-type': 'application/json'};
     return this.http.put(`${this.API}/moderator/test`, modifiedTest, {headers});
+  }
+
+  public getCurrentRedactorResolvedTests() {
+    return this.http.get<ResolvedTest[]>(`${this.API}/redactor/list/test/resolved`);
+  }
+
+  public addTestVersion(newTestVersion: string) {
+    const headers = {'Content-type': 'application/json'};
+    return this.http.post(`${this.API}/redactor/test/version/add`, newTestVersion, {headers});
   }
 }

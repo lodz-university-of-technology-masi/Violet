@@ -1,0 +1,74 @@
+<mat-card class="card">
+
+  <mat-card-title>Resolved tests</mat-card-title>
+
+  <mat-card-content>
+
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table matSort [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+          <mat-cell class='id-cell' *matCellDef="let tests">
+            {{tests.id}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell class="button-cell-1" *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell class="button-cell-1" *matCellDef="let tests">
+            {{tests.testName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="scored points">
+          <mat-header-cell class="button-cell-1" *matHeaderCellDef mat-sort-header>Scored Points</mat-header-cell>
+          <mat-cell class="button-cell-1" *matCellDef="let tests">
+            {{tests.pointsSum}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="max points">
+          <mat-header-cell class="button-cell-1" *matHeaderCellDef mat-sort-header>Max Points</mat-header-cell>
+          <mat-cell class="button-cell-1" *matCellDef="let tests">
+            {{tests.pointsMax}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="version">
+          <mat-header-cell class="button-cell-1" *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
+          <mat-cell class="button-cell-1" *matCellDef="let tests">
+            {{tests.version}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="candidate email">
+          <mat-header-cell class="button-cell-2" *matHeaderCellDef mat-sort-header>Candidate's Email</mat-header-cell>
+          <mat-cell class="button-cell-2" *matCellDef="let tests">
+            {{tests.candidateByCandidateIdEmail}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <mat-header-cell class="button-cell-2" *matHeaderCellDef mat-sort-header>Position</mat-header-cell>
+          <mat-cell class="button-cell-2" *matCellDef="let tests">
+            {{tests.positionByPositionIdName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="language">
+          <mat-header-cell class="button-cell-1" *matHeaderCellDef mat-sort-header>Language</mat-header-cell>
+          <mat-cell class="button-cell-1" *matCellDef="let tests">
+            {{tests.languageByLanguageIdName}}
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

@@ -16,7 +16,7 @@ export class RedactorTestListComponent implements OnInit {
 
   showDetailedTable = false;
 
-  displayedColumns: string[] = ['id', 'name', 'delete', 'choose'];
+  displayedColumns: string[] = ['id', 'name', 'add', 'delete', 'choose'];
   displayedColumnsDetailed: string[] = ['id', 'name', 'active', 'modify'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -66,6 +66,10 @@ export class RedactorTestListComponent implements OnInit {
   }
 
   onModifyClick(test: TestVersion) {
-    //TODO: implement
+    this.router.navigate(['/test-modify'], {queryParams: {testId: test.id}});
+  }
+
+  onAddClick(test: TestVersion) {
+    this.router.navigate(['/test-add-version'], {queryParams: {testId: test.id}});
   }
 }
