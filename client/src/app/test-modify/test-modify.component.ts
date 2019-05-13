@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {Language} from '../shared/model/candidate-model';
+import {Component, OnInit} from '@angular/core';
 import {ModifiedTest, NewTest, NewTestModel} from '../shared/model/test-model';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestService} from '../shared/services/test.service';
 import {CandidateService} from '../shared/services/candidate.service';
 import {MessageService} from '../shared/services/message.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-test-modify',
@@ -13,7 +13,7 @@ import {MessageService} from '../shared/services/message.service';
   styleUrls: ['./test-modify.component.css']
 })
 export class TestModifyComponent implements OnInit {
-  testId: string;
+  testId: number;
   newTestModel: NewTestModel = {
     name: '',
     openQuestions: [],
@@ -34,7 +34,9 @@ export class TestModifyComponent implements OnInit {
   questions: FormArray;
 
   constructor(private route: ActivatedRoute, private router: Router, private testService: TestService,
-              private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) {}
+              private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder,
+              private location: Location) {
+  }
 
   ngOnInit() {
     this.testForm = this.formBuilder.group({
@@ -45,7 +47,7 @@ export class TestModifyComponent implements OnInit {
       numericQuestions: this.formBuilder.array([])
     });
     this.route.queryParamMap.subscribe(params => {
-      this.testId = params.get('testId');
+      this.testId = Number(params.get('testId'));
     });
     this.testService.getTest(this.testId).subscribe(data => {
       this.newTestModel.name = data.test.name;
@@ -60,6 +62,8 @@ export class TestModifyComponent implements OnInit {
         for (let j = 0; j < data.test.choiceQuestions[i].answers.length; j++) {
           this.arrayOfChoiceAnswers[i][j] = data.test.choiceQuestions[i].answers[j];
         }
+      }
+      for (let i = 0; i < data.test.scaleQuestions.length; i++) {
         this.arrayOfScaleAnswers[i] = new Array(new Array(data.test.scaleQuestions[i].answers.length));
         for (let j = 0; j < data.test.scaleQuestions[i].answers.length; j++) {
           this.arrayOfScaleAnswers[i][j] = data.test.scaleQuestions[i].answers[j];
@@ -187,7 +191,11 @@ export class TestModifyComponent implements OnInit {
     this.modifiedTest.test.numericQuestions = this.testForm.controls.numericQuestions.value;
     this.testService.modifyTest(JSON.stringify(this.modifiedTest)).subscribe(() => {
       this.messageService.success('Test has been modified.');
-      this.router.navigate(['/test-list']);
+      this.location.back();
     });
+  }
+
+  cancel() {
+    this.location.back();
   }
 }

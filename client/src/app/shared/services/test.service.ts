@@ -12,7 +12,7 @@ export class TestService {
   constructor(private http: HttpClient, private config: Configuration) {
   }
 
-  getTest(id: string): Observable<TestVersionContentModel> {
+  getTest(id: number): Observable<TestVersionContentModel> {
     return this.http.get<TestVersionContentModel>(this.API + '/test/version/' + id);
   }
 
@@ -41,7 +41,7 @@ export class TestService {
     return this.http.post(`${this.API}/redactor/test/add`, newTest, {headers});
   }
 
-  public assignPosition(positionId: string, testId: string) {
+  public assignPosition(positionId: string, testId: number) {
     return this.http.put(`${this.API}/moderator/test/assign?positionId=${positionId}&testId=${testId}`, null);
   }
 

@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 })
 export class ResolveTestComponent implements OnInit {
   public test: TestVersionContentModel;
-  private testVersionId: string;
+  private testVersionId: number;
   private token: string;
   questions: QuestionModel[] = [];
   answers: string[];
@@ -24,7 +24,7 @@ export class ResolveTestComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(p => {
-      this.testVersionId = p.get('testVersionId');
+      this.testVersionId = Number(p.get('testVersionId'));
       this.token = p.get('token');
     });
 

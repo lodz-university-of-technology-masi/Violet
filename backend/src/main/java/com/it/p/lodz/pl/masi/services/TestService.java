@@ -61,6 +61,9 @@ public class TestService {
         for (var test : groupedVersions.keySet()) {
             var testDto = new TestDto();
             testDto.setId(Long.toString(test.getId()));
+            if(test.getPositionByPositionId() != null) {
+                testDto.setPositionId(Long.toString(test.getPositionByPositionId().getId()));
+            }
             testDto.setTestVersions(modelMapper.map(groupedVersions.get(test), listType));
             tests.add(testDto);
         }
@@ -186,7 +189,8 @@ public class TestService {
                 testVersionTest.getOpenQuestions().size() != newTestVersion.getOpenQuestions().size() ||
                 testVersionTest.getScaleQuestions().size() != newTestVersion.getScaleQuestions().size()
         ) {
-            throw new TestVersionNotEquivalent();
+            //TODO: Review
+//            throw new TestVersionNotEquivalent();
         }
     }
 

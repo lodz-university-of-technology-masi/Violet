@@ -13,7 +13,8 @@ import {MessageService} from '../shared/services/message.service';
   styleUrls: ['./test-add-version.component.css']
 })
 export class TestAddVersionComponent implements OnInit {
-  testId = '';
+  testId: number;
+  testVersionId: number;
   languages: Language[];
   arrayOfChoiceAnswers: any[];
   arrayOfScaleAnswers: any[];
@@ -26,7 +27,7 @@ export class TestAddVersionComponent implements OnInit {
     numericQuestions: []
   };
   newTestVersion: NewTestVersion = {
-    testId: '',
+    testId: null,
     languageId: '',
     test: this.newTestModel
   };
@@ -49,9 +50,10 @@ export class TestAddVersionComponent implements OnInit {
       this.languages = data;
     });
     this.route.queryParamMap.subscribe(params => {
-      this.testId = params.get('testId');
+      this.testId = Number(params.get('testId'));
+      this.testVersionId = Number(params.get('testVersionId'));
     });
-    this.testService.getTest(this.testId).subscribe(data => {
+    this.testService.getTest(this.testVersionId).subscribe(data => {
       this.newTestModel.name = data.test.name;
       this.newTestModel.openQuestions = data.test.openQuestions;
       this.newTestModel.choiceQuestions = data.test.choiceQuestions;
@@ -64,6 +66,8 @@ export class TestAddVersionComponent implements OnInit {
         for (let j = 0; j < data.test.choiceQuestions[i].answers.length; j++) {
           this.arrayOfChoiceAnswers[i][j] = data.test.choiceQuestions[i].answers[j];
         }
+      }
+      for (let i = 0; i < data.test.scaleQuestions.length; i++) {
         this.arrayOfScaleAnswers[i] = new Array(new Array(data.test.scaleQuestions[i].answers.length));
         for (let j = 0; j < data.test.scaleQuestions[i].answers.length; j++) {
           this.arrayOfScaleAnswers[i][j] = data.test.scaleQuestions[i].answers[j];
