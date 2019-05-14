@@ -10,4 +10,5 @@ public interface LanguageRepository extends JpaRepository<LanguageEntity, Long> 
     List<LanguageEntity> getAllBy();
 
     Optional<LanguageEntity> getById(Long id);
+    Optional<LanguageEntity> getOneByCode(String code);
 }

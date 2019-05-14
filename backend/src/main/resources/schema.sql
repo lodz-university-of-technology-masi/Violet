@@ -85,11 +85,15 @@ create table "language"
 (
 	id bigserial primary key,
 	name varchar(32) not null CONSTRAINT language_name_unique UNIQUE,
+	code varchar(4) not null CONSTRAINT language_code_unique UNIQUE,
 	version bigint not null default 0
 );
 
 create index "language_name"
 on language(name);
+
+create index "language_code"
+on language(code);
 
 create table "test"
 (

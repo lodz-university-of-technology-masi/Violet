@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface TestRepository extends JpaRepository<TestEntity, Long> {
     List<TestEntity> getAllByPositionByPositionIdAndActiveTrueAndDeletedFalse(PositionEntity positionEntity);
-    Optional<TestEntity> getOneByIdAndUserByOwnerId(Long Id, UserEntity userEntity);
+    Optional<TestEntity> getOneByIdAndUserByOwnerIdAndDeletedFalseAndActiveTrue(Long Id, UserEntity userEntity);
 }

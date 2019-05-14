@@ -54,6 +54,10 @@ public class TestController {
         return testService.getTestVersionById(id, user.getUsername());
     }
 
+    @PutMapping("/redactor/test/version/translate/{id}")
+    public void autoTestTranslation(@PathVariable long id, @RequestParam(value = "targetLang") String targetLang) {
+        testService.autoTestTranslation(id, targetLang);
+    }
 
     @DeleteMapping("/redactor/test/{id}")
     public void deleteTestByOwner(@PathVariable long id) {
