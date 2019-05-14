@@ -13,6 +13,7 @@ import java.util.Collection;
 public class LanguageEntity {
     private long id;
     private String name;
+    private String code;
     private long version = 0;
     private Collection<CandidateEntity> candidatesById;
     private Collection<ResolvedTestEntity> resolvedTestsById;
@@ -42,6 +43,18 @@ public class LanguageEntity {
     }
 
     @Basic
+    @NotNull(message = "null_language_code")
+    @Size(min=2, max=4, message = "wrong_language_code_size")
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Basic
     @Column(name = "version")
     public long getVersion() {
         return version;
@@ -64,6 +77,7 @@ public class LanguageEntity {
                 .append(id, that.id)
                 .append(version, that.version)
                 .append(name, that.name)
+                .append(code, that.code)
                 .isEquals();
     }
 
@@ -73,6 +87,7 @@ public class LanguageEntity {
                 .append(id)
                 .append(name)
                 .append(version)
+                .append(code)
                 .toHashCode();
     }
 

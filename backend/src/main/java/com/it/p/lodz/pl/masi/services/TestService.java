@@ -5,14 +5,20 @@ import com.it.p.lodz.pl.masi.entities.LanguageEntity;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
-import com.it.p.lodz.pl.masi.exceptions.*;
+import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
+import com.it.p.lodz.pl.masi.exceptions.TestNotFoundException;
+import com.it.p.lodz.pl.masi.exceptions.TestVersionAddedWithoutMainTestException;
+import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
 import com.it.p.lodz.pl.masi.repositories.TestRepository;
 import com.it.p.lodz.pl.masi.repositories.TestVersionRepository;
+import com.it.p.lodz.pl.masi.tasks.TranslateTestTask;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -30,14 +36,19 @@ public class TestService {
     private PositionRepository positionRepository;
     private CurrentUserProvided currentUserProvided;
     private ModelMapper modelMapper;
+    private TaskExecutor taskExecutor;
 
-    public TestService(TestVersionRepository testVersionRepository, TestRepository testRepository, LanguageRepository languageRepository, PositionRepository positionRepository, CurrentUserProvided currentUserProvided, ModelMapper modelMapper) {
+    @Value("${googleTranslateApi.url}")
+    private String googleTranslateApi;
+
+    public TestService(TestVersionRepository testVersionRepository, TestRepository testRepository, LanguageRepository languageRepository, PositionRepository positionRepository, CurrentUserProvided currentUserProvided, ModelMapper modelMapper, TaskExecutor taskExecutor) {
         this.testVersionRepository = testVersionRepository;
         this.testRepository = testRepository;
         this.languageRepository = languageRepository;
         this.positionRepository = positionRepository;
         this.currentUserProvided = currentUserProvided;
         this.modelMapper = modelMapper;
+        this.taskExecutor = taskExecutor;
     }
 
     public List<TestVersionDto> getTestListForCandidate(Long positionId, Long languageId) {
@@ -61,7 +72,7 @@ public class TestService {
         for (var test : groupedVersions.keySet()) {
             var testDto = new TestDto();
             testDto.setId(Long.toString(test.getId()));
-            if(test.getPositionByPositionId() != null) {
+            if (test.getPositionByPositionId() != null) {
                 testDto.setPositionId(Long.toString(test.getPositionByPositionId().getId()));
             }
             testDto.setTestVersions(modelMapper.map(groupedVersions.get(test), listType));
@@ -81,7 +92,7 @@ public class TestService {
     public EditResolveTestVersionDto getTestVersionById(long id, String email) {
         Optional<TestVersionEntity> testVersionEntity = testVersionRepository.getOneByIdAndDeletedFalseAndActiveTrue(id);
 
-        if(testVersionEntity.isPresent() &&
+        if (testVersionEntity.isPresent() &&
                 !testVersionEntity.get().getTestByTestId().getUserByOwnerId().getEmail().equalsIgnoreCase(email))
             throw new TestVersionNotFoundException();
 
@@ -120,7 +131,7 @@ public class TestService {
     @Transactional
     public void deleteRedactorTestById(long testId) {
         var test = testRepository.findById(testId);
-        if(test.isPresent() &&
+        if (test.isPresent() &&
                 !test.get().getUserByOwnerId().getEmail().equalsIgnoreCase(currentUserProvided.getCurrentUserEntity().getEmail()))
             throw new TestNotFoundException();
 
@@ -163,7 +174,7 @@ public class TestService {
     @Transactional
     public void addTestVersion(NewTestVersionDto newTestVersionDto) {
         TestEntity testEntity = this.testRepository
-                .getOneByIdAndUserByOwnerId(Long.parseLong(newTestVersionDto.getTestId()), this.currentUserProvided.getCurrentUserEntity())
+                .getOneByIdAndUserByOwnerIdAndDeletedFalseAndActiveTrue(Long.parseLong(newTestVersionDto.getTestId()), this.currentUserProvided.getCurrentUserEntity())
                 .orElseThrow(TestNotFoundException::new);
 
         this.checkIfTestVersionIsEquivalent(newTestVersionDto.getTest(), testEntity);
@@ -204,7 +215,7 @@ public class TestService {
 
         for (var test : groupedVersions.keySet()) {
             var testDto = new TestDto();
-            if(test.getUserByOwnerId().getId() == currentUserProvided.getCurrentUserEntity().getId() && test.isDeleted()==false){
+            if (test.getUserByOwnerId().getId() == currentUserProvided.getCurrentUserEntity().getId() && test.isDeleted() == false) {
                 testDto.setId(Long.toString(test.getId()));
                 testDto.setTestVersions(modelMapper.map(groupedVersions.get(test), listType));
                 tests.add(testDto);
@@ -213,4 +224,15 @@ public class TestService {
 
         return tests;
     }
+
+    public void autoTestTranslation(long id, String targetLang) {
+        TestVersionEntity testVersionEntity = this.testVersionRepository
+                .getOneByIdAndTestByTestId_UserByOwnerId(id, this.currentUserProvided.getCurrentUserEntity())
+                .orElseThrow(TestNotFoundException::new);
+
+        LanguageEntity targetLanguageEntity = this.languageRepository.getOneByCode(targetLang).orElseThrow(LanguageNotFoundException::new);
+
+        this.taskExecutor.execute(new TranslateTestTask(targetLanguageEntity, this.testVersionRepository, googleTranslateApi, testVersionEntity));
+    }
+
 }
