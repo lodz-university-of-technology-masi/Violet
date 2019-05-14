@@ -6,5 +6,6 @@
   "LOGOUT": "Logout",
   "redactor_get_error": "Could not fetch user data",
   "redactor_saved": "User data saved",
+  "test_version_translate_started": "Test translation started, new test version should be available soon",
   "redactor_edit_error": "Could not save user data"
 }
