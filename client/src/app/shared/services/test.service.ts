@@ -54,6 +54,10 @@ export class TestService {
     return this.http.get<ResolvedTest[]>(`${this.API}/redactor/list/test/resolved`);
   }
 
+  public translateTestVersion(id: number, targetLang: string) {
+    return this.http.put(`${this.API}/redactor/test/version/translate/${id}?targetLang=${targetLang}`, null);
+  }
+
   public addTestVersion(newTestVersion: string) {
     const headers = {'Content-type': 'application/json'};
     return this.http.post(`${this.API}/redactor/test/version/add`, newTestVersion, {headers});

@@ -5,10 +5,7 @@ import com.it.p.lodz.pl.masi.entities.LanguageEntity;
 import com.it.p.lodz.pl.masi.entities.PositionEntity;
 import com.it.p.lodz.pl.masi.entities.TestEntity;
 import com.it.p.lodz.pl.masi.entities.TestVersionEntity;
-import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.TestNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.TestVersionAddedWithoutMainTestException;
-import com.it.p.lodz.pl.masi.exceptions.TestVersionNotFoundException;
+import com.it.p.lodz.pl.masi.exceptions.*;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.repositories.LanguageRepository;
 import com.it.p.lodz.pl.masi.repositories.PositionRepository;
@@ -231,6 +228,10 @@ public class TestService {
                 .orElseThrow(TestNotFoundException::new);
 
         LanguageEntity targetLanguageEntity = this.languageRepository.getOneByCode(targetLang).orElseThrow(LanguageNotFoundException::new);
+
+        if(targetLanguageEntity.equals(testVersionEntity.getLanguageByLanguageId())) {
+            throw new TestTranslationException();
+        }
 
         this.taskExecutor.execute(new TranslateTestTask(targetLanguageEntity, this.testVersionRepository, googleTranslateApi, testVersionEntity));
     }

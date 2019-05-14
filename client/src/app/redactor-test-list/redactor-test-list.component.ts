@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {TestListWithVersions, TestVersion} from '../shared/model/test-model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestService} from '../shared/services/test.service';
@@ -17,7 +17,7 @@ export class RedactorTestListComponent implements OnInit {
   showDetailedTable = false;
 
   displayedColumns: string[] = ['id', 'name', 'add', 'delete', 'choose'];
-  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify'];
+  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify', 'translate'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -32,6 +32,7 @@ export class RedactorTestListComponent implements OnInit {
   ngOnInit() {
     console.log('init');
     this.updateTable();
+    this.showDetailedTable = false;
 
   }
 
@@ -44,11 +45,11 @@ export class RedactorTestListComponent implements OnInit {
       this.dataSource = new MatTableDataSource<TestListWithVersions>(this.tests);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.showDetailedTable = false;
     });
   }
 
   onChooseClick(tests: TestListWithVersions) {
+    this.updateTable();
     this.dataSourceDetailed = new MatTableDataSource<TestVersion>(tests.testVersions);
     this.dataSourceDetailed.paginator = this.paginator;
     this.dataSourceDetailed.sort = this.sort;
@@ -59,6 +60,7 @@ export class RedactorTestListComponent implements OnInit {
     this.testService.redactorDeleteTest(test.id).subscribe(() => {
       this.messageService.success('test_deleted');
       this.updateTable();
+      this.showDetailedTable = false;
     });
   }
 
@@ -73,4 +75,13 @@ export class RedactorTestListComponent implements OnInit {
   onAddClick() {
     this.router.navigate(['/test-add']);
   }
+
+  onTranslateClick(tests: TestVersion) {
+    const targetLang = (tests.languageName === 'polish' ? 'en' : 'pl');
+    this.testService.translateTestVersion(tests.id, targetLang).subscribe(() => {
+        this.messageService.success('test_version_translate_started');
+      }
+    );
+  }
+
 }
