@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {UserIdentity, UserRole} from './shared/model/user-model';
 import {AuthService} from './shared/services/auth.service';
 import {MessageService} from './shared/services/message.service';
+import {TestListWithVersions} from './shared/model/test-model';
+import {DeviceDetectorModule, DeviceDetectorService} from 'ngx-device-detector';
 
 const languages = ['pl', 'en'];
 
@@ -20,8 +22,13 @@ export class AppComponent {
   };
   isLogged = false;
   UserRole = UserRole;
+  timeLeft: number = 0;
+  interval;
+  startTimerValue = true;
+  deviceInfo = '';
 
-  constructor(private router: Router, private translateService: TranslateService, private authService: AuthService, private messageService: MessageService) {
+  constructor(private router: Router, private translateService: TranslateService, private authService: AuthService,
+              private messageService: MessageService, private deviceService: DeviceDetectorService) {
     this.authService.listen().subscribe(message => {
       if (message === 'login') {
         this.updateLoginAndRoles();
@@ -31,6 +38,7 @@ export class AppComponent {
     });
     this.setupTranslationService();
     this.updateLoginAndRoles();
+    this.getBrowser();
   }
 
   private setupTranslationService() {
@@ -106,5 +114,49 @@ export class AppComponent {
   onRedactorTestsListClick() {
     this.router.navigate(['/test-list-redactor']);
 
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.timeLeft++;
+    }, 100);
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+    this.timeLeft = this.timeLeft / 10;
+    this.saveDataInStorage(this.timeLeft, this.deviceInfo);
+  }
+
+  saveDataInStorage(time: number, browserName: String) {
+    const jsonData = {
+      'time': time,
+      'browser': browserName
+    };
+    if (typeof (Storage) !== 'undefined') {
+      const myJsonTime = JSON.stringify(jsonData);
+      localStorage.setItem('timeMetrics', myJsonTime);
+    } else {
+      console.log('Sorry, your browser does not support web storage...');
+      this.messageService.error('measurement_error');
+    }
+
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'D'.valueOf() && event.shiftKey && this.startTimerValue === true) {
+      this.startTimerValue = false;
+      this.startTimer();
+      this.messageService.info('measurement_started');
+    } else if (event.key === 'D'.valueOf() && event.shiftKey && this.startTimerValue === false) {
+      this.startTimerValue = true;
+      this.pauseTimer();
+      this.messageService.info('measurement_ended');
+    }
+  }
+
+  getBrowser() {
+    this.deviceInfo = this.deviceService.browser;
   }
 }

@@ -7,5 +7,8 @@
   "redactor_get_error": "Nie udało się pobrać danych użytkownika",
   "redactor_saved": "Zapisano dane użytkownika",
   "test_version_translate_started": "Tłumaczenie testu rozpoczęte, nowa wersja testu powinna być dostępna wkrótce",
+  "measurement_started": "Pomiar metryk rozpoczęty",
+  "measurement_ended": "Pomiar metryk zakończony",
+  "measurement_error": "Twoja przeglądarka nie obsługuje pomiaru metryk",
   "redactor_edit_error": "Nie udało się zapisać danych użytkownika"
 }
