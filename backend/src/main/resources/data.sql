@@ -42,3 +42,8 @@ VALUES (1, 5, 3, 1,
         '{"name":"Test 1","openQuestions":[{"question":"Ile masz lat?"},{"question":"Jak bardzo lubisz MASI?"}],"choiceQuestions":[{"question":"Ile masz lat?","answers":["8 lat","9 lat","10 lat"]},{"question":"Jak bardzo lubisz MASI?","answers":["1","2","3"]}],"scaleQuestions":[{"question":"Jak bardzo lubisz MASI?","answers":[1,2,3]},{"question":"Jak bardzo lubisz Springa?","answers":[1,2,3,4,5,6]}],"numericQuestions":[{"question":"Ile masz lat?"},{"question":"8+3?"}]}',
         '{"testAnswers": ["21 lat", "Bardzo lubię MASI", "9 lat", "3", "3", "5", "21", "11"]}',
         '{"marks":[1,0,1,1,0,0,1,0]}', 4, 8)
+
+INSERT INTO usability_data (id, ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
+VALUES (1, '127.0.0.1', 'firefox', 'candidate_127.0.0.1', 2, '2019-05-15 17:11', 1920, 1080, 1, 98.82, 20983, false, 0);
+INSERT INTO usability_data (id, ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
+VALUES (2, '192.168.1.213', 'chrome', 'jan.nowak@to.co', 4, '2019-05-15 17:13', 1920, 1080, 2, 182.09, 45738, true, 3);

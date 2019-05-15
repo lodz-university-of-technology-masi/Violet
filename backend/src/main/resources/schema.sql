@@ -150,3 +150,20 @@ create table "resolved_test"
 	points_max bigint not null,
 	version bigint not null default 0
 );
+
+create table "usability_data"
+(
+	id bigserial primary key,
+	ip varchar(15) not null,
+	browser varchar(15) not null,
+	username varchar(64) not null,
+	m_id integer not null,
+	savetime timestamp not null,
+	res_w integer not null,
+	res_h integer not null,
+	mc integer not null,
+	time decimal not null,
+	dist decimal not null,
+	fail boolean not null default false,
+	error integer not null default 0
+);
