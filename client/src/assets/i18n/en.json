@@ -7,5 +7,8 @@
   "redactor_get_error": "Could not fetch user data",
   "redactor_saved": "User data saved",
   "test_version_translate_started": "Test translation started, new test version should be available soon",
+  "measurement_started": "Metrics measurement started",
+  "measurement_ended": "Metrics measurement stopped",
+  "measurement_error": "This browser does not support metrics measurement",
   "redactor_edit_error": "Could not save user data"
 }

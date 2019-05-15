@@ -39,6 +39,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {TestModifyComponent} from './test-modify/test-modify.component';
 import { ResolveTestListComponent } from './resolve-test-list/resolve-test-list.component';
 import { TestAddVersionComponent } from './test-add-version/test-add-version.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+import {CommonModule} from '@angular/common';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -178,7 +180,7 @@ export function createTranslateLoader(http: HttpClient) {
     TestAddComponent,
     TestModifyComponent,
     ResolveTestListComponent,
-    TestAddVersionComponent
+    TestAddVersionComponent,
   ],
   imports: [
     BrowserModule,
@@ -199,6 +201,9 @@ export function createTranslateLoader(http: HttpClient) {
     MatSortModule,
     MatRadioModule,
     BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    DeviceDetectorModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-top-right-custom',
     }),
