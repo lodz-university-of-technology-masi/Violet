@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS "test_version" CASCADE;
 DROP TABLE IF EXISTS "candidate" CASCADE;
 DROP TABLE IF EXISTS "candidate_token" CASCADE;
 DROP TABLE IF EXISTS "resolved_test" CASCADE;
+DROP TABLE IF EXISTS "usability_data" CASCADE;
 
 create table "user"
 (
