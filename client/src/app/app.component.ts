@@ -52,12 +52,18 @@ export class AppComponent {
 
   onPositionListClick() {
     this.router.navigate(['/positions-list']);
-    this.clicksCounter++;
+
+    if(this.startTimerValue === false){
+      this.clicksCounter++;
+    }
   }
 
   onAddPositionClick() {
     this.router.navigate(['/position-add']);
-    this.clicksCounter++;
+
+    if(this.startTimerValue === false){
+      this.clicksCounter++;
+    }
   }
 
   returnToHome() {
@@ -66,22 +72,34 @@ export class AppComponent {
 
   onRedactorListClick() {
     this.router.navigate(['/redactor-list']);
-    this.clicksCounter++;
+
+    if(this.startTimerValue === false){
+      this.clicksCounter++;
+    }
   }
 
   onAddRedactorClick() {
     this.router.navigate(['/redactor-add']);
-    this.clicksCounter++;
+
+    if(this.startTimerValue === false){
+      this.clicksCounter++;
+    }
   }
 
   onTestListClick() {
     this.router.navigate(['/test-list']);
-    this.clicksCounter++;
+
+    if(this.startTimerValue === false){
+      this.clicksCounter++;
+    }
   }
 
   onAddTestClick() {
     this.router.navigate(['/test-add']);
-    this.clicksCounter++;
+
+    if(this.startTimerValue === false){
+      this.clicksCounter++;
+    }
   }
 
   onResolveTestListClick() {
