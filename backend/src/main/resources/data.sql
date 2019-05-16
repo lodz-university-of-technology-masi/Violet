@@ -43,7 +43,7 @@ VALUES (1, 5, 3, 1,
         '{"testAnswers": ["21 lat", "Bardzo lubię MASI", "9 lat", "3", "3", "5", "21", "11"]}',
         '{"marks":[1,0,1,1,0,0,1,0]}', 4, 8);
 
-INSERT INTO usability_data (id, ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
-VALUES (1, '127.0.0.1', 'firefox', 'candidate_127.0.0.1', 2, '2019-05-15 17:11', 1920, 1080, 1, 98.82, 20983, false, 0);
-INSERT INTO usability_data (id, ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
-VALUES (2, '192.168.1.213', 'chrome', 'jan.nowak@to.co', 4, '2019-05-15 17:13', 1920, 1080, 2, 182.09, 45738, true, 3);
+INSERT INTO usability_data (ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
+VALUES ('127.0.0.1', 'F', 'candidate127.0.0.1', 1, '2019-05-15 17:11', 1920, 1080, 1, 98.82, 20983, false, 0);
+INSERT INTO usability_data (ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
+VALUES ('192.168.1.213', 'C', 'jan.nowak@to.co', 1, '2019-05-15 17:13', 1920, 1080, 2, 182.09, 45738, true, 3);

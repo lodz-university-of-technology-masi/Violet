@@ -3,6 +3,10 @@ package com.it.p.lodz.pl.masi.repositories;
 import com.it.p.lodz.pl.masi.entities.UsabilityDataEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface UsabilityDataRepository extends JpaRepository<UsabilityDataEntity, Long> {
+import java.util.List;
+
+
+public interface UsabilityDataRepository extends JpaRepository<UsabilityDataEntity, Long> {
+    List<UsabilityDataEntity> getAllByUsername(String username);
 
 }
