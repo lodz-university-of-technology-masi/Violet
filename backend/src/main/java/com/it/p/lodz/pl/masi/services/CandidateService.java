@@ -4,11 +4,7 @@ import com.it.p.lodz.pl.masi.dtos.RegisterCandidateDto;
 import com.it.p.lodz.pl.masi.dtos.RegisterCandidateResponseDto;
 import com.it.p.lodz.pl.masi.dtos.ResolveTestDto;
 import com.it.p.lodz.pl.masi.entities.*;
-import com.it.p.lodz.pl.masi.exceptions.CandidateNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.InvalidTokenException;
-import com.it.p.lodz.pl.masi.exceptions.LanguageNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.PositionNotFoundException;
-import com.it.p.lodz.pl.masi.exceptions.WrongAnswerNumberException;
+import com.it.p.lodz.pl.masi.exceptions.*;
 import com.it.p.lodz.pl.masi.model.Test;
 import com.it.p.lodz.pl.masi.model.TestAnswer;
 import com.it.p.lodz.pl.masi.repositories.*;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 

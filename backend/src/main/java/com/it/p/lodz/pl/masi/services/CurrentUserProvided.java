@@ -18,7 +18,7 @@ public class CurrentUserProvided {
         this.userRepository = userRepository;
     }
 
-    public UserEntity getCurrentUserEntity() {
+    UserEntity getCurrentUserEntity() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         Optional<UserEntity> userEntity = userRepository.findOneByEmail(email);
         return userEntity.orElseThrow(UserNotFoundException::new);

@@ -53,7 +53,7 @@ export class AppComponent {
   onPositionListClick() {
     this.router.navigate(['/positions-list']);
 
-    if(this.startTimerValue === false){
+    if (this.startTimerValue === false) {
       this.clicksCounter++;
     }
   }
@@ -61,7 +61,7 @@ export class AppComponent {
   onAddPositionClick() {
     this.router.navigate(['/position-add']);
 
-    if(this.startTimerValue === false){
+    if (this.startTimerValue === false) {
       this.clicksCounter++;
     }
   }
@@ -73,7 +73,7 @@ export class AppComponent {
   onRedactorListClick() {
     this.router.navigate(['/redactor-list']);
 
-    if(this.startTimerValue === false){
+    if (this.startTimerValue === false) {
       this.clicksCounter++;
     }
   }
@@ -81,7 +81,7 @@ export class AppComponent {
   onAddRedactorClick() {
     this.router.navigate(['/redactor-add']);
 
-    if(this.startTimerValue === false){
+    if (this.startTimerValue === false) {
       this.clicksCounter++;
     }
   }
@@ -89,7 +89,7 @@ export class AppComponent {
   onTestListClick() {
     this.router.navigate(['/test-list']);
 
-    if(this.startTimerValue === false){
+    if (this.startTimerValue === false) {
       this.clicksCounter++;
     }
   }
@@ -97,7 +97,7 @@ export class AppComponent {
   onAddTestClick() {
     this.router.navigate(['/test-add']);
 
-    if(this.startTimerValue === false){
+    if (this.startTimerValue === false) {
       this.clicksCounter++;
     }
   }
@@ -182,11 +182,13 @@ export class AppComponent {
       this.messageService.info('measurement_ended');
     }
   }
+
   @HostListener('click', ['$event'])
   onMouseEnter(event: any) {
     this.clicksCounter++;
   }
+
   getBrowser() {
-    this.deviceInfo = this.deviceService.browser;
+    this.deviceInfo = this.deviceService.browser.charAt(0);
   }
 }
