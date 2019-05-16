@@ -26,6 +26,7 @@ export class AppComponent {
   interval;
   startTimerValue = true;
   deviceInfo = '';
+  clicksCounter = 0;
 
   constructor(private router: Router, private translateService: TranslateService, private authService: AuthService,
               private messageService: MessageService, private deviceService: DeviceDetectorService) {
@@ -51,10 +52,12 @@ export class AppComponent {
 
   onPositionListClick() {
     this.router.navigate(['/positions-list']);
+    this.clicksCounter++;
   }
 
   onAddPositionClick() {
     this.router.navigate(['/position-add']);
+    this.clicksCounter++;
   }
 
   returnToHome() {
@@ -63,18 +66,22 @@ export class AppComponent {
 
   onRedactorListClick() {
     this.router.navigate(['/redactor-list']);
+    this.clicksCounter++;
   }
 
   onAddRedactorClick() {
     this.router.navigate(['/redactor-add']);
+    this.clicksCounter++;
   }
 
   onTestListClick() {
     this.router.navigate(['/test-list']);
+    this.clicksCounter++;
   }
 
   onAddTestClick() {
     this.router.navigate(['/test-add']);
+    this.clicksCounter++;
   }
 
   onResolveTestListClick() {
@@ -125,17 +132,18 @@ export class AppComponent {
   pauseTimer() {
     clearInterval(this.interval);
     this.timeLeft = this.timeLeft / 10;
-    this.saveDataInStorage(this.timeLeft, this.deviceInfo);
+    this.saveDataInStorage(this.timeLeft, this.clicksCounter, this.deviceInfo);
   }
 
-  saveDataInStorage(time: number, browserName: String) {
+  saveDataInStorage(time: number, clicks: number, browserName: String) {
     const jsonData = {
       'time': time,
+      'clicks': clicks,
       'browser': browserName
     };
     if (typeof (Storage) !== 'undefined') {
       const myJsonTime = JSON.stringify(jsonData);
-      localStorage.setItem('timeMetrics', myJsonTime);
+      localStorage.setItem('Metrics', myJsonTime);
     } else {
       console.log('Sorry, your browser does not support web storage...');
       this.messageService.error('measurement_error');
@@ -147,6 +155,7 @@ export class AppComponent {
   handleDeleteKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'D'.valueOf() && event.shiftKey && this.startTimerValue === true) {
       this.startTimerValue = false;
+      this.clicksCounter = 0;
       this.startTimer();
       this.messageService.info('measurement_started');
     } else if (event.key === 'D'.valueOf() && event.shiftKey && this.startTimerValue === false) {
@@ -155,7 +164,10 @@ export class AppComponent {
       this.messageService.info('measurement_ended');
     }
   }
-
+  @HostListener('click', ['$event'])
+  onMouseEnter(event: any) {
+    this.clicksCounter++;
+  }
   getBrowser() {
     this.deviceInfo = this.deviceService.browser;
   }
