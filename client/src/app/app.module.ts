@@ -126,7 +126,7 @@ const appRoutes: Routes = [
     path: 'test-add',
     component: TestAddComponent,
     canActivate: [AuthGuard], data: {
-      permittedRoles: [UserRole.moderator]
+      permittedRoles: [UserRole.redactor]
     }
   },
   {

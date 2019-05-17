@@ -11,14 +11,13 @@
     <button mat-menu-item (click)="onRedactorListClick()">Redactor list</button>
     <button mat-menu-item (click)="onAddRedactorClick()">Add redactor</button>
   </mat-menu>
-  <button mat-button *ngIf="hasRole([UserRole.moderator])" [matMenuTriggerFor]="testMenu">Tests</button>
-  <mat-menu #testMenu="matMenu">
-    <button mat-menu-item (click)="onTestListClick()">Tests list</button>
+  <button mat-button *ngIf="hasRole([UserRole.moderator])" (click)="onTestListClick()">Tests</button>
+  <button mat-button *ngIf="hasRole([UserRole.redactor])" [matMenuTriggerFor]="myTestMenu">My Tests</button>
+  <mat-menu #myTestMenu="matMenu">
+    <button mat-menu-item (click)="onRedactorTestsListClick()">Tests list</button>
     <button mat-menu-item (click)="onAddTestClick()">Add test</button>
   </mat-menu>
-  <button mat-button *ngIf="hasRole([UserRole.redactor])" (click)="onRedactorTestsListClick()">My Tests</button>
   <button mat-button *ngIf="hasRole([UserRole.redactor])" (click)="onResolveTestListClick()">Resolved Tests</button>
-
   <span class="fill-space"></span>
   <button *ngIf="hasRole([UserRole.guest])" mat-raised-button routerLink='/login-user'>{{ "LOGIN" | translate }}</button>
   <button *ngIf="isLogged" mat-raised-button (click)='onLogoutClick()'>{{ "LOGOUT" | translate }}</button>

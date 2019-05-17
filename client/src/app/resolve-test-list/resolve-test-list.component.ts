@@ -14,7 +14,7 @@ export class ResolveTestListComponent implements OnInit {
 
   tests: ResolvedTest[];
 
-  displayedColumns: string[] = ['id', 'name', 'scored points', 'max points', 'version', 'candidate email', 'position', 'language'];
+  displayedColumns: string[] = ['id', 'name', 'scored points', 'max points', 'candidate email', 'position', 'language'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;

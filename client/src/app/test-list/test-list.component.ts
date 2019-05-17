@@ -87,10 +87,6 @@ export class TestListComponent implements OnInit, DoCheck {
     });
   }
 
-  onAddClick() {
-    this.router.navigate(['/test-add']);
-  }
-
   onAssignChange(test: TestVersion, positionId: string) {
     this.testService.assignPosition(positionId, test.id).subscribe(() => {
       this.messageService.success('Position assigned');
