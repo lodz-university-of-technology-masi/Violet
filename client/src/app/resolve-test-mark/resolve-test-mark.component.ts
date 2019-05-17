@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {MarkResolveTestAnswers, ModifiedTest, NewTestModel, QuestionModel, TestMarks} from '../shared/model/test-model';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MarkResolveTestAnswers, QuestionModel, TestMarks} from '../shared/model/test-model';
+import {FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestService} from '../shared/services/test.service';
 import {CandidateService} from '../shared/services/candidate.service';
 import {MessageService} from '../shared/services/message.service';
 import {Location} from '@angular/common';
-import {ResolveTestModel} from '../shared/model/resolve-test-model';
 
 @Component({
   selector: 'app-resolve-test-mark',

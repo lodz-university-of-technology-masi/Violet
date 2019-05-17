@@ -7,14 +7,12 @@ import com.it.p.lodz.pl.masi.entities.ResolvedTestEntity;
 import com.it.p.lodz.pl.masi.exceptions.ResolvedTestNotFoundException;
 import com.it.p.lodz.pl.masi.model.Mark;
 import com.it.p.lodz.pl.masi.repositories.ResolvedTestRepository;
-import io.micrometer.core.instrument.util.MathUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Component
 public class ResolvedTestService {
