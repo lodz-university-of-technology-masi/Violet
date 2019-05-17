@@ -2,7 +2,7 @@ import {Injectable, Input} from '@angular/core';
 import {Configuration} from '../../configuration';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ResolvedTest, TestListWithVersions, TestVersionContentModel} from '../model/test-model';
+import {MarkResolveTest, ResolvedTest, TestListWithVersions, TestVersionContentModel} from '../model/test-model';
 import {ResolveTestModel} from '../model/resolve-test-model';
 
 @Injectable()
@@ -14,6 +14,10 @@ export class TestService {
 
   getTest(id: number): Observable<TestVersionContentModel> {
     return this.http.get<TestVersionContentModel>(this.API + '/test/version/' + id);
+  }
+
+  getResolvedTest(id: number): Observable<MarkResolveTest> {
+    return this.http.get<MarkResolveTest>(this.API + '/redactor/test/resolved/' + id);
   }
 
   resolveTest(model: ResolveTestModel): Observable<object> {
@@ -61,5 +65,10 @@ export class TestService {
   public addTestVersion(newTestVersion: string) {
     const headers = {'Content-type': 'application/json'};
     return this.http.post(`${this.API}/redactor/test/version/add`, newTestVersion, {headers});
+  }
+
+  public markResolvedTest(testMarks: string) {
+    const headers = {'Content-type': 'application/json'};
+    return this.http.put(`${this.API}/redactor/test/resolved/mark`, testMarks, {headers});
   }
 }

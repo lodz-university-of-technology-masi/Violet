@@ -37,10 +37,11 @@ import {ExportService} from './shared/services/export.service';
 import {TestAddComponent} from './test-add/test-add.component';
 import {MatIconModule} from '@angular/material/icon';
 import {TestModifyComponent} from './test-modify/test-modify.component';
-import { ResolveTestListComponent } from './resolve-test-list/resolve-test-list.component';
-import { TestAddVersionComponent } from './test-add-version/test-add-version.component';
-import { DeviceDetectorModule } from 'ngx-device-detector';
+import {ResolveTestListComponent} from './resolve-test-list/resolve-test-list.component';
+import {TestAddVersionComponent} from './test-add-version/test-add-version.component';
+import {DeviceDetectorModule} from 'ngx-device-detector';
 import {CommonModule} from '@angular/common';
+import {ResolveTestMarkComponent} from './resolve-test-mark/resolve-test-mark.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -144,6 +145,13 @@ const appRoutes: Routes = [
     }
   },
   {
+    path: 'resolve-test-mark',
+    component: ResolveTestMarkComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.redactor]
+    }
+  },
+  {
     path: 'test-add-version',
     component: TestAddVersionComponent,
     canActivate: [AuthGuard], data: {
@@ -181,6 +189,7 @@ export function createTranslateLoader(http: HttpClient) {
     TestModifyComponent,
     ResolveTestListComponent,
     TestAddVersionComponent,
+    ResolveTestMarkComponent,
   ],
   imports: [
     BrowserModule,

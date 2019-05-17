@@ -46,6 +46,23 @@ export interface NewTestModel {
   numericQuestions: NumericQuestionModel[];
 }
 
+export interface MarkResolveTestAnswers {
+  testAnswers: string[];
+}
+
+export interface MarkResolveTest {
+  id: string;
+  test: NewTestModel;
+  answer: MarkResolveTestAnswers;
+  pointsMax: string;
+  version: string;
+}
+
+export interface TestMarks {
+  id: string;
+  mark: number[];
+}
+
 export interface ModifiedTest {
   versionId: string;
   test: NewTestModel;

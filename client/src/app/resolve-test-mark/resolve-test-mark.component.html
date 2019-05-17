@@ -1,0 +1,20 @@
+<div class="example-container">
+  <form (ngSubmit)="markTest()" #markForm="ngForm">
+    <mat-card>
+      <mat-card-title class="title">{{testName}}</mat-card-title>
+      <div *ngFor="let question of questions; index as i;" class="question-container">
+        <p class="secondary-title questions">Question: {{question.question}}</p>
+        <p class="secondary-title answers">Answer: {{answer.testAnswers[i]}}</p>
+        <ng-container>
+          <mat-radio-group name="mark_{{i}}" [(ngModel)]="testMarks.mark[i]" required>
+            <label>Mark: </label>
+            <mat-radio-button class="question-mark-option" [value]=0>0</mat-radio-button>
+            <mat-radio-button class="question-mark-option" [value]=1>1</mat-radio-button>
+          </mat-radio-group>
+        </ng-container>
+      </div>
+      <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!markForm.form.valid">Mark Test</button>
+      <a class="end-button cancel-button" mat-button routerLink="/resolve-test-list">Cancel</a>
+    </mat-card>
+  </form>
+</div>
