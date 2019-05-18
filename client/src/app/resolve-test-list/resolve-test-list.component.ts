@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ResolvedTest, TestListWithVersions, TestVersion} from '../shared/model/test-model';
+import {ResolvedTest} from '../shared/model/test-model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
@@ -14,7 +14,7 @@ export class ResolveTestListComponent implements OnInit {
 
   tests: ResolvedTest[];
 
-  displayedColumns: string[] = ['id', 'name', 'scored points', 'max points', 'version', 'candidate email', 'position', 'language'];
+  displayedColumns: string[] = ['id', 'name', 'scored points', 'max points', 'candidate email', 'position', 'language', 'mark'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -33,6 +33,10 @@ export class ResolveTestListComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+  }
+
+  onMarkClick(test: ResolvedTest) {
+    this.router.navigate(['/resolve-test-mark'], {queryParams: {testId: test.id}});
   }
 }
 
