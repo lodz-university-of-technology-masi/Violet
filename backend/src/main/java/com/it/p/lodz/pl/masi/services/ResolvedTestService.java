@@ -1,9 +1,11 @@
 package com.it.p.lodz.pl.masi.services;
 
 import com.it.p.lodz.pl.masi.dtos.FullResolvedTestDto;
+import com.it.p.lodz.pl.masi.dtos.MarkedResolvedTestDto;
 import com.it.p.lodz.pl.masi.dtos.ResolvedTestDto;
 import com.it.p.lodz.pl.masi.entities.ResolvedTestEntity;
 import com.it.p.lodz.pl.masi.exceptions.ResolvedTestNotFoundException;
+import com.it.p.lodz.pl.masi.model.Mark;
 import com.it.p.lodz.pl.masi.repositories.ResolvedTestRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -38,5 +40,17 @@ public class ResolvedTestService {
                     .findOneByIdAndUserByOwnerId(id, currentUserProvided.getCurrentUserEntity())
                     .map($ -> modelMapper.map($, FullResolvedTestDto.class))
                     .orElseThrow(ResolvedTestNotFoundException::new);
+    }
+
+    public void markTest(MarkedResolvedTestDto markedResolvedTestDto) {
+        Mark mark = new Mark();
+        ResolvedTestEntity resolvedTestEntity = resolvedTestRepository
+                .findById(Long.parseLong(markedResolvedTestDto.getId()))
+                .orElseThrow(ResolvedTestNotFoundException::new);
+        mark.setMarks(markedResolvedTestDto.getMark());
+        resolvedTestEntity.setMark(mark);
+        Long sum = (long) mark.getMarks().stream().mapToInt(Integer::intValue).sum();
+        resolvedTestEntity.setPointsSum(sum);
+        this.resolvedTestRepository.saveAndFlush(resolvedTestEntity);
     }
 }

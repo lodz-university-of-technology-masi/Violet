@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {UserIdentity, UserRole} from './shared/model/user-model';
@@ -15,7 +15,7 @@ const languages = ['pl', 'en'];
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   userIdentity: UserIdentity = {
     email: 'not_login',
@@ -28,6 +28,8 @@ export class AppComponent {
   startTimerValue = true;
   deviceInfo = '';
   clicksCounter = 0;
+  width = 0;
+  height = 0;
   distance = 0;
   currentX;
   currentY;
@@ -52,6 +54,11 @@ export class AppComponent {
       this.translateService.use(this.translateService.getBrowserLang());
     }
     this.translateService.setDefaultLang('en');
+  }
+
+  ngOnInit() {
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
   }
 
   onPositionListClick() {
@@ -200,6 +207,12 @@ export class AppComponent {
     }
     this.currentX = x;
     this.currentY = y;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.width = event.target.innerWidth;
+    this.height = event.target.innerHeight;
   }
 
   getBrowser() {

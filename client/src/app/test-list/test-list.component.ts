@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, DoCheck} from '@angular/core';
+import {Component, OnInit, ViewChild, DoCheck} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {TestListWithVersions, TestVersion, TestVersionContentModel, QuestionModel} from '../shared/model/test-model';
+import {TestListWithVersions, TestVersion, QuestionModel} from '../shared/model/test-model';
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
@@ -85,10 +85,6 @@ export class TestListComponent implements OnInit, DoCheck {
     this.testService.getTest(test.id).subscribe(t => {
       this.exportService.exportCsv(t, test.languageName);
     });
-  }
-
-  onAddClick() {
-    this.router.navigate(['/test-add']);
   }
 
   onAssignChange(test: TestVersion, positionId: string) {
