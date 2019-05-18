@@ -4,8 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserIdentity, UserRole} from './shared/model/user-model';
 import {AuthService} from './shared/services/auth.service';
 import {MessageService} from './shared/services/message.service';
-import {TestListWithVersions} from './shared/model/test-model';
-import {DeviceDetectorModule, DeviceDetectorService} from 'ngx-device-detector';
+import {DeviceDetectorService} from 'ngx-device-detector';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 
 const languages = ['pl', 'en'];
@@ -162,15 +161,17 @@ export class AppComponent implements OnInit {
     clearInterval(this.interval);
     this.time = this.time / 10;
     let integerDistance = Math.trunc(this.distance);
-    this.saveDataInStorage(this.time, this.clicksCounter, integerDistance, this.deviceInfo);
+    this.saveDataInStorage(this.time, this.clicksCounter, integerDistance, this.deviceInfo, this.width, this.height);
   }
 
-  saveDataInStorage(time: number, clicks: number, distance: number, browserName: String) {
+  saveDataInStorage(time: number, clicks: number, distance: number, browserName: String, width: number, height: number) {
     const jsonData = {
       'time': time,
       'clicks': clicks,
       'distance': distance,
-      'browser': browserName
+      'browser': browserName,
+      'width': width,
+      'height': height
     };
     if (typeof (Storage) !== 'undefined') {
       const myJsonTime = JSON.stringify(jsonData);
@@ -202,8 +203,8 @@ export class AppComponent implements OnInit {
     this.clicksCounter++;
     let x = event.clientX;     // Get the horizontal coordinate
     let y = event.clientY;     // Get the vertical coordinate
-    if(isNotNullOrUndefined(this.currentY) && isNotNullOrUndefined(this.currentX)){
-      this.distance += this.countDistance(this.currentX,this.currentY,x,y);
+    if (isNotNullOrUndefined(this.currentY) && isNotNullOrUndefined(this.currentX)) {
+      this.distance += this.countDistance(this.currentX, this.currentY, x, y);
     }
     this.currentX = x;
     this.currentY = y;
@@ -218,7 +219,8 @@ export class AppComponent implements OnInit {
   getBrowser() {
     this.deviceInfo = this.deviceService.browser.charAt(0);
   }
-  countDistance(x1: number, y1: number, x2: number, y2: number): number{
-    return  Math.sqrt( Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2) );
+
+  countDistance(x1: number, y1: number, x2: number, y2: number): number {
+    return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
   }
 }
