@@ -6,6 +6,7 @@ import {TestService} from '../shared/services/test.service';
 import {Language} from '../shared/model/candidate-model';
 import {CandidateService} from '../shared/services/candidate.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ImportService } from '../shared/services/import.service';
 
 @Component({
   selector: 'app-test-add',
@@ -35,7 +36,7 @@ export class TestAddComponent implements OnInit {
   testForm: FormGroup;
   questions: FormArray;
 
-  constructor(private route: ActivatedRoute, private router: Router, private testService: TestService,
+  constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, private importService: ImportService,
               private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -177,5 +178,20 @@ export class TestAddComponent implements OnInit {
       this.messageService.success('Test has been added.');
       this.router.navigate(['/test-list']);
     });
+  }
+
+  fileChanged(e) {
+    var file = e.target.files[0];
+    
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      console.log(fileReader.result);
+      var test = this.importService.parseCsv(e);
+      this.testForm.get("openQuestions").setValue(test.test.openQuestions);
+      this.testForm.get("choiceQuestions").setValue(test.test.choiceQuestions);
+      this.testForm.get("numericQuestions").setValue(test.test.numericQuestions);
+      this.testForm.get("scaleQuestions").setValue(test.test.scaleQuestions);
+    }
+    fileReader.readAsText(file);
   }
 }

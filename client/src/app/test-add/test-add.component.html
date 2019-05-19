@@ -1,7 +1,10 @@
 <div class="example-container">
   <form [formGroup]="testForm" #test="ngForm" (ngSubmit)='addTest()'>
     <mat-card>
-
+        <div class="import">
+          <input type="image" class="file" type='file' (change)="fileChanged($event)">
+          <img src src="../../assets/icons/csv.png" class='icon' />
+        </div>
       <mat-card-title>New Test Form</mat-card-title>
 
       <mat-card-content>

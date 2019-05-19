@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TestService} from '../shared/services/test.service';
 import {CandidateService} from '../shared/services/candidate.service';
 import {MessageService} from '../shared/services/message.service';
+import { ImportService } from '../shared/services/import.service';
 
 @Component({
   selector: 'app-test-add-version',
@@ -34,7 +35,7 @@ export class TestAddVersionComponent implements OnInit {
   testForm: FormGroup;
   questions: FormArray;
 
-  constructor(private route: ActivatedRoute, private router: Router, private testService: TestService,
+  constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, private importService: ImportService,
               private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
