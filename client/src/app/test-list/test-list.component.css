@@ -54,14 +54,3 @@ mat-cell {
   display: flex;
   justify-content: center;
 }
-
-#hidden-export-container {
-  overflow: hidden;
-  opacity: 0.0;
-  font-size: 2em;
-}
-
-.icon {
-  height: 30px;
-  margin-left: 5px;
-}

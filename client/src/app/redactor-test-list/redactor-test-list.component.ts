@@ -1,23 +1,26 @@
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {TestListWithVersions, TestVersion} from '../shared/model/test-model';
+import {Component, OnInit, ViewChild, ViewChildren, DoCheck} from '@angular/core';
+import {TestListWithVersions, TestVersion, QuestionModel} from '../shared/model/test-model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
+import { ExportService } from '../shared/services/export.service';
 
 @Component({
   selector: 'app-redactor-test-list',
   templateUrl: './redactor-test-list.component.html',
   styleUrls: ['./redactor-test-list.component.css']
 })
-export class RedactorTestListComponent implements OnInit {
+export class RedactorTestListComponent implements OnInit, DoCheck {
 
   tests: TestListWithVersions[];
+  private triggerExport = false;
+  questions: QuestionModel[] = [];
 
   showDetailedTable = false;
 
   displayedColumns: string[] = ['id', 'name', 'add', 'delete', 'choose'];
-  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify', 'translate'];
+  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify', 'translate', 'export'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -26,7 +29,7 @@ export class RedactorTestListComponent implements OnInit {
   @ViewChild(MatSort) sortDetailed: MatSort;
   dataSourceDetailed;
 
-  constructor(private testService: TestService, private router: Router, private messageService: MessageService) {
+  constructor(private testService: TestService, private router: Router, private messageService: MessageService, private exportService: ExportService) {
   }
 
   ngOnInit() {
@@ -34,6 +37,13 @@ export class RedactorTestListComponent implements OnInit {
     this.updateTable();
     this.showDetailedTable = false;
 
+  }
+
+  ngDoCheck(): void {
+    if(this.triggerExport) {
+      this.triggerExport = false;
+      this.exportPdf();
+    }
   }
 
   updateTable() {
@@ -82,6 +92,28 @@ export class RedactorTestListComponent implements OnInit {
         this.messageService.success('test_version_translate_started');
       }
     );
+  }
+
+  onPdfExportClick(test: TestVersion) {
+    this.testService.getTest(test.id).subscribe(t => {
+      this.questions = this.questions
+      .concat(t.test.choiceQuestions)
+      .concat(t.test.numericQuestions)
+      .concat(t.test.openQuestions)
+      .concat(t.test.scaleQuestions);
+      this.triggerExport = true;
+      });
+  }
+
+  exportPdf() {
+    var data = document.getElementById('export-container');
+    this.exportService.exportPdf(data);
+  }
+
+  onCsvExportClick(test: TestVersion) {
+    this.testService.getTest(test.id).subscribe(t => {
+      this.exportService.exportCsv(t, test.languageName);
+    });
   }
 
 }
