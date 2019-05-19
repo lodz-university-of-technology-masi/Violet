@@ -4,7 +4,6 @@ import {TestListWithVersions, TestVersion, QuestionModel} from '../shared/model/
 import {TestService} from '../shared/services/test.service';
 import {Router} from '@angular/router';
 import {MessageService} from '../shared/services/message.service';
-import {ExportService} from '../shared/services/export.service';
 import {PositionsService} from '../shared/services/positions.service';
 import {TestPosition} from '../shared/model/position-model';
 
@@ -13,16 +12,14 @@ import {TestPosition} from '../shared/model/position-model';
   templateUrl: './test-list.component.html',
   styleUrls: ['./test-list.component.css']
 })
-export class TestListComponent implements OnInit, DoCheck {
+export class TestListComponent implements OnInit {
 
   tests: TestListWithVersions[];
-  questions: QuestionModel[] = [];
-  private triggerExport = false;
 
   showDetailedTable = false;
 
   displayedColumns: string[] = ['id', 'name', 'delete', 'assign', 'choose'];
-  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify', 'export'];
+  displayedColumnsDetailed: string[] = ['id', 'name', 'language', 'modify'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
@@ -33,18 +30,11 @@ export class TestListComponent implements OnInit, DoCheck {
   positions: TestPosition[];
 
   constructor(private testService: TestService, private router: Router, private messageService: MessageService,
-              private exportService: ExportService, private positionsService: PositionsService) {
+              private positionsService: PositionsService) {
   }
 
   ngOnInit() {
     this.updateTable();
-  }
-
-  ngDoCheck(): void {
-    if(this.triggerExport) {
-      this.triggerExport = false;
-      this.exportPdf();
-    }
   }
 
   updateTable() {
@@ -81,31 +71,9 @@ export class TestListComponent implements OnInit, DoCheck {
     this.router.navigate(['/test-modify'], {queryParams: {testId: test.id}});
   }
 
-  onCsvExportClick(test: TestVersion) {
-    this.testService.getTest(test.id).subscribe(t => {
-      this.exportService.exportCsv(t, test.languageName);
-    });
-  }
-
   onAssignChange(test: TestVersion, positionId: string) {
     this.testService.assignPosition(positionId, test.id).subscribe(() => {
       this.messageService.success('Position assigned');
     });
-  }
-
-  onPdfExportClick(test: TestVersion) {
-    this.testService.getTest(test.id).subscribe(t => {
-      this.questions = this.questions
-      .concat(t.test.choiceQuestions)
-      .concat(t.test.numericQuestions)
-      .concat(t.test.openQuestions)
-      .concat(t.test.scaleQuestions);
-      this.triggerExport = true;
-      });
-  }
-
-  exportPdf() {
-    var data = document.getElementById('export-container');
-    this.exportService.exportPdf(data);
   }
 }
