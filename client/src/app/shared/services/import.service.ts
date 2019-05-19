@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TestModel, OpenQuestionModel, ChoiceQuestionModel, ScaleQuestionModel, NumericQuestionModel, NewTestVersion, NewTestModel } from '../model/test-model';
+import { TestModel, OpenQuestionModel, ChoiceQuestionModel, ScaleQuestionModel, NumericQuestionModel, NewTestVersion, NewTestModel, NewTest } from '../model/test-model';
 import { ParseError } from '../model/parse-error';
 
 @Injectable({
@@ -9,9 +9,9 @@ export class ImportService {
 
   constructor() { }
 
-  parseCsv(e): NewTestVersion {
+  parseCsv(e): NewTest {
     var content = e.target.result.split("\n");
-    var version = new NewTestVersion();
+    var version = new NewTest();
     version.languageId = content[0].split(";")[2];
     var test = new NewTestModel();
     version.test = test;

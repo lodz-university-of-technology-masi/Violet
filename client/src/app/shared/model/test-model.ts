@@ -27,7 +27,7 @@ export class TestModel {
     numericQuestions: NumericQuestionModel[];
 }
 
-export interface NewTest {
+export class NewTest {
   languageId: string;
   test: NewTestModel;
 }

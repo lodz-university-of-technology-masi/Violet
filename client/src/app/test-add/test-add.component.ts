@@ -35,6 +35,7 @@ export class TestAddComponent implements OnInit {
   };
   testForm: FormGroup;
   questions: FormArray;
+  file: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, private importService: ImportService,
               private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) {}
@@ -51,6 +52,7 @@ export class TestAddComponent implements OnInit {
     });
     this.testForm = this.formBuilder.group({
       languageId: ['', Validators.required],
+      testName: [''],
       name: ['', Validators.required],
       openQuestions: this.formBuilder.array([this.createOpenNumericQuestion()]),
       choiceQuestions: this.formBuilder.array([this.createChoiceScaleQuestion()]),
@@ -181,16 +183,24 @@ export class TestAddComponent implements OnInit {
   }
 
   fileChanged(e) {
-    var file = e.target.files[0];
+    this.file = e;
+  }
+
+  importCsv() {
+    var file = this.file.target.files[0];
     
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       console.log(fileReader.result);
       var test = this.importService.parseCsv(e);
-      this.testForm.get("openQuestions").setValue(test.test.openQuestions);
-      this.testForm.get("choiceQuestions").setValue(test.test.choiceQuestions);
-      this.testForm.get("numericQuestions").setValue(test.test.numericQuestions);
-      this.testForm.get("scaleQuestions").setValue(test.test.scaleQuestions);
+      this.candidateService.getAllLanguages().subscribe(l => {
+        test.languageId = l.find(l => l.name == test.languageId).id.toString();
+        test.test.name = this.testForm.get('testName').value;
+        this.testService.addTest(JSON.stringify(test)).subscribe(() => {
+          this.messageService.success('Test has been added.');
+          this.router.navigate(['/test-list']);
+        });
+      })
     }
     fileReader.readAsText(file);
   }
