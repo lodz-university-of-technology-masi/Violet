@@ -69,7 +69,7 @@ export class ExportService {
     line = line + e.question + ';';
     line = line + e.answers.length + ';';
     e.answers.forEach(a => {
-      line = line + a + ';';
+      line = line + a + '|';
     });
     return line;
   }

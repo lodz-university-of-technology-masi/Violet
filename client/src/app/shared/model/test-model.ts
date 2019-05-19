@@ -18,7 +18,7 @@ export interface TestVersion {
   languageName: string;
 }
 
-export interface TestModel {
+export class TestModel {
     name: string;
     id: number;
     openQuestions: OpenQuestionModel[];
@@ -27,18 +27,18 @@ export interface TestModel {
     numericQuestions: NumericQuestionModel[];
 }
 
-export interface NewTest {
+export class NewTest {
   languageId: string;
   test: NewTestModel;
 }
 
-export interface NewTestVersion {
+export class NewTestVersion {
   testId: number;
   languageId: string;
   test: NewTestModel;
 }
 
-export interface NewTestModel {
+export class NewTestModel {
   name: string;
   openQuestions: OpenQuestionModel[];
   choiceQuestions: ChoiceQuestionModel[];
@@ -80,16 +80,16 @@ export interface ResolvedTest {
   languageByLanguageIdName: string;
 }
 
-export interface QuestionModel {
+export class QuestionModel {
     question: string;
 }
 
-export interface OpenQuestionModel extends QuestionModel {}
+export class OpenQuestionModel extends QuestionModel {}
 
-export interface ChoiceQuestionModel extends QuestionModel {
+export class ChoiceQuestionModel extends QuestionModel {
     answers: string[];
 }
-export interface ScaleQuestionModel extends QuestionModel {
+export class ScaleQuestionModel extends QuestionModel {
     answers: number[];
 }
-export interface NumericQuestionModel extends QuestionModel {}
+export class NumericQuestionModel extends QuestionModel {}

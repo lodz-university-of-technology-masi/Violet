@@ -1,7 +1,6 @@
 <div class="example-container">
   <form [formGroup]="testForm" #test="ngForm" (ngSubmit)='addTest()'>
     <mat-card>
-
       <mat-card-title>New Test Version Form</mat-card-title>
 
       <mat-card-content>
@@ -11,7 +10,8 @@
 
         <div class="title">Test language:</div>
         <mat-radio-group name="testLanguage" formControlName="languageId" required>
-          <mat-radio-button class="language-option" *ngFor="let language of languages" [value]=language.id required>{{language.name}}</mat-radio-button>
+          <mat-radio-button class="language-option" *ngFor="let language of languages" [value]=language.id required>
+            {{language.name}}</mat-radio-button>
         </mat-radio-group>
 
         <div class="title">Questions:</div>
@@ -26,14 +26,16 @@
         </div>
 
         <div class="secondary-title">Choice questions:</div>
-        <div class="question" formArrayName="choiceQuestions" *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
+        <div class="question" formArrayName="choiceQuestions"
+          *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
-            <input formControlName="question" matInput placeholder="Choice question text"/>
+            <input formControlName="question" matInput placeholder="Choice question text" />
           </mat-form-field>
           <div class="answers">
             <div *ngFor="let answer of arrayOfChoiceAnswers[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer" (change)='addChoiceAnswer(i, j, $event.target.value)'/>
+                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer"
+                  (change)='addChoiceAnswer(i, j, $event.target.value)' />
               </mat-form-field>
               <a class="inside-button" mat-button type="removeAnswer" (click)='removeChoiceAnswerInput(i)'>
                 <mat-icon>delete</mat-icon>
@@ -44,14 +46,16 @@
         </div>
 
         <div class="secondary-title">Scale questions:</div>
-        <div class="question" formArrayName="scaleQuestions" *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
+        <div class="question" formArrayName="scaleQuestions"
+          *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
-            <input formControlName="question" matInput placeholder="Scale question text"/>
+            <input formControlName="question" matInput placeholder="Scale question text" />
           </mat-form-field>
           <div class="answers">
             <div *ngFor="let answer of arrayOfScaleAnswers[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer" (change)='addScaleAnswer(i, j, $event.target.value)'/>
+                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer"
+                  (change)='addScaleAnswer(i, j, $event.target.value)' />
               </mat-form-field>
               <a class="inside-button" mat-button type="removeAnswer" (click)='removeScaleAnswerInput(i)'>
                 <mat-icon>delete</mat-icon>
