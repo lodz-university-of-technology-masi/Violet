@@ -10,5 +10,10 @@
   "measurement_started": "Pomiar metryk rozpoczęty",
   "measurement_ended": "Pomiar metryk zakończony",
   "measurement_error": "Twoja przeglądarka nie obsługuje pomiaru metryk",
-  "redactor_edit_error": "Nie udało się zapisać danych użytkownika"
+  "redactor_edit_error": "Nie udało się zapisać danych użytkownika",
+  "not_a_number": "Wartość nie jest liczbą:",
+  "invalid_type": "Nieznany typ pytania:",
+  "empty_file": "Plik jest pusty",
+  "invalid_line_format": "Niepoprawny format linii",
+  "no_answers_lt_one": "Zbyt mało odpowiedzi w pytaniu"
 }

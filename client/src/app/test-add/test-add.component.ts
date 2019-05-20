@@ -1,12 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {NewTest, NewTestModel} from '../shared/model/test-model';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MessageService} from '../shared/services/message.service';
-import {TestService} from '../shared/services/test.service';
-import {Language} from '../shared/model/candidate-model';
-import {CandidateService} from '../shared/services/candidate.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { NewTest, NewTestModel } from '../shared/model/test-model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from '../shared/services/message.service';
+import { TestService } from '../shared/services/test.service';
+import { Language } from '../shared/model/candidate-model';
+import { CandidateService } from '../shared/services/candidate.service';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImportService } from '../shared/services/import.service';
+import { ParseError } from '../shared/model/parse-error';
+import { LanguageService } from '../shared/services/language.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-test-add',
@@ -38,7 +41,7 @@ export class TestAddComponent implements OnInit {
   file: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, private importService: ImportService,
-              private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) {}
+    private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder, private translateService: TranslateService) { }
 
   ngOnInit() {
     this.arrayOfChoiceAnswers = new Array(new Array(2));
@@ -106,8 +109,8 @@ export class TestAddComponent implements OnInit {
     window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
   }
   findSynonyms(value: string) {
-  window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
-}
+    window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+  }
   removeQuestion(type: string, id: number): void {
     switch (type) {
       case 'Open question':
@@ -188,19 +191,26 @@ export class TestAddComponent implements OnInit {
 
   importCsv() {
     var file = this.file.target.files[0];
-    
+
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       console.log(fileReader.result);
-      var test = this.importService.parseCsv(e);
-      this.candidateService.getAllLanguages().subscribe(l => {
-        test.languageId = l.find(l => l.name == test.languageId).id.toString();
-        test.test.name = this.testForm.get('testName').value;
-        this.testService.addTest(JSON.stringify(test)).subscribe(() => {
-          this.messageService.success('Test has been added.');
-          this.router.navigate(['/test-list']);
+      try {
+        var test = this.importService.parseCsv(e);
+
+        this.candidateService.getAllLanguages().subscribe(l => {
+          test.languageId = l.find(l => l.name == test.languageId).id.toString();
+          test.test.name = this.testForm.get('testName').value;
+          this.testService.addTest(JSON.stringify(test)).subscribe(() => {
+            this.messageService.success('Test has been added.');
+            this.router.navigate(['/test-list']);
+          });
         });
-      })
+      } catch (error) {
+        let e: ParseError = error;
+        this.translateService.get(e.message).subscribe(m => this.messageService.error(m + ' ' + e.value));
+        return;
+      }
     }
     fileReader.readAsText(file);
   }
