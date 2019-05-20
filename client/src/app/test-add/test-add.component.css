@@ -35,10 +35,17 @@ a[mat-button] {
 
 .icon {
   float: right;
+  overflow: hidden;
   height: 60px;
   width: 60px;
   margin-top: 20px;
   margin-right: 10px;
+}
+
+.iconImg {
+  float: right;
+  height: 40px;
+  width: 40px;
 }
 
 .example-container {
