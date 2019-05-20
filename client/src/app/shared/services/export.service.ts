@@ -57,7 +57,7 @@ export class ExportService {
     line = line + lang + ';';
     line = line + e.question + ';';
     line = line + '1;';
-    line = line + '|;'
+    line = line + '|'
     return line;
   }
 
