@@ -46,7 +46,7 @@ export class ImportService {
     return version;
   }
   validateFields(fields: string[]) {
-    if(fields.length != 7)
+    if(fields.length != 6)
       throw new ParseError("invalid_line_format", fields[0]);
     if(isNaN(Number.parseInt(fields[0])))
       throw new ParseError("not_a_number", fields[0]);
