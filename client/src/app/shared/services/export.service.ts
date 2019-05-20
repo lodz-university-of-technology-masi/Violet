@@ -71,6 +71,7 @@ export class ExportService {
     e.answers.forEach(a => {
       line = line + a + '|';
     });
+    line = line.substring(0, line.length - 1);
     return line;
   }
 
