@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.it.p.lodz.pl</groupId>
     <artifactId>masi</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.9.0</version>
     <name>masi</name>
     <description>Demo project for Spring Boot</description>
 
@@ -113,6 +113,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.10</version>
+                <configuration>
+                    <repository>${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>
