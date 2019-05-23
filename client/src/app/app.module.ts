@@ -42,6 +42,7 @@ import {TestAddVersionComponent} from './test-add-version/test-add-version.compo
 import {DeviceDetectorModule} from 'ngx-device-detector';
 import {CommonModule} from '@angular/common';
 import {ResolveTestMarkComponent} from './resolve-test-mark/resolve-test-mark.component';
+import {MetricService} from './shared/services/metric.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -236,7 +237,8 @@ export function createTranslateLoader(http: HttpClient) {
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     MessageService,
-    ExportService
+    ExportService,
+    MetricService
   ],
   bootstrap: [
     AppComponent
