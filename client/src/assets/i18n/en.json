@@ -15,5 +15,9 @@
   "invalid_type": "Invalid question type:",
   "empty_file": "The file is empty",
   "invalid_line_format": "Invalid format of line",
-  "no_answers_lt_one": "There must be at least one answer in question"
+  "no_answers_lt_one": "There must be at least one answer in question",
+  "local_storage_clear": "Local storage has been cleared.",
+  "failed_measurement": "Failed measurements have been gathered.",
+  "measurement_sent": "Metrics sent.",
+  "measurement_aborted": "Metrics measurement aborted."
 }

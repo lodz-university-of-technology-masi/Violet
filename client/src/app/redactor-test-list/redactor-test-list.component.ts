@@ -75,7 +75,7 @@ export class RedactorTestListComponent implements OnInit, DoCheck {
   }
 
   onModifyClick(test: TestVersion) {
-    this.router.navigate(['/test-modify'], {queryParams: {testId: test.id}});
+    this.router.navigate(['/test-modify-redactor'], {queryParams: {testId: test.id}});
   }
 
   onAddVersionClick(test: TestListWithVersions) {
