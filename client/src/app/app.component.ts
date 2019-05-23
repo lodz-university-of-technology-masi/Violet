@@ -223,6 +223,7 @@ export class AppComponent implements OnInit {
         }
         if (this.even % 2 === 0) {
           this.prepareBasicJsonMetric();
+          this.metric.fail = false;
           this.metricService.importMetric(JSON.stringify(this.metric)).subscribe(() => {
             this.messageService.info('Measurements have been gathered.');
           });
