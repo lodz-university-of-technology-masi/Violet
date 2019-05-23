@@ -6,6 +6,8 @@ import {AuthService} from './shared/services/auth.service';
 import {MessageService} from './shared/services/message.service';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {Metric} from './shared/model/metric-model';
+import {MetricService} from './shared/services/metric.service';
 
 const languages = ['pl', 'en'];
 
@@ -20,6 +22,15 @@ export class AppComponent implements OnInit {
     email: 'not_login',
     roles: [UserRole.guest]
   };
+  metric: Metric = {
+    browser: '',
+    resW: '',
+    resH: '',
+    mc: '',
+    time: '',
+    dist: '',
+    fail: false
+  }
   isLogged = false;
   UserRole = UserRole;
   time = 0;
@@ -32,9 +43,11 @@ export class AppComponent implements OnInit {
   distance = 0;
   currentX;
   currentY;
+  even = 0;
+  tempLS: string;
 
   constructor(private router: Router, private translateService: TranslateService, private authService: AuthService,
-              private messageService: MessageService, private deviceService: DeviceDetectorService) {
+              private messageService: MessageService, private deviceService: DeviceDetectorService, private metricService: MetricService) {
     this.authService.listen().subscribe(message => {
       if (message === 'login') {
         this.updateLoginAndRoles();
@@ -63,7 +76,7 @@ export class AppComponent implements OnInit {
   onPositionListClick() {
     this.router.navigate(['/positions-list']);
 
-    if (this.startTimerValue === false) {
+    if (!this.startTimerValue) {
       this.clicksCounter++;
     }
   }
@@ -71,7 +84,7 @@ export class AppComponent implements OnInit {
   onAddPositionClick() {
     this.router.navigate(['/position-add']);
 
-    if (this.startTimerValue === false) {
+    if (!this.startTimerValue) {
       this.clicksCounter++;
     }
   }
@@ -83,7 +96,7 @@ export class AppComponent implements OnInit {
   onRedactorListClick() {
     this.router.navigate(['/redactor-list']);
 
-    if (this.startTimerValue === false) {
+    if (!this.startTimerValue) {
       this.clicksCounter++;
     }
   }
@@ -91,7 +104,7 @@ export class AppComponent implements OnInit {
   onAddRedactorClick() {
     this.router.navigate(['/redactor-add']);
 
-    if (this.startTimerValue === false) {
+    if (!this.startTimerValue) {
       this.clicksCounter++;
     }
   }
@@ -99,7 +112,7 @@ export class AppComponent implements OnInit {
   onTestListClick() {
     this.router.navigate(['/test-list']);
 
-    if (this.startTimerValue === false) {
+    if (!this.startTimerValue) {
       this.clicksCounter++;
     }
   }
@@ -107,7 +120,7 @@ export class AppComponent implements OnInit {
   onAddTestClick() {
     this.router.navigate(['/test-add']);
 
-    if (this.startTimerValue === false) {
+    if (!this.startTimerValue) {
       this.clicksCounter++;
     }
   }
@@ -180,21 +193,56 @@ export class AppComponent implements OnInit {
       console.log('Sorry, your browser does not support web storage...');
       this.messageService.error('measurement_error');
     }
+  }
 
+  prepareBasicJsonMetric() {
+    this.tempLS = JSON.parse(localStorage.getItem('Metrics'));
+    this.metric.browser = this.tempLS.browser;
+    this.metric.resW = this.tempLS.width.toString();
+    this.metric.resH = this.tempLS.height.toString();
+    this.metric.mc = this.tempLS.clicks.toString();
+    this.metric.time = this.tempLS.time.toString();
+    this.metric.dist = this.tempLS.distance.toString();
   }
 
   @HostListener('document:keyup', ['$event'])
   handleDeleteKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'D'.valueOf() && event.shiftKey && this.startTimerValue === true) {
-      this.startTimerValue = false;
-      this.clicksCounter = 0;
-      this.distance = 0;
-      this.startTimer();
-      this.messageService.info('measurement_started');
-    } else if (event.key === 'D'.valueOf() && event.shiftKey && this.startTimerValue === false) {
-      this.startTimerValue = true;
-      this.pauseTimer();
-      this.messageService.info('measurement_ended');
+    if (event.shiftKey) {
+      if (event.key === 'D'.valueOf()) {
+        this.even++;
+        if (this.startTimerValue) {
+          this.startTimerValue = false;
+          this.clicksCounter = 0;
+          this.distance = 0;
+          this.startTimer();
+          this.messageService.info('measurement_started');
+        } else {
+          this.startTimerValue = true;
+          this.pauseTimer();
+          this.messageService.info('measurement_ended');
+        }
+        if (this.even % 2 === 0) {
+          this.prepareBasicJsonMetric();
+          this.metricService.importMetric(JSON.stringify(this.metric)).subscribe(() => {
+            this.messageService.info('Measurements have been gathered.');
+          });
+        }
+      } else if (event.key === 'W'.valueOf()) {
+        this.even = 0;
+        localStorage.clear();
+        this.messageService.info('Gathering measurements have ended.');
+        this.messageService.info('Local storage has been cleared.');
+      } else if (event.key === 'R'.valueOf()) {
+        this.even = 0;
+        this.saveDataInStorage(this.time, this.clicksCounter, this.distance, this.deviceInfo, this.width, this.height);
+        this.prepareBasicJsonMetric();
+        this.metric.fail = true;
+        this.metricService.importMetric(JSON.stringify(this.metric)).subscribe(() => {
+          this.messageService.info('Failed measurements have been gathered.');
+        });
+        localStorage.clear();
+        this.messageService.info('Local storage has been cleared.');
+      }
     }
   }
 
