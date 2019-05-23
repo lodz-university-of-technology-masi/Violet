@@ -51,7 +51,7 @@ public class TestService {
     public List<TestVersionDto> getTestListForCandidate(Long positionId, Long languageId) {
         List<TestEntity> tests = testRepository.getAllByPositionByPositionIdAndActiveTrueAndDeletedFalse(positionRepository.getOne(positionId));
         List<TestVersionEntity> testVersions = testVersionRepository.
-                getAllByLanguageByLanguageIdAndTestByTestIdAndActiveTrueAndDeletedFalse(languageRepository.getOne(languageId), tests);
+                getAllByLanguageByLanguageIdAndTestByTestIdInAndActiveTrueAndDeletedFalse(languageRepository.getOne(languageId), tests);
         Type listType = new TypeToken<List<TestVersionDto>>() {
         }.getType();
         return modelMapper.map(testVersions, listType);

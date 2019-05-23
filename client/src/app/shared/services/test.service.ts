@@ -54,6 +54,11 @@ export class TestService {
     return this.http.put(`${this.API}/moderator/test`, modifiedTest, {headers});
   }
 
+  public modifyTestRedactor(modifiedTest: string) {
+    const headers = {'Content-type': 'application/json'};
+    return this.http.put(`${this.API}/redactor/test`, modifiedTest, {headers});
+  }
+
   public getCurrentRedactorResolvedTests() {
     return this.http.get<ResolvedTest[]>(`${this.API}/redactor/list/test/resolved`);
   }

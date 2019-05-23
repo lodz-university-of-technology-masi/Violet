@@ -181,7 +181,7 @@ export class TestAddComponent implements OnInit {
     this.newTest.test.numericQuestions = this.testForm.controls.numericQuestions.value;
     this.testService.addTest(JSON.stringify(this.newTest)).subscribe(() => {
       this.messageService.success('Test has been added.');
-      this.router.navigate(['/test-list']);
+      this.router.navigate(['/test-list-redactor']);
     });
   }
 
@@ -203,7 +203,7 @@ export class TestAddComponent implements OnInit {
           test.test.name = this.testForm.get('testName').value;
           this.testService.addTest(JSON.stringify(test)).subscribe(() => {
             this.messageService.success('Test has been added.');
-            this.router.navigate(['/test-list']);
+            this.router.navigate(['/test-list-redactor']);
           });
         });
       } catch (error) {

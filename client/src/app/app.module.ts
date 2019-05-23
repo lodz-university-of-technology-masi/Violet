@@ -43,6 +43,7 @@ import {DeviceDetectorModule} from 'ngx-device-detector';
 import {CommonModule} from '@angular/common';
 import {ResolveTestMarkComponent} from './resolve-test-mark/resolve-test-mark.component';
 import {MetricService} from './shared/services/metric.service';
+import {TestModifyRedactorComponent} from './test-modify-redactor/test-modify.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -135,7 +136,14 @@ const appRoutes: Routes = [
     path: 'test-modify',
     component: TestModifyComponent,
     canActivate: [AuthGuard], data: {
-      permittedRoles: [UserRole.moderator, UserRole.redactor]
+      permittedRoles: [UserRole.moderator]
+    }
+  },
+  {
+    path: 'test-modify-redactor',
+    component: TestModifyRedactorComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.redactor]
     }
   },
   {
@@ -191,6 +199,7 @@ export function createTranslateLoader(http: HttpClient) {
     ResolveTestListComponent,
     TestAddVersionComponent,
     ResolveTestMarkComponent,
+    TestModifyRedactorComponent
   ],
   imports: [
     BrowserModule,

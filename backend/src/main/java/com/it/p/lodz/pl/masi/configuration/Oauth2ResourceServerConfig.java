@@ -23,7 +23,7 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers("/metric/add").permitAll()
                 .antMatchers( "/moderator/**").hasAuthority("moderator")
                 .antMatchers(HttpMethod.DELETE, "/moderator/test/{\\d+}").hasAuthority("moderator")
-                .antMatchers("/user/redactor/**").hasAuthority("redactor")
+                .antMatchers("/user/redactor/**").hasAuthority("moderator")
                 .antMatchers("/user/identity").hasAnyAuthority("redactor", "moderator")
                 .antMatchers("/redactor/**").hasAuthority("redactor")
                 .antMatchers(HttpMethod.GET, "/user/redactor/{\\d+}").hasAuthority("redactor")

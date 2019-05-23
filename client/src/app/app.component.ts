@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     time: '',
     dist: '',
     fail: false
-  }
+  };
   isLogged = false;
   UserRole = UserRole;
   time = 0;
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   currentX;
   currentY;
   even = 0;
-  tempLS: string;
+  tempLS: any;
 
   constructor(private router: Router, private translateService: TranslateService, private authService: AuthService,
               private messageService: MessageService, private deviceService: DeviceDetectorService, private metricService: MetricService) {
@@ -225,24 +225,24 @@ export class AppComponent implements OnInit {
           this.prepareBasicJsonMetric();
           this.metric.fail = false;
           this.metricService.importMetric(JSON.stringify(this.metric)).subscribe(() => {
-            this.messageService.info('Measurements have been gathered.');
+            this.messageService.info('measurement_sent');
           });
         }
       } else if (event.key === 'W'.valueOf()) {
         this.even = 0;
-        localStorage.clear();
-        this.messageService.info('Gathering measurements have ended.');
-        this.messageService.info('Local storage has been cleared.');
+        localStorage.removeItem('Metrics');
+        this.messageService.info('measurement_aborted');
+        this.messageService.info('local_storage_clear');
       } else if (event.key === 'R'.valueOf()) {
         this.even = 0;
         this.saveDataInStorage(this.time, this.clicksCounter, this.distance, this.deviceInfo, this.width, this.height);
         this.prepareBasicJsonMetric();
         this.metric.fail = true;
         this.metricService.importMetric(JSON.stringify(this.metric)).subscribe(() => {
-          this.messageService.info('Failed measurements have been gathered.');
+          this.messageService.info('failed_measurement');
         });
-        localStorage.clear();
-        this.messageService.info('Local storage has been cleared.');
+        localStorage.removeItem('Metrics');
+        this.messageService.info('local_storage_clear');
       }
     }
   }
