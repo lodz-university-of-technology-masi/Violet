@@ -44,6 +44,6 @@ VALUES (1, 5, 3, 1,
         '{"marks":[1,0,1,1,0,0,1,0]}', 4, 8);
 
 INSERT INTO usability_data (ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
-VALUES ('127.0.0.1', 'F', 'candidate127.0.0.1', 1, '2019-05-15 17:11', 1920, 1080, 1, 98.82, 20983, false, 0);
+VALUES ('127.0.0.1', 'F', 'candidate127.0.0.1', 1, '2019-05-15 17:11', 1920, 1080, 1, 98.82, 20983, 0, 0);
 INSERT INTO usability_data (ip, browser, username, m_id, savetime, res_w, res_h, mc, time, dist, fail, error)
-VALUES ('192.168.1.213', 'C', 'jan.nowak@to.co', 1, '2019-05-15 17:13', 1920, 1080, 2, 182.09, 45738, true, 3);
+VALUES ('192.168.1.213', 'C', 'jan.nowak@to.co', 1, '2019-05-15 17:13', 1920, 1080, 2, 182.09, 45738, 1, 3);

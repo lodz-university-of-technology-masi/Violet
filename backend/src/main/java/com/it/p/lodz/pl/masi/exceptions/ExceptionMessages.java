@@ -17,4 +17,5 @@ public class ExceptionMessages {
     static final String WRONG_ANSWER_NUMBER = "wrong_answer_number";
     static final String INVALID_TOKEN = "invalid_token";
     static final String TEST_TRANSLATION_EXCEPTION = "test_translation_exception";
+    static final String WRONG_PASSWORD_LENGTH = "wrong_password_length";
 }

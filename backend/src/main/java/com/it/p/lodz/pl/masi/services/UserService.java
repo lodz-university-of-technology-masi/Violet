@@ -7,6 +7,7 @@ import com.it.p.lodz.pl.masi.dtos.UserRedactorDto;
 import com.it.p.lodz.pl.masi.entities.RoleEntity;
 import com.it.p.lodz.pl.masi.entities.UserEntity;
 import com.it.p.lodz.pl.masi.entities.UserRoleEntity;
+import com.it.p.lodz.pl.masi.exceptions.PasswordLengthException;
 import com.it.p.lodz.pl.masi.exceptions.PasswordMismatchException;
 import com.it.p.lodz.pl.masi.exceptions.RedactorNotFoundException;
 import com.it.p.lodz.pl.masi.repositories.RoleRepository;
@@ -51,6 +52,9 @@ public class UserService {
     public void addRedactor(UserRedactorDto userRedactorDto) {
         if (!userRedactorDto.getPassword().equals(userRedactorDto.getSecondPassword())) {
             throw new PasswordMismatchException();
+        }
+        if (userRedactorDto.getPassword().length() < 8) {
+            throw new PasswordLengthException();
         }
         UserEntity userEntity = new UserEntity();
         userEntity.setFirstName(userRedactorDto.getFirstName());

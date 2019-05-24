@@ -169,6 +169,6 @@ create table "usability_data"
 	mc integer not null,
 	time decimal not null,
 	dist decimal not null,
-	fail boolean not null default false,
+	fail integer not null default 0,
 	error integer not null default 0
 );

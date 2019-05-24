@@ -4,13 +4,15 @@ import {Observable, of, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {MessageService} from './message.service';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  constructor(private messageService: MessageService, private router: Router) { }
+  constructor(private messageService: MessageService, private router: Router, private authService: AuthService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (localStorage.getItem('token') && !req.url.includes('/oauth/token')) {
@@ -23,9 +25,10 @@ export class HttpInterceptorService implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError(error => {
-        if (error.error.error === 'invalid_token') {
+        if (error.error.error === 'invalid_token' || error.error.message === 'user_not_found') {
             localStorage.removeItem('token');
             this.router.navigate(['/login-user']);
+            this.authService.addEvent('logout');
         } else if (error instanceof HttpErrorResponse && error.error.error !== 'unauthorized' && error.error.error !== 'invalid_token') {
           if (error.error.message) {
             this.messageService.error(`${error.error.message}`);
