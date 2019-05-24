@@ -18,6 +18,14 @@ a[mat-button] {
   margin-right: 0;
 }
 
+mat-form-field {
+  width: 20vw !important;
+}
+
+#searching {
+  width: 95% !important;
+}
+
 .example-container {
   display: flex;
   flex-direction: column;
