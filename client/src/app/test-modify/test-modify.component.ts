@@ -118,7 +118,7 @@ export class TestModifyComponent implements OnInit {
       case 'Scale question':
         this.questions = this.testForm.get('scaleQuestions') as FormArray;
         this.questions.push(this.createChoiceScaleQuestion());
-        this.arrayOfScaleAnswers.push(['', '']);
+        this.arrayOfScaleAnswers.push([0, 0]);
         break;
       case 'Numeric question':
         this.questions = this.testForm.get('numericQuestions') as FormArray;
@@ -158,7 +158,7 @@ export class TestModifyComponent implements OnInit {
   }
 
   addScaleAnswerInput(i: number): void {
-    this.arrayOfScaleAnswers[i].push('');
+    this.arrayOfScaleAnswers[i].push(0);
   }
 
   removeScaleAnswerInput(i: number): void {
@@ -170,7 +170,11 @@ export class TestModifyComponent implements OnInit {
   }
 
   addScaleAnswer(i: number, j: number, value: string): void {
-    this.arrayOfScaleAnswers[i][j] = value;
+    if (value === '' || value === undefined) {
+      this.arrayOfScaleAnswers[i][j] = '0';
+    } else {
+      this.arrayOfScaleAnswers[i][j] = value;
+    }
   }
 
   setQuestionType(type: string): void {
@@ -197,5 +201,9 @@ export class TestModifyComponent implements OnInit {
 
   cancel() {
     this.location.back();
+  }
+
+  validate(evt) {
+    this.testService.validateScale(evt);
   }
 }

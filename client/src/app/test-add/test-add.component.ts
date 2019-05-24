@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NewTest, NewTestModel } from '../shared/model/test-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../shared/services/message.service';
@@ -8,7 +8,6 @@ import { CandidateService } from '../shared/services/candidate.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImportService } from '../shared/services/import.service';
 import { ParseError } from '../shared/model/parse-error';
-import { LanguageService } from '../shared/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -41,7 +40,8 @@ export class TestAddComponent implements OnInit {
   file: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, private importService: ImportService,
-    private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder, private translateService: TranslateService) { }
+              private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder,
+              private translateService: TranslateService) { }
 
   ngOnInit() {
     this.arrayOfChoiceAnswers = new Array(new Array(2));
@@ -49,7 +49,7 @@ export class TestAddComponent implements OnInit {
     this.arrayOfChoiceAnswers[0].fill('');
     this.arrayOfScaleAnswers = new Array(new Array(2));
     this.arrayOfScaleAnswersNumber = new Array(new Array(2));
-    this.arrayOfScaleAnswers[0].fill('');
+    this.arrayOfScaleAnswers[0].fill(0);
     this.candidateService.getAllLanguages().subscribe(data => {
       this.languages = data;
     });
@@ -92,7 +92,7 @@ export class TestAddComponent implements OnInit {
       case 'Scale question':
         this.questions = this.testForm.get('scaleQuestions') as FormArray;
         this.questions.push(this.createChoiceScaleQuestion());
-        this.arrayOfScaleAnswers.push(['', '']);
+        this.arrayOfScaleAnswers.push([0, 0]);
         this.arrayOfScaleAnswersNumber.push(new Array(2));
         break;
       case 'Numeric question':
@@ -145,7 +145,7 @@ export class TestAddComponent implements OnInit {
   }
 
   addScaleAnswerInput(i: number): void {
-    this.arrayOfScaleAnswers[i].push('');
+    this.arrayOfScaleAnswers[i].push(0);
     this.arrayOfScaleAnswersNumber[i] = new Array(this.arrayOfScaleAnswersNumber[i].length + 1);
   }
 
@@ -159,7 +159,11 @@ export class TestAddComponent implements OnInit {
   }
 
   addScaleAnswer(i: number, j: number, value: string): void {
-    this.arrayOfScaleAnswers[i][j] = value;
+    if (value === '' || value === undefined) {
+      this.arrayOfScaleAnswers[i][j] = '0';
+    } else {
+      this.arrayOfScaleAnswers[i][j] = value;
+    }
   }
 
   setQuestionType(type: string): void {
@@ -213,5 +217,9 @@ export class TestAddComponent implements OnInit {
       }
     }
     fileReader.readAsText(file);
+  }
+
+  validate(evt) {
+    this.testService.validateScale(evt);
   }
 }

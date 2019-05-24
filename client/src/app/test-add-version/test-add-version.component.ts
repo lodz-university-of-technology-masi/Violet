@@ -115,7 +115,7 @@ export class TestAddVersionComponent implements OnInit {
   }
 
   addScaleAnswerInput(i: number): void {
-    this.arrayOfScaleAnswers[i].push('');
+    this.arrayOfScaleAnswers[i].push(0);
   }
 
   removeScaleAnswerInput(i: number): void {
@@ -127,7 +127,11 @@ export class TestAddVersionComponent implements OnInit {
   }
 
   addScaleAnswer(i: number, j: number, value: string): void {
-    this.arrayOfScaleAnswers[i][j] = value;
+    if (value === '' || value === undefined) {
+      this.arrayOfScaleAnswers[i][j] = '0';
+    } else {
+      this.arrayOfScaleAnswers[i][j] = value;
+    }
   }
 
   addTest() {
@@ -148,5 +152,9 @@ export class TestAddVersionComponent implements OnInit {
       this.messageService.success('Test version has been added.');
       this.router.navigate(['/test-list-redactor']);
     });
+  }
+
+  validate(evt) {
+    this.testService.validateScale(evt);
   }
 }

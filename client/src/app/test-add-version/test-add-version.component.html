@@ -54,8 +54,8 @@
           <div class="answers">
             <div *ngFor="let answer of arrayOfScaleAnswers[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer"
-                  (change)='addScaleAnswer(i, j, $event.target.value)' />
+                <input type="text" class="form-control" matInput placeholder="Answer number" [value]="answer"
+                       (change)='addScaleAnswer(i, j, $event.target.value)' (keypress)='validate(event)' />
               </mat-form-field>
               <a class="inside-button" mat-button type="removeAnswer" (click)='removeScaleAnswerInput(i)'>
                 <mat-icon>delete</mat-icon>
