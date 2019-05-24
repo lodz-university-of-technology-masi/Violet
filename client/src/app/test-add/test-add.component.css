@@ -38,7 +38,7 @@ mat-form-field {
 
 .import-name {
   float: left;
-  width: 70%;
+  width: 70% !important;
 }
 
 .icon {
