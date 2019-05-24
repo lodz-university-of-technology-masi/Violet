@@ -21,7 +21,7 @@ public class UsabilityDataEntity {
     private int mc;
     private Double time;
     private Double dist;
-    private boolean fail = false;
+    private int fail = 0;
     private int error = 0;
 
     @Id
@@ -148,11 +148,11 @@ public class UsabilityDataEntity {
     @Basic
     @NotNull(message = "null_fail")
     @Column(name = "fail")
-    public boolean isFail() {
+    public int getFail() {
         return fail;
     }
 
-    public void setFail(boolean fail) {
+    public void setFail(int fail) {
         this.fail = fail;
     }
 
