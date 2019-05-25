@@ -32,7 +32,7 @@ export class TestModifyComponent implements OnInit {
   arrayOfScaleAnswers: any[];
   testForm: FormGroup;
   questions: FormArray;
-
+  value = '';
   constructor(private route: ActivatedRoute, private router: Router, private testService: TestService,
               private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder,
               private location: Location) {
@@ -205,5 +205,11 @@ export class TestModifyComponent implements OnInit {
 
   validate(evt) {
     this.testService.validateScale(evt);
+  }
+  openWiki(value: string) {
+    window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+  }
+  findSynonyms(value: string) {
+    window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
   }
 }

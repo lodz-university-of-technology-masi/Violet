@@ -1,6 +1,6 @@
 <mat-card class="card">
 
-  <mat-card-title>Tests</mat-card-title>
+  <mat-card-title>{{'tests' | translate}}</mat-card-title>
 
   <mat-card-content>
 
@@ -8,28 +8,28 @@
       <mat-table #table matSort [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> {{'id' | translate}}</mat-header-cell>
           <mat-cell class='id-cell' *matCellDef="let tests">
             {{tests.id}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'name' | translate}}</mat-header-cell>
           <mat-cell *matCellDef="let tests">
             {{tests.testVersions[0].testName}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="delete">
-          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> {{'delete' | translate}} </mat-header-cell>
           <mat-cell class='button-cell-1' *matCellDef="let tests">
-            <button mat-button mat-raised-button color='primary' (click)='onDeleteClick(tests)'> Delete </button>
+            <button mat-button mat-raised-button color='primary' (click)='onDeleteClick(tests)'> {{'delete' | translate}} </button>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="assign">
-          <mat-header-cell class='button-cell-2' *matHeaderCellDef mat-sort-header>Assign to the position</mat-header-cell>
+          <mat-header-cell class='button-cell-2' *matHeaderCellDef mat-sort-header>{{'assign_to_the_position' | translate}}</mat-header-cell>
           <mat-cell class='button-cell-2' *matCellDef="let tests">
             <mat-select (selectionChange)="onAssignChange(tests, $event.value)" [(value)]="tests.positionId">
               <mat-option *ngFor="let position of positions" [value]="position.id">{{position.name}}</mat-option>
@@ -38,9 +38,9 @@
         </ng-container>
 
         <ng-container matColumnDef="choose">
-          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Choose</mat-header-cell>
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> {{'choose' | translate}}</mat-header-cell>
           <mat-cell class='button-cell-1' *matCellDef="let tests">
-            <button mat-button mat-raised-button color='primary' (click)='onChooseClick(tests)'> Choose</button>
+            <button mat-button mat-raised-button color='primary' (click)='onChooseClick(tests)'> {{'choose' | translate}}</button>
           </mat-cell>
         </ng-container>
 
@@ -54,11 +54,11 @@
 
 </mat-card>
 
-<br/><br/>
+<br/><br/>te
 
 <mat-card class="card" *ngIf=showDetailedTable>
 
-  <mat-card-title>Versions of test</mat-card-title>
+  <mat-card-title>{{'versions_of_test' | translate}}</mat-card-title>
 
   <mat-card-content>
 
@@ -66,30 +66,30 @@
       <mat-table #table matSort [dataSource]="dataSourceDetailed">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> {{'id' | translate}}</mat-header-cell>
           <mat-cell class='id-cell' *matCellDef="let tests">
             {{tests.id}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'name' | translate}}</mat-header-cell>
           <mat-cell *matCellDef="let tests">
             {{tests.testName}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="language">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Language</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'language' | translate}}</mat-header-cell>
           <mat-cell *matCellDef="let tests">
             {{tests.languageName}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="modify">
-          <mat-header-cell class='button-cell-4' *matHeaderCellDef mat-sort-header> Modify </mat-header-cell>
+          <mat-header-cell class='button-cell-4' *matHeaderCellDef mat-sort-header> {{'modify' | translate}} </mat-header-cell>
           <mat-cell class='button-cell-4' *matCellDef="let tests">
-            <button mat-button mat-raised-button color='primary' (click)='onModifyClick(tests)'> Modify </button>
+            <button mat-button mat-raised-button color='primary' (click)='onModifyClick(tests)'> {{'modify' | translate}} </button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumnsDetailed"></mat-header-row>

@@ -13,8 +13,8 @@
           </mat-radio-group>
         </ng-container>
       </div>
-      <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!markForm.form.valid">Mark Test</button>
-      <a class="end-button cancel-button" mat-button routerLink="/resolve-test-list">Cancel</a>
+      <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!markForm.form.valid">{{'mark_test' | translate}}</button>
+      <a class="end-button cancel-button" mat-button routerLink="/resolve-test-list">{{'cancel' | translate}}</a>
     </mat-card>
   </form>
 </div>

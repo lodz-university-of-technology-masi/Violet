@@ -1,7 +1,7 @@
 <form class="form" #languageAndPosition="ngForm">
   <mat-card>
 
-    <mat-card-title>Register for test</mat-card-title>
+    <mat-card-title>{{'register_for_test' | translate}}</mat-card-title>
 
     <mat-card-content>
 
@@ -26,9 +26,9 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" [disabled]="!languageAndPosition.form.valid"
-              (click)='findTests()'>Find tests
+              (click)='findTests()'>{{'find_tests' | translate}}
       </button>
-      <a mat-button routerLink="/home">Cancel</a>
+      <a mat-button routerLink="/home">{{'cancel' | translate}}</a>
     </mat-card-actions>
 
   </mat-card>
@@ -39,7 +39,7 @@
 
 <mat-card *ngIf=testTableVisible>
 
-  <mat-card-title>Available tests</mat-card-title>
+  <mat-card-title>{{'available_test' | translate}}</mat-card-title>
 
   <mat-card-content>
 
@@ -47,23 +47,23 @@
       <mat-table #table matSort [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> {{'id' | translate}}</mat-header-cell>
           <mat-cell class='id-cell' *matCellDef="let tests">
             {{tests.id}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'name' | translate}}</mat-header-cell>
           <mat-cell *matCellDef="let tests">
             {{tests.testName}}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="choose">
-          <mat-header-cell class='button-cell-1' *matHeaderCellDef> Choose </mat-header-cell>
+          <mat-header-cell class='button-cell-1' *matHeaderCellDef> {{'choose' | translate}} </mat-header-cell>
           <mat-cell class='button-cell-1' *matCellDef="let tests">
-            <button mat-button mat-raised-button color='primary' (click)='chooseTest(tests.id)'> Choose </button>
+            <button mat-button mat-raised-button color='primary' (click)='chooseTest(tests.id)'> {{'choose' | translate}} </button>
           </mat-cell>
         </ng-container>
 
@@ -82,7 +82,7 @@
 <form class="form" #userDetails="ngForm">
   <mat-card *ngIf=userDetailsVisible>
 
-    <mat-card-title>Provide you details</mat-card-title>
+    <mat-card-title>{{'provide_you_details' | translate}}s</mat-card-title>
 
     <mat-card-content>
 
@@ -107,7 +107,7 @@
               (click)='startTest()'>
         Start test
       </button>
-      <a mat-button routerLink="/home">Cancel</a>
+      <a mat-button routerLink="/home">{{'cancel' | translate}}</a>
     </mat-card-actions>
 
   </mat-card>
