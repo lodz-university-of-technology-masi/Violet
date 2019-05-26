@@ -14,7 +14,6 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 export class RedactorEditComponent implements OnInit {
   public redactorId: number;
   public redactor: RedactorModel;
-
   constructor(private route: ActivatedRoute, private redactorService: RedactorService, private messageService: MessageService, private router: Router) { }
 
   ngOnInit() {

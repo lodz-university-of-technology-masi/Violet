@@ -1,7 +1,7 @@
 <form class="form" #positionForm="ngForm" (ngSubmit)="submitForm()">
   <mat-card>
 
-    <mat-card-title>Add Position</mat-card-title>
+    <mat-card-title>{{'add_position' | translate}}</mat-card-title>
 
     <mat-card-content>
 
@@ -13,9 +13,9 @@
 
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit"
-              [disabled]="!positionForm.form.valid">Save
+              [disabled]="!positionForm.form.valid">{{'save' | translate}}
       </button>
-      <a mat-button routerLink="/positions-list">Cancel</a>
+      <a mat-button routerLink="/positions-list">{{'cancel' | translate}}</a>
 
     </mat-card-actions>
 

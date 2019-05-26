@@ -8,23 +8,23 @@
         </mat-form-field>
         <input class="file" type='file' (change)="fileChanged($event)">
       </div>
-      <mat-card-title>New Test Form</mat-card-title>
+      <mat-card-title>{{'new_test_form' | translate}}</mat-card-title>
 
       <mat-card-content>
         <mat-form-field>
           <input matInput placeholder="Test name" formControlName="name" required>
         </mat-form-field>
 
-        <div class="title">Test language:</div>
+        <div class="title">{{'test_language' | translate}}</div>
         <mat-radio-group name="testLanguage" formControlName="languageId" required>
           <mat-radio-button class="language-option" *ngFor="let language of languages" [value]=language.id required>
             {{language.name}}</mat-radio-button>
         </mat-radio-group>
 
-        <div class="title">Questions:</div>
+        <div class="title">{{'questions' | translate}}</div>
 
         <div class="questions">
-          <div class="secondary-title">Add question</div>
+          <div class="secondary-title">{{'add_question' | translate}}</div>
           <mat-radio-group name="questionType">
             <mat-radio-button class="question-option" *ngFor="let type of questionTypes" (click)='setQuestionType(type)'
               [value]=type required>{{type}}</mat-radio-button>
@@ -34,7 +34,7 @@
           </a>
         </div>
 
-        <div class="secondary-title">Open questions:</div>
+        <div class="secondary-title">{{'open_questions' | translate}}</div>
         <div class="question" *ngFor="let question of testForm.get('openQuestions').controls; let i = index;">
           <mat-form-field formArrayName="openQuestions">
             <div [formGroupName]="i">
@@ -42,11 +42,11 @@
             </div>
           </mat-form-field>
           <div>
-            <a mat-button type="removeQuestion" (click)="removeQuestion('Open question', i)">Remove question</a>
+            <a mat-button type="removeQuestion" (click)="removeQuestion('Open question', i)">{{'remove_question' | translate}}</a>
           </div>
         </div>
 
-        <div class="secondary-title">Choice questions:</div>
+        <div class="secondary-title">{{'choice_question' | translate}}</div>
         <div class="question" formArrayName="choiceQuestions"
           *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
@@ -62,14 +62,14 @@
                 <mat-icon>delete</mat-icon>
               </a>
             </div>
-            <a class="mat-button-wrapper" mat-button type="addAnswer" (click)='addChoiceAnswerInput(i)'>Add answer</a>
+            <a class="mat-button-wrapper" mat-button type="addAnswer" (click)='addChoiceAnswerInput(i)'>{{'add_answer' | translate}}</a>
           </div>
           <div>
-            <a mat-button type="removeQuestion" (click)="removeQuestion('Choice question', i)">Remove question</a>
+            <a mat-button type="removeQuestion" (click)="removeQuestion('Choice question', i)">{{'remove_question' | translate}}</a>
           </div>
         </div>
 
-        <div class="secondary-title">Scale questions:</div>
+        <div class="secondary-title">{{'scale_questions' | translate}}</div>
         <div class="question" formArrayName="scaleQuestions"
           *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
@@ -86,14 +86,14 @@
                 <mat-icon>delete</mat-icon>
               </a>
             </div>
-            <a mat-button type="addAnswer" (click)='addScaleAnswerInput(i)'>Add answer</a>
+            <a mat-button type="addAnswer" (click)='addScaleAnswerInput(i)'>{{'add_answer' | translate}}</a>
           </div>
           <div>
-            <a mat-button type="removeQuestion" (click)="removeQuestion('Scale question', i)">Remove question</a>
+            <a mat-button type="removeQuestion" (click)="removeQuestion('Scale question', i)">{{'remove_question' | translate}}</a>
           </div>
         </div>
 
-        <div class="secondary-title">Numeric questions:</div>
+        <div class="secondary-title">{{'numeric_questions' | translate}}</div>
         <div class="question" *ngFor="let question of testForm.get('numericQuestions').controls; let i = index;">
           <mat-form-field formArrayName="numericQuestions">
             <div [formGroupName]="i">
@@ -101,7 +101,7 @@
             </div>
           </mat-form-field>
           <div>
-            <a mat-button type="removeQuestion" (click)="removeQuestion('Numeric question', i)">Remove question</a>
+            <a mat-button type="removeQuestion" (click)="removeQuestion('Numeric question', i)">{{'remove_question' | translate}}</a>
           </div>
         </div>
 
@@ -110,7 +110,7 @@
         <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!test.form.valid">
           Add test
         </button>
-        <a class="end-button cancel-button" mat-button routerLink="/test-list-redactor">Cancel</a>
+        <a class="end-button cancel-button" mat-button routerLink="/test-list-redactor">{{'cancel' | translate}}</a>
       </mat-card-actions>
     </mat-card>
 
@@ -119,7 +119,7 @@
 <form class="widthStyle topMargin" #wikiForm="ngForm">
   <mat-card>
 
-    <mat-card-title>Searching</mat-card-title>
+    <mat-card-title>{{'searching' | translate}}</mat-card-title>
 
     <mat-card-content>
 
@@ -129,8 +129,8 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="openWiki(value)">Search Wiki </button>
-      <button mat-raised-button color="primary" (click)="findSynonyms(value)">Search Synonyms</button>
+      <button mat-raised-button color="primary" (click)="openWiki(value)">{{'search_wiki' | translate}} </button>
+      <button mat-raised-button color="primary" (click)="findSynonyms(value)">{{'search_synonyms' | translate}}</button>
     </mat-card-actions>
 
   </mat-card>

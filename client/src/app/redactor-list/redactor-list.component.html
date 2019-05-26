@@ -2,37 +2,37 @@
   <mat-table #table matSort [dataSource]="dataSource">
 
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'id' | translate}} </mat-header-cell>
       <mat-cell *matCellDef="let redactor">
         {{redactor.id}}
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'first_name' | translate}} </mat-header-cell>
       <mat-cell *matCellDef="let redactor">
         {{redactor.firstName}}
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'last_name' | translate}}</mat-header-cell>
       <mat-cell *matCellDef="let redactor">
         {{redactor.lastName}}
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="delete">
-      <mat-header-cell class='button-cell-2' *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+      <mat-header-cell class='button-cell-2' *matHeaderCellDef mat-sort-header> {{'delete' | translate}} </mat-header-cell>
       <mat-cell class='button-cell-2' *matCellDef="let redactor">
-        <button mat-button mat-raised-button color='primary' (click)='onDeleteClick(redactor)'> Delete </button>
+        <button mat-button mat-raised-button color='primary' (click)='onDeleteClick(redactor)'> {{'delete' | translate}} </button>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+      <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> {{'edit' | translate}} </mat-header-cell>
       <mat-cell class='button-cell-1' *matCellDef="let redactor">
-        <button mat-button mat-raised-button color='primary' (click)='onEditClick(redactor)'> Edit </button>
+        <button mat-button mat-raised-button color='primary' (click)='onEditClick(redactor)'> {{'edit' | translate}} </button>
       </mat-cell>
     </ng-container>
 

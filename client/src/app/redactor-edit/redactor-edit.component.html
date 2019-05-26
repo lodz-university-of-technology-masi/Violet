@@ -1,7 +1,7 @@
 <form class="form" #redactorForm="ngForm" (ngSubmit)="submitForm()">
   <mat-card>
 
-    <mat-card-title>Edit Redactor</mat-card-title>
+    <mat-card-title>{{'edit_redactor' | translate}}</mat-card-title>
 
     <mat-card-content>
       <mat-form-field>
@@ -20,9 +20,9 @@
 
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit"
-              [disabled]="!redactorForm.form.valid">Save
+              [disabled]="!redactorForm.form.valid">{{'save' | translate}}
       </button>
-      <a mat-button routerLink="/redactor-list">Cancel</a>
+      <a mat-button routerLink="/redactor-list">{{'cancel' | translate}}</a>
 
     </mat-card-actions>
 

@@ -1,11 +1,11 @@
 <div *ngIf="!isLogged">
   <mat-card>
 
-    <mat-card-title>Candidate access</mat-card-title>
+    <mat-card-title>{{'candidate_access' | translate}}</mat-card-title>
 
     <mat-card-content>
 
-      <button mat-raised-button color="primary" (click)="startTest()">Start test</button>
+      <button mat-raised-button color="primary" (click)="startTest()">{{'start_test' | translate}}</button>
     </mat-card-content>
 
   </mat-card>
