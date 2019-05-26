@@ -44,6 +44,7 @@ import {CommonModule} from '@angular/common';
 import {ResolveTestMarkComponent} from './resolve-test-mark/resolve-test-mark.component';
 import {MetricService} from './shared/services/metric.service';
 import {TestModifyRedactorComponent} from './test-modify-redactor/test-modify.component';
+import { TestImportComponent } from './test-import/test-import.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -133,6 +134,13 @@ const appRoutes: Routes = [
     }
   },
   {
+    path: 'test-import',
+    component: TestImportComponent,
+    canActivate: [AuthGuard], data: {
+      permittedRoles: [UserRole.redactor]
+    }
+  },
+  {
     path: 'test-modify',
     component: TestModifyComponent,
     canActivate: [AuthGuard], data: {
@@ -181,61 +189,62 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    LoginUserComponent,
-    AppComponent,
-    PositionsListComponent,
-    HomeComponent,
-    PositionAddComponent,
-    RegisterCandidateComponent,
-    ResolveTestComponent,
-    RedactorListComponent,
-    RedactorAddComponent,
-    RedactorEditComponent,
-    TestListComponent,
-    RedactorTestListComponent,
-    TestAddComponent,
-    TestModifyComponent,
-    ResolveTestListComponent,
-    TestAddVersionComponent,
-    ResolveTestMarkComponent,
-    TestModifyRedactorComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatListModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatGridListModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSortModule,
-    MatRadioModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    FormsModule,
-    DeviceDetectorModule.forRoot(),
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-right-custom',
-    }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient]
-      }
-    }),
-    RouterModule.forRoot(appRoutes),
-    MatIconModule
-  ],
+   declarations: [
+      LoginUserComponent,
+      AppComponent,
+      PositionsListComponent,
+      HomeComponent,
+      PositionAddComponent,
+      RegisterCandidateComponent,
+      ResolveTestComponent,
+      RedactorListComponent,
+      RedactorAddComponent,
+      RedactorEditComponent,
+      TestListComponent,
+      RedactorTestListComponent,
+      TestAddComponent,
+      TestModifyComponent,
+      ResolveTestListComponent,
+      TestAddVersionComponent,
+      ResolveTestMarkComponent,
+      TestModifyRedactorComponent,
+      TestImportComponent
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      MatButtonModule,
+      MatCardModule,
+      MatInputModule,
+      MatListModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatSelectModule,
+      MatGridListModule,
+      FormsModule,
+      ReactiveFormsModule,
+      MatSortModule,
+      MatRadioModule,
+      BrowserAnimationsModule,
+      CommonModule,
+      FormsModule,
+      DeviceDetectorModule.forRoot(),
+      ToastrModule.forRoot({
+        positionClass: 'toast-top-right-custom',
+      }),
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient]
+        }
+      }),
+      RouterModule.forRoot(appRoutes),
+      MatIconModule
+    ],
   providers: [
     AuthService,
     PositionsService,

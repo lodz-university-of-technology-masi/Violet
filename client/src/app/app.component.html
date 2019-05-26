@@ -16,6 +16,7 @@
   <mat-menu #myTestMenu="matMenu">
     <button mat-menu-item (click)="onRedactorTestsListClick()">{{'tests_list' | translate}}</button>
     <button mat-menu-item (click)="onAddTestClick()">{{'add_test' | translate}}</button>
+    <button mat-menu-item (click)="onImportTestClick()">{{'import_test' | translate}}</button>
   </mat-menu>
   <button mat-button *ngIf="hasRole([UserRole.redactor])" (click)="onResolveTestListClick()">{{'resolved_tests' | translate}}</button>
   <span class="fill-space"></span>

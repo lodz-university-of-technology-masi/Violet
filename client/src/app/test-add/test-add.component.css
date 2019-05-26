@@ -22,40 +22,6 @@ mat-form-field {
   width: 95% !important;
 }
 
-.import {
-  float: right;
-  width: 40%;
-  /* border: solid; */
-  /* border-width: 1px;
-  padding: 3px; */
-}
-
-.file {
-  float: left;
-  width: 70%;
-  margin-left: 10px;
-}
-
-.import-name {
-  float: left;
-  width: 70% !important;
-}
-
-.icon {
-  float: right;
-  overflow: hidden;
-  height: 60px;
-  width: 60px;
-  margin-top: 20px;
-  margin-right: 10px;
-}
-
-.iconImg {
-  float: right;
-  height: 40px;
-  width: 40px;
-}
-
 .example-container {
   display: flex;
   flex-direction: column;

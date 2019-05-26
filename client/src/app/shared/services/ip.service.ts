@@ -9,7 +9,7 @@ export class IpService {
 
   constructor(private http: HttpClient) { }
 
-  getClientIp(): Observable<string> {
-    return this.http.get('http://api.ipify.org/?format=jsonp&callback=JSONP_CALLBACK', {responseType: 'text'});
+  getClientIp(): Observable<any> {
+    return this.http.get('http://api.ipify.org/?format=jsonp&callback=JSONP_CALLBACK', {responseType: "text"});
   }
 }
