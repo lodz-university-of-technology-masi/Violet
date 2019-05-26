@@ -6,7 +6,7 @@
     <mat-card-content>
 
       <mat-form-field>
-        <input matInput placeholder="Position Name" [(ngModel)]="position.name"
+        <input matInput [placeholder]="'position_name' | translate" [(ngModel)]="position.name"
                required name="name" #name>
       </mat-form-field>
     </mat-card-content>

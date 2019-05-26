@@ -5,7 +5,7 @@
 
       <mat-card-content>
         <mat-form-field>
-          <input matInput placeholder="Test name" formControlName="name" required>
+          <input matInput [placeholder]="'test_name' | translate" formControlName="name" required>
         </mat-form-field>
 
         <div class="title">{{'test_language' | translate}}</div>
@@ -31,7 +31,7 @@
         <div class="question" *ngFor="let question of testForm.get('openQuestions').controls; let i = index;">
           <mat-form-field formArrayName="openQuestions">
             <div [formGroupName]="i">
-              <input formControlName="question" matInput placeholder="Open question text">
+              <input formControlName="question" matInput [placeholder]="'open_question_text' | translate">
             </div>
           </mat-form-field>
           <div>
@@ -43,12 +43,12 @@
         <div class="question" formArrayName="choiceQuestions"
           *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
-            <input formControlName="question" matInput placeholder="Choice question text" />
+            <input formControlName="question" matInput [placeholder]="'choice_question_text' | translate" />
           </mat-form-field>
           <div class="answers">
             <div *ngFor="let answer of arrayOfChoiceAnswersNumber[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer text"
+                <input type="text" class="form-control" matInput [placeholder]="'answer_text' | translate"
                   (change)='addChoiceAnswer(i, j, $event.target.value)' />
               </mat-form-field>
               <a class="inside-button" mat-button type="removeAnswer" (click)='removeChoiceAnswerInput(i)'>
@@ -66,12 +66,12 @@
         <div class="question" formArrayName="scaleQuestions"
           *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
-            <input formControlName="question" matInput placeholder="Scale question text" />
+            <input formControlName="question" matInput [placeholder]="'scale_question_text' | translate" />
           </mat-form-field>
           <div class="answers">
             <div *ngFor="let answer of arrayOfScaleAnswersNumber[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer number"
+                <input type="text" class="form-control" matInput [placeholder]="'answer_number' | translate"
                        [value]="arrayOfScaleAnswers[i][j]" (change)='addScaleAnswer(i, j, $event.target.value)'
                        (keypress)='validate(event)' />
               </mat-form-field>
@@ -90,7 +90,7 @@
         <div class="question" *ngFor="let question of testForm.get('numericQuestions').controls; let i = index;">
           <mat-form-field formArrayName="numericQuestions">
             <div [formGroupName]="i">
-              <input formControlName="question" matInput placeholder="Numeric question text">
+              <input formControlName="question" matInput [placeholder]="'numeric_question_text' | translate">
             </div>
           </mat-form-field>
           <div>
@@ -101,7 +101,7 @@
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button class="btn btn-success" color="primary" type="submit" [disabled]="!test.form.valid">
-          Add test
+          {{ 'add_test' | translate }}
         </button>
         <a class="end-button cancel-button" mat-button routerLink="/test-list-redactor">{{'cancel' | translate}}</a>
       </mat-card-actions>
@@ -117,7 +117,7 @@
     <mat-card-content>
 
       <mat-form-field id="searching">
-        <input matInput placeholder="Type" [(ngModel)]="value" name="value">
+        <input matInput [placeholder]="'type' | translate" [(ngModel)]="value" name="value">
       </mat-form-field>
     </mat-card-content>
 

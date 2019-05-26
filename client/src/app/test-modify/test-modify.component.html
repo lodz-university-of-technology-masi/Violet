@@ -6,7 +6,7 @@
 
       <mat-card-content>
         <mat-form-field>
-          <input matInput placeholder="Test name" formControlName="name" required>
+          <input matInput [placeholder]="'test_name' | translate" formControlName="name" required>
         </mat-form-field>
 
         <div class="title">{{'questions' | translate}}</div>
@@ -25,7 +25,7 @@
         <div class="question" *ngFor="let question of testForm.get('openQuestions').controls; let i = index;">
           <mat-form-field formArrayName="openQuestions">
             <div [formGroupName]="i">
-              <input formControlName="question" matInput placeholder="Open question text">
+              <input formControlName="question" matInput [placeholder]="'open_question_text' | translate">
             </div>
           </mat-form-field>
           <div>
@@ -36,12 +36,12 @@
         <div class="secondary-title">{{'choice_question' | translate}}</div>
         <div class="question" formArrayName="choiceQuestions" *ngFor="let question of testForm.get('choiceQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
-            <input formControlName="question" matInput placeholder="Choice question text"/>
+            <input formControlName="question" matInput [placeholder]="'choice_question_text' | translate"/>
           </mat-form-field>
           <div class="answers">
             <div *ngFor="let answer of arrayOfChoiceAnswers[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer text" [value]="answer" (change)='addChoiceAnswer(i, j, $event.target.value)'/>
+                <input type="text" class="form-control" matInput [placeholder]="'answer_text' | translate" [value]="answer" (change)='addChoiceAnswer(i, j, $event.target.value)'/>
               </mat-form-field>
               <a class="inside-button" mat-button type="removeAnswer" (click)='removeChoiceAnswerInput(i)'>
                 <mat-icon>delete</mat-icon>
@@ -57,12 +57,12 @@
         <div class="secondary-title">{{'scale_questions' | translate}}</div>
         <div class="question" formArrayName="scaleQuestions" *ngFor="let question of testForm.get('scaleQuestions').controls; let i = index;">
           <mat-form-field [formGroupName]="i">
-            <input formControlName="question" matInput placeholder="Scale question text"/>
+            <input formControlName="question" matInput [placeholder]="'scale_question_text' | translate"/>
           </mat-form-field>
           <div class="answers">
             <div *ngFor="let answer of arrayOfScaleAnswers[i]; let j = index;">
               <mat-form-field>
-                <input type="text" class="form-control" matInput placeholder="Answer number" [value]="answer"
+                <input type="text" class="form-control" matInput [placeholder]="'answer_number' | translate" [value]="answer"
                        (change)='addScaleAnswer(i, j, $event.target.value)' (keypress)='validate(event)' />
               </mat-form-field>
               <a class="inside-button" mat-button type="removeAnswer" (click)='removeScaleAnswerInput(i)'>
@@ -80,7 +80,7 @@
         <div class="question" *ngFor="let question of testForm.get('numericQuestions').controls; let i = index;">
           <mat-form-field formArrayName="numericQuestions">
             <div [formGroupName]="i">
-              <input formControlName="question" matInput placeholder="Numeric question text">
+              <input formControlName="question" matInput [placeholder]="'numeric_question_text' | translate">
             </div>
           </mat-form-field>
           <div>
@@ -107,7 +107,7 @@
     <mat-card-content>
 
       <mat-form-field id="searching">
-        <input matInput placeholder="Type" [(ngModel)]="value" name="value">
+        <input matInput [placeholder]="'type' | translate" [(ngModel)]="value" name="value">
       </mat-form-field>
     </mat-card-content>
 

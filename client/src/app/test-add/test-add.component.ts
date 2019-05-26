@@ -181,7 +181,7 @@ export class TestAddComponent implements OnInit {
     }
     this.newTest.test.numericQuestions = this.testForm.controls.numericQuestions.value;
     this.testService.addTest(JSON.stringify(this.newTest)).subscribe(() => {
-      this.messageService.success('Test has been added.');
+      this.messageService.success('test_added');
       this.router.navigate(['/test-list-redactor']);
     });
   }

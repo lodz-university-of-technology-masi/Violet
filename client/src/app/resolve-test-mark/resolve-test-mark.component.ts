@@ -47,7 +47,7 @@ export class ResolveTestMarkComponent implements OnInit {
     console.log(this.testMarks.mark);
     console.log(JSON.stringify(this.testMarks));
     this.testService.markResolvedTest(JSON.stringify(this.testMarks)).subscribe(() => {
-      this.messageService.success('Test has been marked.');
+      this.messageService.success('test_marked');
       this.location.back();
     });
   }

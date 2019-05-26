@@ -73,7 +73,7 @@ export class TestListComponent implements OnInit {
 
   onAssignChange(test: TestVersion, positionId: string) {
     this.testService.assignPosition(positionId, test.id).subscribe(() => {
-      this.messageService.success('Position assigned');
+      this.messageService.success('position_assigned');
     });
   }
 }

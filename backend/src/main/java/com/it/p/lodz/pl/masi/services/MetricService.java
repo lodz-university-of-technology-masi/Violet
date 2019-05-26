@@ -52,7 +52,7 @@ public class MetricService {
                     new File(realPathToUploads).mkdir();
                 }
 
-                String filePath = realPathToUploads + createFileName(remoteAddr)  + "_" + file.getOriginalFilename();
+                String filePath = realPathToUploads + getUsername(remoteAddr)  + "_" + file.getOriginalFilename();
                 File dest = new File(filePath);
                 file.transferTo(dest);
 
@@ -60,14 +60,6 @@ public class MetricService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private String createFileName(String remoteAddr) {
-        if (!"anonymousUser".equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
-            return this.currentUserProvided.getCurrentUserEntity().getEmail() + remoteAddr;
-        } else {
-            return "candidate" + remoteAddr;
         }
     }
 
