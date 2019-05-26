@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Configuration} from '../../configuration';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IpService {
-
-  constructor(private http: HttpClient) { }
-
+  private API = this.config.Server;
+  constructor(private http: HttpClient, private config: Configuration) { }
   getClientIp(): Observable<any> {
-    return this.http.get('http://api.ipify.org/?format=jsonp&callback=JSONP_CALLBACK', {responseType: "text"});
+    return this.http.get(`${this.API}/user/ip`, {responseType: "text"});
   }
 }
