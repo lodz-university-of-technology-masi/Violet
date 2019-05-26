@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class UserController {
 
@@ -23,6 +25,11 @@ public class UserController {
     public HttpStatus addRedactor(@RequestBody UserRedactorDto userRedactorDto) {
         userService.addRedactor(userRedactorDto);
         return HttpStatus.ACCEPTED;
+    }
+
+    @GetMapping("user/ip")
+    public String getUserIp(HttpServletRequest request) {
+        return request.getRemoteAddr();
     }
 
     @GetMapping("/user/redactor")

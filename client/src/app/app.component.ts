@@ -79,8 +79,11 @@ export class AppComponent implements OnInit {
 
   setUserIp() {
     this.ipService.getClientIp().subscribe(r => {
-      this.userIdentity.email = 'candidate-' + r.substring(23, r.length - 4);
-    });
+      var ip: string = r;
+      while(ip.indexOf(':') != -1)
+        ip = ip.replace(':', '.');
+      this.userIdentity.email = 'candidate-' + ip;
+    }, e => console.log(e));
   }
 
   onPositionListClick() {
