@@ -218,7 +218,8 @@ export class AppComponent implements OnInit {
       var a = document.createElement('a');
         // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
         a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-        var filename = this.userIdentity.email+ '_' + Date.now() + '.jpg';
+        var date = new Date();
+        var filename = this.userIdentity.email+ '_' + date.toISOString() + '.jpg';
         
         a.download = filename;
         console.log('File saved to ' + filename);
