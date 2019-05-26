@@ -45,6 +45,7 @@ import {ResolveTestMarkComponent} from './resolve-test-mark/resolve-test-mark.co
 import {MetricService} from './shared/services/metric.service';
 import {TestModifyRedactorComponent} from './test-modify-redactor/test-modify.component';
 import { TestImportComponent } from './test-import/test-import.component';
+import {UploadService} from './shared/services/upload.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -256,7 +257,8 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     MessageService,
     ExportService,
-    MetricService
+    MetricService,
+    UploadService
   ],
   bootstrap: [
     AppComponent
