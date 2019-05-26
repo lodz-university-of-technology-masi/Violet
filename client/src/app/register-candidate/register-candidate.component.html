@@ -6,7 +6,7 @@
     <mat-card-content>
 
       <mat-form-field>
-        <mat-select [placeholder]="'Position'" [(value)]="registerCandidate.positionId" required>
+        <mat-select [placeholder]="'position' | translate" [(value)]="registerCandidate.positionId" required>
           <mat-option *ngFor="let p of position" [value]="p.id">
             {{p.name}}
           </mat-option>
@@ -16,7 +16,7 @@
       <br/>
 
       <mat-form-field>
-        <mat-select [placeholder]="'Language'" [(value)]="registerCandidate.languageId" required>
+        <mat-select [placeholder]="'language' | translate" [(value)]="registerCandidate.languageId" required>
           <mat-option *ngFor="let l of language" [value]="l.id">
             {{l.name}}
           </mat-option>
@@ -82,22 +82,22 @@
 <form class="form" #userDetails="ngForm">
   <mat-card *ngIf=userDetailsVisible>
 
-    <mat-card-title>{{'provide_you_details' | translate}}s</mat-card-title>
+    <mat-card-title>{{'provide_you_details' | translate}}</mat-card-title>
 
     <mat-card-content>
 
       <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="registerCandidate.firstName"
+        <input matInput [placeholder]="'name' | translate" [(ngModel)]="registerCandidate.firstName"
                required name="name" #name>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Lastname" [(ngModel)]="registerCandidate.lastName"
+        <input matInput [placeholder]="'lastname' | translate" [(ngModel)]="registerCandidate.lastName"
                required name="name" #name>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="E-mail" [(ngModel)]="registerCandidate.email"
+        <input matInput [placeholder]="'email' | translate" [(ngModel)]="registerCandidate.email"
                required name="name" #name>
       </mat-form-field>
 

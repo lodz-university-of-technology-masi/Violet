@@ -18,7 +18,7 @@
     <ng-container matColumnDef="active">
       <mat-header-cell class='button-cell-1' *matHeaderCellDef mat-sort-header> {{'change_state' | translate}} </mat-header-cell>
       <mat-cell class='button-cell-1' *matCellDef="let positions">
-        <button mat-button mat-raised-button color='primary' (click)='onChangeStateClick(positions)'> {{positions.active === true ? 'Deactivate' : 'Active'}} </button>
+        <button mat-button mat-raised-button color='primary' (click)='onChangeStateClick(positions)'> {{positions.active === true ? ('deactivate' | translate) : ('active' | translate) }} </button>
       </mat-cell>
     </ng-container>
 

@@ -149,7 +149,7 @@ export class TestAddVersionComponent implements OnInit {
     }
     this.newTestVersion.test.numericQuestions = this.testForm.controls.numericQuestions.value;
     this.testService.addTestVersion(JSON.stringify(this.newTestVersion)).subscribe(() => {
-      this.messageService.success('Test version has been added.');
+      this.messageService.success('test_version_added');
       this.router.navigate(['/test-list-redactor']);
     });
   }

@@ -9,7 +9,7 @@
     </ng-container>
     <ng-template #elseTemplate>
         <mat-form-field class="answer-input">
-            <input name="answer_{{i}}" [(ngModel)]="answers[i]" matInput placeholder="Answer">
+            <input name="answer_{{i}}" [(ngModel)]="answers[i]" matInput [placeholder]="'answer' | translate">
           </mat-form-field>
     </ng-template>
   </div>

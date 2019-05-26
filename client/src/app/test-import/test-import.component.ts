@@ -43,7 +43,7 @@ export class TestImportComponent implements OnInit {
           test.languageId = l.find(l => l.name == test.languageId).id.toString();
           test.test.name = this.testForm.get('testName').value;
           this.testService.addTest(JSON.stringify(test)).subscribe(() => {
-            this.messageService.success('Test has been added.');
+            this.messageService.success('test_added');
             this.router.navigate(['/test-list-redactor']);
           });
         });

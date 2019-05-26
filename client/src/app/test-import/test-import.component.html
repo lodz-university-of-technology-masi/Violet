@@ -6,7 +6,7 @@
           <button mat-raised-button color="primary" type="button" (click)='importCsv()' class='icon'><img
               src="../../assets/icons/csv.png" class='iconImg' /></button>
           <mat-form-field class="import-name">
-            <input matInput formControlName="testName" placeholder="Test name" />
+            <input matInput formControlName="testName" [placeholder]="'test_name' | translate" />
           </mat-form-field>
           <input class="file" type='file' (change)="fileChanged($event)">
         </div>

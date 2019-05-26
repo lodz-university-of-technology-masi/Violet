@@ -1,36 +1,36 @@
 <form class="form" #redactorForm="ngForm" (ngSubmit)="submitForm()">
   <mat-card>
 
-    <mat-card-title>Add Redactor</mat-card-title>
+    <mat-card-title>{{'add_redactor' | translate}}</mat-card-title>
 
     <mat-card-content>
       <mat-form-field>
-        <input matInput placeholder="First Name" [(ngModel)]="redactor.firstName"
+        <input matInput [placeholder]="'first_name' | translate" [(ngModel)]="redactor.firstName"
                required name="firstName" #firstName>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Last Name" [(ngModel)]="redactor.lastName"
+        <input matInput [placeholder]="'last_name' | translate" [(ngModel)]="redactor.lastName"
                required name="lastName" #lastName>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="E-mail" [(ngModel)]="redactor.email"
+        <input matInput [placeholder]="'email' | translate" [(ngModel)]="redactor.email"
                required name="email" #email>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Password" [(ngModel)]="redactor.password"
+        <input matInput [placeholder]="'password' | translate" [(ngModel)]="redactor.password"
                required name="password" type="password" #password>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Re-type Password" [(ngModel)]="redactor.secondPassword"
+        <input matInput [placeholder]="'second_password' | translate" [(ngModel)]="redactor.secondPassword"
                required name="secondPassword" type="password" #password>
       </mat-form-field>
     </mat-card-content>
 
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit"
-              [disabled]="!redactorForm.form.valid">Save
+              [disabled]="!redactorForm.form.valid">{{'save' | translate}}
       </button>
-      <a mat-button routerLink="/redactor-list">Cancel</a>
+      <a mat-button routerLink="/redactor-list">{{'cancel' | translate}}</a>
 
     </mat-card-actions>
 

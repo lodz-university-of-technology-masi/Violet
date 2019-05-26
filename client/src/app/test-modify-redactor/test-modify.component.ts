@@ -192,7 +192,7 @@ export class TestModifyRedactorComponent implements OnInit {
     }
     this.modifiedTest.test.numericQuestions = this.testForm.controls.numericQuestions.value;
     this.testService.modifyTestRedactor(JSON.stringify(this.modifiedTest)).subscribe(() => {
-      this.messageService.success('Test has been modified.');
+      this.messageService.success('test_modified');
       this.location.back();
     });
   }

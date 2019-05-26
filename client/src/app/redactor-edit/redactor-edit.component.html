@@ -5,15 +5,15 @@
 
     <mat-card-content>
       <mat-form-field>
-        <input matInput placeholder="First Name" [(ngModel)]="redactor.firstName"
+        <input matInput [placeholder]="'first_name' | translate" [(ngModel)]="redactor.firstName"
                required name="firstName" #firstName>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Last Name" [(ngModel)]="redactor.lastName"
+        <input matInput [placeholder]="'last_name' | translate" [(ngModel)]="redactor.lastName"
                required name="lastName" #lastName>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="E-mail" [(ngModel)]="redactor.email"
+        <input matInput [placeholder]="'email' | translate" [(ngModel)]="redactor.email"
                required name="email" #email>
       </mat-form-field>
     </mat-card-content>

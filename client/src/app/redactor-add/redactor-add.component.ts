@@ -30,7 +30,7 @@ export class RedactorAddComponent implements OnInit {
 
   submitForm() {
     this.redactorService.save(this.redactor).subscribe(() => {
-      this.messageService.success('Redactor has been added.');
+      this.messageService.success('redactor_added');
       this.gotoList();
     });
   }

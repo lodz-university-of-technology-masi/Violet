@@ -3,11 +3,11 @@
     <mat-card>
       <mat-card-title class="title">{{testName}}</mat-card-title>
       <div *ngFor="let question of questions; index as i;" class="question-container">
-        <p class="secondary-title questions">Question: {{question.question}}</p>
-        <p class="secondary-title answers">Answer: {{answer.testAnswers[i]}}</p>
+        <p class="secondary-title questions">{{'mark_form_question' | translate}} {{question.question}}</p>
+        <p class="secondary-title answers">{{'mark_form_answer' | translate}} {{answer.testAnswers[i]}}</p>
         <ng-container>
           <mat-radio-group name="mark_{{i}}" [(ngModel)]="testMarks.mark[i]" required>
-            <label>Mark: </label>
+            <label>{{'mark_form_mark' | translate}} </label>
             <mat-radio-button class="question-mark-option" [value]=0>0</mat-radio-button>
             <mat-radio-button class="question-mark-option" [value]=1>1</mat-radio-button>
           </mat-radio-group>
