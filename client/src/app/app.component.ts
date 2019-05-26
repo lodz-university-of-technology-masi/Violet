@@ -8,6 +8,8 @@ import {DeviceDetectorService} from 'ngx-device-detector';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {Metric} from './shared/model/metric-model';
 import {MetricService} from './shared/services/metric.service';
+import html2canvas from 'html2canvas';
+import { IpService } from './shared/services/ip.service';
 
 const languages = ['pl', 'en'];
 
@@ -46,7 +48,7 @@ export class AppComponent implements OnInit {
   even = 0;
   tempLS: any;
 
-  constructor(private router: Router, private translateService: TranslateService, private authService: AuthService,
+  constructor(private router: Router, private translateService: TranslateService, private authService: AuthService, private ipService: IpService,
               private messageService: MessageService, private deviceService: DeviceDetectorService, private metricService: MetricService) {
     this.authService.listen().subscribe(message => {
       if (message === 'login') {
@@ -71,6 +73,13 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
+    this.setUserIp();
+  }
+
+  setUserIp() {
+    this.ipService.getClientIp().subscribe(r => {
+      this.userIdentity.email = 'candidate-' + r.substring(23, r.length - 4);
+    });
   }
 
   onPositionListClick() {
@@ -143,10 +152,8 @@ export class AppComponent implements OnInit {
       this.isLogged = true;
     }, err => {
       this.isLogged = false;
-      this.userIdentity = {
-        email: 'not_login',
-        roles: [UserRole.guest]
-      };
+      this.userIdentity.roles = [UserRole.guest];
+      this.setUserIp();
     });
   }
 
@@ -205,10 +212,24 @@ export class AppComponent implements OnInit {
     this.metric.dist = this.tempLS.distance.toString();
   }
 
+  takeScreenshot() {
+    var data = document.body;
+    html2canvas(data).then(canvas => {
+      var a = document.createElement('a');
+        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+        var filename = this.userIdentity.email+ '_' + Date.now() + 'jpg';
+        a.download = filename;
+        console.log("File saved to somefilename.jpg");
+        a.click();
+    })
+  }
+
   @HostListener('document:keyup', ['$event'])
   handleDeleteKeyboardEvent(event: KeyboardEvent) {
     if (event.shiftKey) {
       if (event.key === 'D'.valueOf()) {
+        this.takeScreenshot();
         this.even++;
         if (this.startTimerValue) {
           this.startTimerValue = false;
