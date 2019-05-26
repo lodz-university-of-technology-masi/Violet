@@ -135,5 +135,6 @@
   "tests": "Testy",
   "tests_list": "Lista testów",
   "add_test": "Dodaj test",
-  "resolved_tests": "Rozwiązane testy"
+  "resolved_tests": "Rozwiązane testy",
+  "import_test": "Zaimportuj test"
 }

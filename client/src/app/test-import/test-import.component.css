@@ -1,0 +1,110 @@
+
+  
+  .file {
+    float: left;
+    width: 80%;
+    margin-left: 10px;
+  }
+  
+  .import-name {
+    float: left;
+    width: 80% !important;
+  }
+  
+  .icon {
+    float: right;
+    overflow: hidden;
+    height: 60px;
+    width: 60px;
+    margin-top: 20px;
+    margin-right: 10px;
+  }
+  
+  .iconImg {
+    float: right;
+    height: 40px;
+    width: 40px;
+  }
+  mat-icon {
+    color: white;
+  }
+  
+  mat-radio-button {
+    margin-top: 10px;
+    padding: 6px;
+  }
+  
+  mat-card {
+    min-height: 100px;
+  }
+
+  a[mat-button] {
+    background-color: #c2185b;
+    color: #ffffff;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  mat-form-field {
+    width: 20vw !important;
+  }
+  
+  #searching {
+    width: 95% !important;
+  }
+  
+  .example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+    width: 40%;
+    margin: 0 auto;
+  }
+  
+  .title {
+    margin-top: 16px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  
+  .secondary-title {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+  .answers, .questions {
+    margin-left: 2.5em;
+    margin-bottom: 16px;
+  }
+  
+  .inside-button {
+    margin-left: 8px !important;
+  }
+  
+  .end-button {
+    margin-left: 8px !important;
+  }
+  
+  .cancel-button {
+    background-color: inherit !important;
+  }
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    background-color: yellow;
+  }
+  
+  .example-full-width {
+    width: 100%;
+    background-color: yellow;
+  }
+  .widthStyle {
+    width: 20%;
+  }
+  .topMargin {
+    margin-left: 30px;
+  }
+  

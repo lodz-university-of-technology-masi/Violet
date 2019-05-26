@@ -73,7 +73,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-    this.setUserIp();
+    if(!this.isLogged)
+      this.setUserIp();
   }
 
   setUserIp() {
@@ -128,6 +129,14 @@ export class AppComponent implements OnInit {
 
   onAddTestClick() {
     this.router.navigate(['/test-add']);
+
+    if (!this.startTimerValue) {
+      this.clicksCounter++;
+    }
+  }
+
+  onImportTestClick() {
+    this.router.navigate(['/test-import']);
 
     if (!this.startTimerValue) {
       this.clicksCounter++;

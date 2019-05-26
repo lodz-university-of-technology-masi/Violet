@@ -7,7 +7,6 @@ import { Language } from '../shared/model/candidate-model';
 import { CandidateService } from '../shared/services/candidate.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImportService } from '../shared/services/import.service';
-import { ParseError } from '../shared/model/parse-error';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -37,11 +36,9 @@ export class TestAddComponent implements OnInit {
   };
   testForm: FormGroup;
   questions: FormArray;
-  file: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, private importService: ImportService,
-              private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder,
-              private translateService: TranslateService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private testService: TestService, 
+              private candidateService: CandidateService, private messageService: MessageService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.arrayOfChoiceAnswers = new Array(new Array(2));
@@ -187,36 +184,6 @@ export class TestAddComponent implements OnInit {
       this.messageService.success('Test has been added.');
       this.router.navigate(['/test-list-redactor']);
     });
-  }
-
-  fileChanged(e) {
-    this.file = e;
-  }
-
-  importCsv() {
-    var file = this.file.target.files[0];
-
-    let fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      console.log(fileReader.result);
-      try {
-        var test = this.importService.parseCsv(e);
-
-        this.candidateService.getAllLanguages().subscribe(l => {
-          test.languageId = l.find(l => l.name == test.languageId).id.toString();
-          test.test.name = this.testForm.get('testName').value;
-          this.testService.addTest(JSON.stringify(test)).subscribe(() => {
-            this.messageService.success('Test has been added.');
-            this.router.navigate(['/test-list-redactor']);
-          });
-        });
-      } catch (error) {
-        let e: ParseError = error;
-        this.translateService.get(e.message).subscribe(m => this.messageService.error(m + ' ' + e.value));
-        return;
-      }
-    }
-    fileReader.readAsText(file);
   }
 
   validate(evt) {
