@@ -180,5 +180,6 @@
   "type": "Wpisz",
   "choice_question_text": "Pytania zamknięte",
   "test_name": "Nazwa testu",
-  "position_name": "Nazwa pozycji"
+  "position_name": "Nazwa pozycji",
+  "server_error": "Serwer jest niedostępny"
 }
