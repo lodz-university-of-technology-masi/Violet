@@ -25,8 +25,19 @@ export class RedactorTestListComponent implements OnInit, DoCheck {
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
 
-  @ViewChild(MatPaginator) paginatorDetailed: MatPaginator;
-  @ViewChild(MatSort) sortDetailed: MatSort;
+
+  private sortDetailed: MatSort;
+  private paginatorDetailed: MatPaginator;
+
+  @ViewChild('detailedTablePaginator') set setPaginatorDetailed(paginatorDetailed: MatPaginator) {
+    this.paginatorDetailed = paginatorDetailed;
+    this.dataSourceDetailed.paginator = this.paginatorDetailed;
+  }
+
+  @ViewChild('detailedTable') set setSortDetailed(sortDetailed: MatSort) {
+    this.sortDetailed = sortDetailed;
+    this.dataSourceDetailed.sort = this.sortDetailed;
+  }
   dataSourceDetailed;
 
   constructor(private testService: TestService, private router: Router, private messageService: MessageService, private exportService: ExportService) {
@@ -61,8 +72,8 @@ export class RedactorTestListComponent implements OnInit, DoCheck {
   onChooseClick(tests: TestListWithVersions) {
     this.updateTable();
     this.dataSourceDetailed = new MatTableDataSource<TestVersion>(tests.testVersions);
-    this.dataSourceDetailed.paginator = this.paginator;
-    this.dataSourceDetailed.sort = this.sort;
+    this.dataSourceDetailed.paginator = this.paginatorDetailed;
+    this.dataSourceDetailed.sort = this.sortDetailed;
     this.showDetailedTable = true;
   }
 

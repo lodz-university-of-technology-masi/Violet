@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, DoCheck} from '@angular/core';
+import {Component, OnInit, ViewChild, DoCheck, ElementRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TestListWithVersions, TestVersion, QuestionModel} from '../shared/model/test-model';
 import {TestService} from '../shared/services/test.service';
@@ -24,10 +24,21 @@ export class TestListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
 
-  @ViewChild(MatPaginator) paginatorDetailed: MatPaginator;
-  @ViewChild(MatSort) sortDetailed: MatSort;
   dataSourceDetailed;
   positions: TestPosition[];
+
+  private sortDetailed: MatSort;
+  private paginatorDetailed: MatPaginator;
+
+  @ViewChild('detailedTablePaginator') set setPaginatorDetailed(paginatorDetailed: MatPaginator) {
+    this.paginatorDetailed = paginatorDetailed;
+    this.dataSourceDetailed.paginator = this.paginatorDetailed;
+  }
+
+  @ViewChild('detailedTable') set setSortDetailed(sortDetailed: MatSort) {
+    this.sortDetailed = sortDetailed;
+    this.dataSourceDetailed.sort = this.sortDetailed;
+  }
 
   constructor(private testService: TestService, private router: Router, private messageService: MessageService,
               private positionsService: PositionsService) {
@@ -55,8 +66,8 @@ export class TestListComponent implements OnInit {
 
   onChooseClick(tests: TestListWithVersions) {
     this.dataSourceDetailed = new MatTableDataSource<TestVersion>(tests.testVersions);
-    this.dataSourceDetailed.paginator = this.paginator;
-    this.dataSourceDetailed.sort = this.sort;
+    this.dataSourceDetailed.paginator = this.paginatorDetailed;
+    this.dataSourceDetailed.sort = this.sortDetailed;
     this.showDetailedTable = true;
   }
 
