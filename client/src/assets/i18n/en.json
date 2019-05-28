@@ -181,5 +181,6 @@
   "choice_question_text": "Choice question text",
   "test_name": "Test name",
   "position_name": "Position name",
-  "server_error": "Server is unavailable"
+  "server_error": "Server is unavailable",
+  "show_test_versions": "Show more"
 }
