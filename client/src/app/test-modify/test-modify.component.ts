@@ -14,6 +14,8 @@ import {Location} from '@angular/common';
 })
 export class TestModifyComponent implements OnInit {
   testId: number;
+  englishId = '2';
+  polishId = '1';
   newTestModel: NewTestModel = {
     name: '',
     openQuestions: [],
@@ -207,9 +209,20 @@ export class TestModifyComponent implements OnInit {
     this.testService.validateScale(evt);
   }
   openWiki(value: string) {
-    window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+    if(this.modifiedTest.versionId === this.englishId ){
+      window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+    }
+    if(this.modifiedTest.versionId === this.polishId){
+      window.open('https://pl.wikipedia.org/wiki/' + value, '_blank');
+    }
   }
-  findSynonyms(value: string) {
-    window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+
+  findSynonyms(value : string) {
+    if(this.modifiedTest.versionId === this.englishId){
+      window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+    }
+    if(this.modifiedTest.versionId === this.polishId){
+      window.open('https://synonim.net/synonim/' + value, '_blank');
+    }
   }
 }
