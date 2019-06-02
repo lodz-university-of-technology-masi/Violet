@@ -14,8 +14,9 @@ import {Location} from '@angular/common';
 })
 export class TestModifyComponent implements OnInit {
   testId: number;
-  englishId = '2';
-  polishId = '1';
+  english = 'english';
+  polish = 'polish';
+  languageName: string;
   newTestModel: NewTestModel = {
     name: '',
     openQuestions: [],
@@ -50,6 +51,7 @@ export class TestModifyComponent implements OnInit {
     });
     this.route.queryParamMap.subscribe(params => {
       this.testId = Number(params.get('testId'));
+      this.languageName = String(params.get('language'));
     });
     this.testService.getTest(this.testId).subscribe(data => {
       this.newTestModel.name = data.test.name;
@@ -209,19 +211,19 @@ export class TestModifyComponent implements OnInit {
     this.testService.validateScale(evt);
   }
   openWiki(value: string) {
-    if(this.modifiedTest.versionId === this.englishId ){
+    if(this.languageName === this.english){
       window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
     }
-    if(this.modifiedTest.versionId === this.polishId){
+    if(this.languageName === this.polish){
       window.open('https://pl.wikipedia.org/wiki/' + value, '_blank');
     }
   }
 
   findSynonyms(value : string) {
-    if(this.modifiedTest.versionId === this.englishId){
+    if(this.languageName === this.english){
       window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
     }
-    if(this.modifiedTest.versionId === this.polishId){
+    if(this.languageName === this.polish){
       window.open('https://synonim.net/synonim/' + value, '_blank');
     }
   }

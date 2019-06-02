@@ -79,9 +79,8 @@ export class TestListComponent implements OnInit {
   }
 
   onModifyClick(test: TestVersion) {
-    this.router.navigate(['/test-modify'], {queryParams: {testId: test.id}});
+    this.router.navigate(['/test-modify'], {queryParams: {testId: test.id, language: test.languageName}});
   }
-
   onAssignChange(test: TestVersion, positionId: string) {
     this.testService.assignPosition(positionId, test.id).subscribe(() => {
       this.messageService.success('position_assigned');
