@@ -8,6 +8,7 @@ import { CandidateService } from '../shared/services/candidate.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImportService } from '../shared/services/import.service';
 import { TranslateService } from '@ngx-translate/core';
+import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 
 @Component({
   selector: 'app-test-add',
@@ -22,6 +23,8 @@ export class TestAddComponent implements OnInit {
   arrayOfChoiceAnswersNumber: any[];
   arrayOfScaleAnswers: any[];
   value = '';
+  polishId = 1;
+  englishId = 2;
   arrayOfScaleAnswersNumber: any[];
   newTestModel: NewTestModel = {
     name: '',
@@ -103,10 +106,26 @@ export class TestAddComponent implements OnInit {
     this.value = value;
   }
   openWiki(value: string) {
-    window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+    if(this.testForm.controls.languageId.value === this.englishId ){
+      window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+    }
+    if(this.testForm.controls.languageId.value === this.polishId){
+      window.open('https://pl.wikipedia.org/wiki/' + value, '_blank');
+    }
+    else{
+      window.open('https://en.wikipedia.org/wiki/' + value, '_blank');
+    }
   }
-  findSynonyms(value: string) {
-    window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+
+  findSynonyms(value : string) {
+    if(this.testForm.controls.languageId.value === this.englishId){
+      window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+    }
+    if(this.testForm.controls.languageId.value === this.polishId){
+      window.open('https://synonim.net/synonim/' + value, '_blank');
+    } else{
+      window.open('https://www.wordreference.com/synonyms/' + value, '_blank');
+    }
   }
   removeQuestion(type: string, id: number): void {
     switch (type) {
@@ -187,6 +206,6 @@ export class TestAddComponent implements OnInit {
   }
 
   validate(evt) {
-    this.testService.validateScale(evt);
+   this.testService.validateScale(evt);
   }
 }
