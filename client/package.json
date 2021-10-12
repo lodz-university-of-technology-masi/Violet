@@ -28,7 +28,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "angular-pdf-generator": "^0.1.0",
     "core-js": "2.6.5",
-    "electron": "^5.0.1",
+    "electron": "^11.5.0",
     "file-saver": "^2.0.1",
     "html2canvas": "^1.0.0-rc.1",
     "jspdf": "^1.5.3",
